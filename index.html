@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>Margarita Samsonova — Greenfluencer</title>
@@ -16,6 +16,12 @@ html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
+.ocean-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;background:#04121a;
+  background-size:cover;background-position:center;will-change:transform,background-image}
+.whale-bg{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .8s;
+  background-size:contain;background-position:right 4% top 8%;background-repeat:no-repeat;
+  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 50%,#000 42%,transparent 78%);
+  mask-image:radial-gradient(ellipse 62% 58% at 50% 50%,#000 42%,transparent 78%)}
 .room{position:relative}
 .sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
 
@@ -174,7 +180,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <button class="lo-btn" id="loOkBtn">OK</button>
 </div>
 
-<canvas id="scene"></canvas>
+<div class="ocean-bg" id="oceanWrap" aria-hidden="true"></div>
+<div class="whale-bg" id="whaleWrap" aria-hidden="true"></div>
 
 <section class="room r1h" id="r1">
   <div class="sticky">
@@ -342,7 +349,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <button class="dot" data-room="r6" aria-label="Gallery"></button>
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
 (function(){
 'use strict';
@@ -366,133 +372,57 @@ function cacheRooms(){
 cacheRooms();
 window.addEventListener('resize',function(){viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();});
 
-// ── THREE.JS PARTICLES ──
-var renderer,scene3,cam,pts,pGeo,pMat,bgPts,bgGeo,bgMat;
-var P_COUNT=200,B_COUNT=250,pTgt,pPhase,bgTgt,bgPhase;
-var mx3=0,my3=0,mtx3=0,mty3=0,projV3=null;
-
-try{
-  renderer=new THREE.WebGLRenderer({canvas:document.getElementById('scene'),antialias:true,alpha:true});
-  renderer.setPixelRatio(DPR);
-  renderer.setSize(viewW,viewH);
-  scene3=new THREE.Scene();
-  cam=new THREE.PerspectiveCamera(48,viewW/viewH,.1,1000);
-  cam.position.set(0,.8,7);cam.lookAt(0,0,0);
-
-  var P_RING=7;
-  pGeo=new THREE.BufferGeometry();
-  var pPos=new Float32Array(P_COUNT*3),pTgtArr=new Float32Array(P_COUNT*3),pPhaseArr=new Float32Array(P_COUNT);
-  for(var i=0;i<P_COUNT;i++){
-    var a=(i/P_COUNT)*Math.PI*2;
-    pTgtArr[i*3]=Math.cos(a)*P_RING;pTgtArr[i*3+1]=Math.sin(a)*.5;pTgtArr[i*3+2]=Math.sin(a)*P_RING;
-    pPos[i*3]=(Math.random()-.5)*20;pPos[i*3+1]=(Math.random()-.5)*20;pPos[i*3+2]=(Math.random()-.5)*20;
-    pPhaseArr[i]=Math.random()*Math.PI*2;
+// ── OCEAN FRAME SCRUBBER (real water + whale tail splash, scroll-driven) ──
+var oceanWrap=document.getElementById('oceanWrap'),whaleWrap=document.getElementById('whaleWrap');
+var OCEAN_FRAMES=25,WHALE_FRAMES=13;
+var oceanFrames=[],whaleFrames=[];
+var oceanLoaded=0,whaleLoaded=0;
+function preloadFrames(){
+  for(var i=0;i<OCEAN_FRAMES;i++){
+    (function(idx){
+      var im=new Image();
+      im.onload=function(){oceanLoaded++;};
+      im.src='images/frames/ocean/o'+(idx<10?'0':'')+idx+'.jpg';
+      oceanFrames.push(im);
+    })(i);
   }
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+  for(var i=0;i<WHALE_FRAMES;i++){
+    (function(idx){
+      var im=new Image();
+      im.onload=function(){whaleLoaded++;};
+      im.src='images/frames/whale/w'+(idx<10?'0':'')+idx+'.jpg';
+      whaleFrames.push(im);
+    })(i);
+  }
+}
+preloadFrames();
 
-  var pc=document.createElement('canvas');pc.width=256;pc.height=256;
-    var pctx=pc.getContext('2d');
-    pctx.translate(128,128);
-    var petalPink='#ffc2d1',petalDeep='#ff9db8',petalCore='#fff1e0';
-    for(var pi=0;pi<5;pi++){
-      pctx.save();pctx.rotate(pi*Math.PI*2/5);
-      pctx.beginPath();pctx.ellipse(0,-56,24,56,0,0,Math.PI*2);
-      pctx.fillStyle=pi%2?petalPink:petalDeep;pctx.fill();
-      pctx.restore();
+// Scroll-driven scrub: ocean frames advance through the zoom room (r2) and
+// hold through the title rooms; whale-tail frames scrub as the title appears.
+function updateOceanZoom(){
+  if(!oceanWrap)return;
+  var rp2=clamp01(roomData[1].progress);
+  var rp3=clamp01(roomData[2].progress);
+  var rp4=clamp01(roomData[3].progress);
+  // zoom 1.0 -> 1.35 across the particle room, hold through title rooms
+  var z=1+0.35*smoothstep(rp2);
+  // slight drift so the water feels alive
+  var drift=Math.sin(performance.now()*.0004)*.02;
+  oceanWrap.style.transform='scale('+(z+drift).toFixed(4)+')';
+  // ocean frame: scrub 0..24 across r2, hold last frame through title
+  var oi=Math.min(OCEAN_FRAMES-1,Math.floor(smoothstep(rp2)*(OCEAN_FRAMES-1)));
+  if(oceanFrames[oi]&&oceanFrames[oi].complete){
+    oceanWrap.style.backgroundImage='url('+oceanFrames[oi].src+')';
+  }
+  // whale tail: fade in + scrub frames as the title appears (r3)
+  var whaleOp=clamp01((rp3*2-0.4));
+  if(whaleWrap){
+    whaleWrap.style.opacity=(0.85*whaleOp).toFixed(3);
+    var wi=Math.min(WHALE_FRAMES-1,Math.floor(smoothstep(rp3)*(WHALE_FRAMES-1)));
+    if(whaleFrames[wi]&&whaleFrames[wi].complete){
+      whaleWrap.style.backgroundImage='url('+whaleFrames[wi].src+')';
     }
-    pctx.beginPath();pctx.arc(0,0,15,0,Math.PI*2);pctx.fillStyle=petalCore;pctx.fill();
-  pMat=new THREE.PointsMaterial({size:.65,map:new THREE.CanvasTexture(pc),blending:THREE.NormalBlending,depthWrite:false,transparent:true,opacity:0,color:0xffffff});
-  pGeo.setAttribute('aSize',new THREE.BufferAttribute(new Float32Array(P_COUNT).fill(1),1));
-  pMat.onBeforeCompile=function(sh){
-    sh.vertexShader=sh.vertexShader
-      .replace('#include <common>','#include <common>\nattribute float aSize;')
-      .replace('gl_PointSize = size * ( scale / - mvPosition.z );','gl_PointSize = size * aSize * ( scale / - mvPosition.z );');
-  };
-  pts=new THREE.Points(pGeo,pMat);pts.scale.set(.01,.01,.01);scene3.add(pts);
-
-  var B_RING=10;
-  bgGeo=new THREE.BufferGeometry();
-  var bgPos=new Float32Array(B_COUNT*3),bgTgtArr=new Float32Array(B_COUNT*3),bgPhaseArr=new Float32Array(B_COUNT);
-  for(var i=0;i<B_COUNT;i++){
-    var a=(i/B_COUNT)*Math.PI*2;
-    bgTgtArr[i*3]=Math.cos(a)*B_RING;bgTgtArr[i*3+1]=Math.sin(a)*.5;bgTgtArr[i*3+2]=Math.sin(a)*B_RING;
-    bgPos[i*3]=(Math.random()-.5)*24;bgPos[i*3+1]=(Math.random()-.5)*24;bgPos[i*3+2]=(Math.random()-.5)*24;
-    bgPhaseArr[i]=Math.random()*Math.PI*2;
   }
-  bgGeo.setAttribute('position',new THREE.BufferAttribute(bgPos,3));
-  var bpc=document.createElement('canvas');bpc.width=256;bpc.height=256;
-    var bctx=bpc.getContext('2d');
-    bctx.translate(128,128);
-    bctx.strokeStyle='rgba(255,255,255,.92)';bctx.lineWidth=11;bctx.lineCap='round';
-    for(var bi=0;bi<6;bi++){
-      bctx.save();bctx.rotate(bi*Math.PI/3);
-      bctx.beginPath();bctx.moveTo(0,0);bctx.lineTo(0,-92);bctx.stroke();
-      bctx.beginPath();bctx.moveTo(0,-44);bctx.lineTo(-17,-58);bctx.moveTo(0,-44);bctx.lineTo(17,-58);bctx.stroke();
-      bctx.beginPath();bctx.moveTo(0,-70);bctx.lineTo(-13,-81);bctx.moveTo(0,-70);bctx.lineTo(13,-81);bctx.stroke();
-      bctx.restore();
-    }
-  bgMat=new THREE.PointsMaterial({size:.7,map:new THREE.CanvasTexture(bpc),blending:THREE.NormalBlending,depthWrite:false,transparent:true,opacity:0,color:0xffffff});
-  bgGeo.setAttribute('aSize',new THREE.BufferAttribute(new Float32Array(B_COUNT).fill(1),1));
-  bgMat.onBeforeCompile=function(sh){
-    sh.vertexShader=sh.vertexShader
-      .replace('#include <common>','#include <common>\nattribute float aSize;')
-      .replace('gl_PointSize = size * ( scale / - mvPosition.z );','gl_PointSize = size * aSize * ( scale / - mvPosition.z );');
-  };
-  bgPts=new THREE.Points(bgGeo,bgMat);bgPts.position.z=-2;bgPts.scale.set(.01,.01,.01);scene3.add(bgPts);
-
-  window.addEventListener('mousemove',function(e){mtx3=(e.clientX/viewW)*2-1;mty3=-(e.clientY/viewH)*2+1;},{passive:true});
-}catch(e){console.error('Three.js:',e);}
-
-function updateParticles(time){
-  if(!pts)return;
-  mx3+=(mtx3-mx3)*.35;my3+=(mty3-my3)*.35;
-  var mag3D=new THREE.Vector3(mx3*28,my3*16,2);
-  var orbitRot=roomData[1].progress*Math.PI/4*Math.max(1,(roomData[1].height-viewH)/viewH)+time*.001*.5;
-
-  var rp1=clamp01(roomData[1].progress);
-  var ps=lerp(.01,1,smoothstep(rp1));
-  var psOp=lerp(.25,1,smoothstep(rp1));
-  var illum=rp1>0 ? (.2+.8*clamp01(rp1*1.4)) : 0;
-
-  var posArr=pGeo.attributes.position.array;
-  for(var i=0;i<P_COUNT;i++){
-    var idx=i*3,a=(i/P_COUNT)*Math.PI*2,w=Math.sin(time*.001*.4+pPhaseArr[i])*1,r=7+w*.8;
-    posArr[idx]=Math.cos(a+orbitRot)*r;posArr[idx+1]=Math.sin(a*2+orbitRot*0.3)*1.5+w+0.55;posArr[idx+2]=Math.sin(a+orbitRot)*r;
-    var dx=posArr[idx]-mag3D.x,dy=posArr[idx+1]-mag3D.y,dz=posArr[idx+2]-mag3D.z;
-    var dist=Math.sqrt(dx*dx+dy*dy+dz*dz)+.001,force=Math.min(12/dist,20);
-    posArr[idx]+=(posArr[idx]+(dx/dist)*force*.9-posArr[idx])*.12;
-    posArr[idx+1]+=(posArr[idx+1]+(dy/dist)*force*.9-posArr[idx+1])*.12;
-    posArr[idx+2]+=(posArr[idx+2]+(dz/dist)*force*.9-posArr[idx+2])*.12;
-  }
-  pGeo.attributes.position.needsUpdate=true;
-
-  if(!projV3)projV3=new THREE.Vector3();
-  var SWELL_R=.22,aSz=pGeo.attributes.aSize.array;
-  for(var i=0;i<P_COUNT;i++){
-    var idx=i*3;
-    projV3.set(posArr[idx],posArr[idx+1],posArr[idx+2]).project(cam);
-    var sdx=projV3.x-mx3,sdy=projV3.y-my3,sd=Math.sqrt(sdx*sdx+sdy*sdy);
-    var sw=clamp01(1-sd/SWELL_R);
-    aSz[i]=1+2*smoothstep(clamp01((sw-(Math.random()*.4))/.6));
-  }
-  pGeo.attributes.aSize.needsUpdate=true;
-
-  pMat.size=(.3+Math.abs(Math.sin(time*.001*.6))*.5)*(.6+1.433*illum);
-  pMat.opacity=illum*psOp*(.8+Math.abs(Math.sin(time*.001*.6))*.2);
-
-  var bgPosArr=bgGeo.attributes.position.array;
-  for(var i=0;i<B_COUNT;i++){
-    var idx=i*3,a=(i/B_COUNT)*Math.PI*2,w=Math.sin(time*.001*.4+bgPhaseArr[i])*1,r=10+w*.8;
-    bgPosArr[idx]=Math.cos(a+orbitRot)*r;bgPosArr[idx+1]=Math.sin(a*2+orbitRot*0.3)*1.5+w+0.55;bgPosArr[idx+2]=Math.sin(a+orbitRot)*r;
-    var dx=bgPosArr[idx]-mag3D.x,dy=bgPosArr[idx+1]-mag3D.y,dz=bgPosArr[idx+2]-mag3D.z;
-    var dist=Math.sqrt(dx*dx+dy*dy+dz*dz)+.001,force=Math.min(14/dist,18);
-    bgPosArr[idx]+=(bgPosArr[idx]+(dx/dist)*force*.9-bgPosArr[idx])*.14;
-    bgPosArr[idx+1]+=(bgPosArr[idx+1]+(dy/dist)*force*.9-bgPosArr[idx+1])*.14;
-    bgPosArr[idx+2]+=(bgPosArr[idx+2]+(dz/dist)*force*.9-bgPosArr[idx+2])*.14;
-  }
-  bgGeo.attributes.position.needsUpdate=true;
-  bgMat.size=(.35+Math.abs(Math.sin(time*.001*.525+1.5))*.65)*(.6+1.433*illum);
-  bgMat.opacity=illum*psOp*(.7+Math.abs(Math.sin(time*.001*.525+1.5))*.3);
 }
 
 // ── TEXT EFFECTS ──
@@ -665,7 +595,8 @@ function tick(now){
     loader.style.opacity=Math.max(0,Math.min(1,1-r1p*6)).toFixed(3);
 
     // Room 2: Particles zoom
-  if(pts){var ps2=lerp(.01,1,smoothstep(rp[1]));pts.scale.set(ps2,ps2,ps2);bgPts.scale.set(ps2,ps2,ps2);}
+  // Room 2: Ocean zoom
+    updateOceanZoom();
 
   // Room 3: Name reveal
   if(rp[2]>.01){
@@ -742,9 +673,8 @@ function tick(now){
     floor.classList.remove('visible');sectBtns.classList.remove('visible');varprox.classList.remove('visible');
   }
 
-  updateParticles(now);
-  if(renderer){renderer.render(scene3,cam);}
-}
+  updateOceanZoom();
+  }
 
 prevTime=performance.now();
 
