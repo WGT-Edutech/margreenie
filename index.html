@@ -395,7 +395,7 @@ window.addEventListener('resize',function(){viewW=window.innerWidth;viewH=window
 
 // ── WHALE FRAME SCRUBBER (single video: water + whale tail, scroll-driven) ──
 var whaleWrap=document.getElementById('whaleWrap');
-var WHALE_FRAMES=14;
+var WHALE_FRAMES=108;
 var whaleFrames=[];
 var whaleLoaded=0;
 function preloadFrames(){
@@ -403,7 +403,7 @@ function preloadFrames(){
     (function(idx){
       var im=new Image();
       im.onload=function(){whaleLoaded++;};
-      im.src='images/frames/whale/w'+(idx<10?'0':'')+idx+'.jpg';
+      im.src='images/frames/whale/w'+(idx<10?'00':(idx<100?'0':''))+idx+'.jpg';
       whaleFrames.push(im);
     })(i);
   }
