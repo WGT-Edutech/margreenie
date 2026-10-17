@@ -17,7 +17,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
 .whale-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:0;
-  background-size:cover;background-position:center;will-change:transform,background-image,opacity}
+  background-size:contain;background-position:center;background-repeat:no-repeat;will-change:background-image,opacity}
 .room{position:relative}
 .sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
 
@@ -416,11 +416,9 @@ function updateOceanZoom(){
   if(!whaleWrap)return;
   var rp1=clamp01(roomData[0].progress);
   var rp6=clamp01(roomData[5].progress);
-  // zoom 1.0 -> 1.35 across the first phase, hold through name/title rooms
-  var z=1+0.35*smoothstep(rp1);
-  // slight drift so the water feels alive
-  var drift=Math.sin(performance.now()*.0004)*.02;
-  whaleWrap.style.transform='scale('+(z+drift).toFixed(4)+')';
+  // original size — no zoom, no crop; gentle drift only
+    var drift=Math.sin(performance.now()*.0004)*.02;
+    whaleWrap.style.transform='scale('+(1+drift).toFixed(4)+')';
   // whale frame: scrub 0..12 across r1, hold last frame through name/title
   var wi=Math.min(WHALE_FRAMES-1,Math.floor(smoothstep(rp1)*(WHALE_FRAMES-1)));
   if(whaleFrames[wi]&&whaleFrames[wi].complete){
