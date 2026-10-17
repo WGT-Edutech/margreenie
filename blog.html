@@ -66,6 +66,24 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .donate-chip.crypto{border-color:rgba(244,241,234,.18)}
 .donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim);max-width:640px}
 
+
+.post-stage{display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap}
+.post-card{width:min(340px,100%);background:#0d0d14;border:1px solid rgba(244,241,234,.12);border-radius:18px;overflow:hidden}
+.post-head{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem}
+.post-ava{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#ff8a4d,#ff5e62)}
+.post-user{font-size:.85rem;font-weight:600}
+.post-loc{color:var(--text-dim);font-weight:400;font-size:.78rem}
+.post-img{position:relative;aspect-ratio:4/5;background:#000}
+.post-img img{width:100%;height:100%;object-fit:cover;display:block}
+.post-fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:var(--text-dim);font-size:.8rem;padding:1rem;text-align:center}
+.post-actions{display:flex;gap:1rem;padding:.7rem 1rem;font-size:1.15rem}
+.post-caption{padding:0 1rem 1.1rem;font-size:.88rem;color:rgba(244,241,234,.85)}
+.post-caption strong{color:var(--text-cream)}
+.post-more{flex:1;min-width:240px;display:flex;flex-direction:column;gap:1rem;padding-top:.4rem}
+.post-more h3{font-family:'Oswald',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);text-transform:uppercase;letter-spacing:.04em}
+.post-more p{color:var(--text-dim);max-width:420px}
+.post-more a{font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;color:#ff8a4d;text-decoration:none}
+
 </style>
 </head>
 <body>
@@ -126,6 +144,27 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
     <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Read more on Substack →</a>
   </div>
 </article>
+
+<section class="content-room" id="profile">
+  <div class="content-inner">
+    <div class="post-stage" id="postStage">
+      <div class="post-card">
+        <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Kenya · on safari</span></span></div>
+        <div class="post-img" id="postImg">
+          <img src="images/hero-post.jpg" alt="Margarita Samsonova on safari in Kenya, watching a giraffe" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
+          <div class="post-fallback" id="postFallback">Post image missing — check images/hero-post.jpg</div>
+        </div>
+        <div class="post-actions" aria-hidden="true"><span class="pa-heart">&#9825;</span><span class="pa-comment">&#128172;</span><span class="pa-share">&#10148;</span></div>
+        <p class="post-caption"><strong>margreenie</strong> &ldquo;We are nature. We often think of nature as something outside of us &mdash; a forest we visit, a landscape we admire, a place we escape to.&rdquo;</p>
+      </div>
+      <div class="post-more">
+        <h3>More than a feed.</h3>
+        <p>Conservationist. Influencer. Whalean Human. 70 countries, one mission: turn creators into eco leaders and green brands into stories people act on.</p>
+        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow the journey &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="content-room" id="whale">
   <div class="content-inner">
