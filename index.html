@@ -390,16 +390,29 @@ function introSpan(){
 }
 
 var lastAutoT=0;
+var autoV=0;                          // current autoscroll velocity (px/s)
+var AUTO_IDLE_MS=700;                 // resume autoscroll after this idle
 function autoscrollStep(now){
   if(!autoScrollOn||REDUCED)return;
-  if(now-lastInputT<1500)return;                     // user active: hold
   var s=introSpan(),galleryTop=s.top+s.span;
-  if(window.scrollY>=galleryTop-2){autoScrollOn=false;return;} // done at gallery
+  if(window.scrollY>=galleryTop-2){autoScrollOn=false;autoV=0;return;} // done at gallery
   if(!lastAutoT)lastAutoT=now;
   var dtMs=Math.min(100,now-lastAutoT);              // clamp for tab-switch jumps
   lastAutoT=now;
-  var dv=autoVelVh*window.innerHeight*dtMs/1000;     // vh/s → px
-  window.scrollBy(0,dv);
+  var cruise=autoVelVh*window.innerHeight;           // target px/s
+  if(now-lastInputT<AUTO_IDLE_MS){
+    autoV=0;                                         // user active: stop, ramp from 0 on resume
+    return;
+  }
+  // ease out as we approach the gallery (last 2 viewports)
+  var remain=galleryTop-window.scrollY;
+  if(remain<window.innerHeight*2){
+    cruise*=Math.max(0,remain/(window.innerHeight*2));
+  }
+  // smooth velocity ramp: accelerate from 0, decelerate near end
+  autoV+=(cruise-autoV)*Math.min(1,dtMs/400);
+  if(autoV<1)autoV=0;
+  window.scrollBy(0,autoV*dtMs/1000);
 }
 
 function updateOceanZoom(){
