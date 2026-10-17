@@ -138,8 +138,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 #varprox.visible{opacity:1}
 #varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(255,160,102,.4);user-select:none;-webkit-user-select:none}
 
-.r1h{height:120vh}.r2h{height:90vh}.r3h{height:260vh}.r4h{height:140vh}.r5h{height:80vh}.r6h{height:900vh}
-@media(max-width:768px){.r1h{height:90vh}.r2h{height:70vh}.r3h{height:200vh}.r4h{height:110vh}.r5h{height:60vh}}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:120vh}.r4h{height:60vh}.r5h{height:40vh}.r6h{height:900vh}
+@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:90vh}.r4h{height:50vh}.r5h{height:30vh}}
 
 .nav-brand{display:none}
 .menu-toggle{display:none}
@@ -406,7 +406,7 @@ function updateOceanZoom(){
 
 // ── TEXT EFFECTS ──
 var nameText=document.getElementById('nameText'),nameStage=document.getElementById('nameStage');
-var roleText=document.getElementById('roleText'),sloganText=document.getElementById('sloganText'),titleStage=document.getElementById('titleStage');
+var roleText=document.getElementById('roleText'),titleStage=document.getElementById('titleStage');
 
 function splitToChars(el,cls){
   var text=el.textContent;el.textContent='';
@@ -421,14 +421,13 @@ function splitToChars(el,cls){
 }
 var nameVPChars=splitToChars(nameText,'name-char');
 var roleVPChars=splitToChars(roleText,'vp-char');
-var sloganVPChars=sloganText&&sloganText.textContent?splitToChars(sloganText,'vp-char'):[];
 var projectsEl=document.getElementById('varprox');
 var projectsSpan=document.createElement('span');
 projectsSpan.className='variable-proximity';
 projectsEl.appendChild(projectsSpan);
 var projectsVPChars=splitToChars(projectsSpan,'vp-char');
-var allVPChars=[].concat(nameVPChars,roleVPChars,sloganVPChars,projectsVPChars);
-var nameRevealCount=0,slateEnterT=0;
+var allVPChars=[].concat(nameVPChars,roleVPChars,projectsVPChars);
+var nameRevealCount=0;
 
 var TITLE_PAD=40;
 function fitName(){
@@ -580,11 +579,9 @@ function tick(now){
     var enter=clamp01(rp[2]/0.45);
     var target=Math.floor(enter*nameVPChars.length);
     if(target!==nameRevealCount){revealNameChars(target);nameRevealCount=target;}
-    if(enter>=1&&slateEnterT===0)slateEnterT=performance.now();
     updateAllVP();
   }else{nameRevealCount=0;}
-  var timerExit=slateEnterT>0?clamp01((performance.now()-slateEnterT-3000)/1500):0;
-  var ex=Math.max(rp[3],timerExit);
+  var ex=rp[3];
   var enter=clamp01(rp[2]/0.45);
   var inX=-14*(1-smoothstep(enter));
   var outX=-110*smoothstep(ex);
