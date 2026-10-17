@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Network — Margarita Samsonova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#8b5cf6;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(139,92,246,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream)}
+.nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
+.nav-links a:hover{color:var(--purple)}
+.nav-links a.donate-link{color:var(--purple)!important}
+.page-hero{padding:9rem 2rem 3rem;max-width:1000px;margin:0 auto}
+.page-kicker{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#b794f4;margin-bottom:1rem}
+.page-hero h1{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.05;margin-bottom:1rem}
+.page-hero p{max-width:640px;color:var(--text-dim)}
+.net-grid{max-width:1000px;margin:0 auto;padding:2rem 2rem 5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.net-card{display:flex;flex-direction:column;background:#0a0a12;border:1px solid rgba(244,241,234,.09);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text-cream);transition:transform .25s,border-color .25s,box-shadow .25s}
+.net-card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.45);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.net-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#08080f}
+.net-card-body{padding:1.2rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.net-card h2{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em}
+.net-card p{font-size:.86rem;color:var(--text-dim);flex:1}
+.net-card-domain{font-size:.72rem;color:var(--purple);letter-spacing:.04em;word-break:break-all}
+.net-card.soon{border-style:dashed;cursor:default}
+.net-card.soon:hover{transform:none;border-color:rgba(244,241,234,.2);box-shadow:none}
+.site-footer{background:#000;border-top:1px solid rgba(139,92,246,.15);padding:3rem 2rem 4rem}
+.footer-inner{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
+.footer-brand{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.12em}
+.footer-links{display:flex;flex-wrap:wrap;gap:1.2rem}
+.footer-links a{color:var(--text-dim);text-decoration:none;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.footer-links a:hover{color:var(--purple)}
+.footer-note{margin-top:1.6rem;font-size:.85rem;color:var(--text-dim)}
+@media(max-width:768px){.nav-links a{margin-left:1rem;font-size:.78rem}}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <span class="nav-brand">MRG</span>
+  <span class="nav-links">
+    <a href="index.html#r3">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="network.html">Network</a>
+    <a href="index.html#donate" class="donate-link">Donate</a>
+  </span>
+</nav>
+
+<div class="page-hero">
+  <div class="page-kicker">The Network · Brands &amp; Projects</div>
+  <h1>Green worlds she grows.</h1>
+  <p>Behind the projects, programmes and partnerships Margarita connects, films and amplifies. Click through to each one &mdash; and if you run a green brand, this is the network you want to be in.</p>
+</div>
+
+<div class="net-grid">
+  <a class="net-card" href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/forest-green.jpg" alt="Sunlit green forest">
+    <div class="net-card-body">
+      <h2>Behind the Greens</h2>
+      <p>Her environmental media company &mdash; documentary production, social storytelling and campaigns connecting environmental projects, brands, creators and audiences.</p>
+      <span class="net-card-domain">instagram.com/behindthegreensmedia</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/whale-ocean.jpg" alt="Whale in the ocean">
+    <div class="net-card-body">
+      <h2>Whale Passage</h2>
+      <p>Her ongoing storytelling and research project on whale communication &mdash; the heart of the quest that began with Alaska's whales.</p>
+      <span class="net-card-domain">instagram.com/margreenie</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/sailing-lisbon.jpg" alt="Sailboats on the water">
+    <div class="net-card-body">
+      <h2>Greenfluencers in the Wild</h2>
+      <p>The 10-day Lisbon programme turning young creators into eco leaders &mdash; filmed for a future reality series, and already changing careers.</p>
+      <span class="net-card-domain">jeromemaas.com/blog/greenfluencers-in-the-wild</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://terraincognita.pt/en/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/ocean-lounge.jpg" alt="Sea and coastline">
+    <div class="net-card-body">
+      <h2>Terra Incognita</h2>
+      <p>Portugal's impact sailing organisation &mdash; marine education on the Tagus, whale and dolphin watches, and the day-out partner of the Greenfluencers programme.</p>
+      <span class="net-card-domain">terraincognita.pt</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://mboceaniclounge.pt/en/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/soul-fest.jpg" alt="Festival lights">
+    <div class="net-card-body">
+      <h2>Mercedes Oceanic Lounge</h2>
+      <p>Terra Incognita's ocean-protection space with Mercedes &mdash; educating guests from around the world about marine life along Lisbon's coast.</p>
+      <span class="net-card-domain">mboceaniclounge.pt</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://www.wherevermags.com/news/eco-heroines-in-portugal/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/mangrove.jpg" alt="Mangrove trees over water">
+    <div class="net-card-body">
+      <h2>Mangrowth</h2>
+      <p>Her documentary on mangroves &mdash; filmed where these forests protect coastlines, biodiversity and the livelihoods of the people who depend on them.</p>
+      <span class="net-card-domain">wherevermags.com (Eco Heroines feature)</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/margo-story.jpg" alt="Traveler overlooking a landscape">
+    <div class="net-card-body">
+      <h2>Sacred Soul Fest</h2>
+      <p>Her "Voyage Across the Atlantic for the Whales" conversation &mdash; recorded live at the festival with Conscious CoCreators.</p>
+      <span class="net-card-domain">open.spotify.com (CoCreators Circle E4)</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/glacier-alaska.jpg" alt="Glacier in Alaska">
+    <div class="net-card-body">
+      <h2>Voyage Michigan</h2>
+      <p>Her long-form story &mdash; from a tight-money childhood in Latvia to 70 countries, whales as guides, and founding Behind the Greens.</p>
+      <span class="net-card-domain">voyagemichigan.com</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://www.threads.com/@margreenie" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/elephant-kenya.jpg" alt="Elephant in the savanna">
+    <div class="net-card-body">
+      <h2>The Knysna Quest</h2>
+      <p>Retracing Lyall Watson's 2000 elephant-whale encounter on the Knysna coast &mdash; the expedition behind the blog post. Follow the Quest on Threads &amp; Instagram.</p>
+      <span class="net-card-domain">threads.com/@margreenie</span>
+    </div>
+  </a>
+
+  <a class="net-card" href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">
+    <img class="net-card-img" src="images/forest-green.jpg" alt="Green forest canopy">
+    <div class="net-card-body">
+      <h2>EU Young Energy Ambassador</h2>
+      <p>Representing Latvia as a Young Energy Ambassador for the European Commission &mdash; advocating sustainable, inclusive energy at policy level.</p>
+      <span class="net-card-domain">linkedin.com/in/margreen</span>
+    </div>
+  </a>
+
+  <a class="net-card soon" href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">
+    <div class="net-card-body">
+      <h2>Your brand here?</h2>
+      <p>Green brand or impactful project? Margarita connects brands with trained greenfluencers and turns environmental work into stories people act on.</p>
+      <span class="net-card-domain">DM @margreenie to start the conversation</span>
+    </div>
+  </a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">margreenie</div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Behind the Greens</a>
+      <a href="https://www.youtube.com/margreen" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.threads.com/@margreenie" target="_blank" rel="noopener">Threads</a>
+      <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Substack</a>
+      <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <div class="footer-inner"><p class="footer-note">Live consciously, create passionately, act boldly. — Margarita Samsonova</p></div>
+</footer>
+
+</body>
+</html>

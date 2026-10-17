@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Margarita Samsonova — Greenfluencer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#8b5cf6;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+#scene{position:fixed;inset:0;z-index:2;pointer-events:none}
+.room{position:relative}
+.sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
+
+.name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
+.name-text{font-family:'Roboto Flex',sans-serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:700;color:var(--text-cream);text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px hsl(260 90% 75% / .8),0 0 4px hsl(260 90% 65% / .4)}
+.name-char{display:inline-block;opacity:0;transform:translateY(20px)}
+
+.title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
+.title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(260 90% 75% / .65)}
+.title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(260 90% 75% / .6)}
+
+#galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center}
+.card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
+.ring-card{position:absolute;left:50%;top:50%;width:420px;height:280px;margin-left:-210px;margin-top:-140px;transform-style:preserve-3d;cursor:pointer}
+.ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease}
+.ring-card-reflect{position:absolute;top:calc(100% + 150px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
+.ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:.55;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 40%,transparent 95%);mask-image:linear-gradient(to bottom,#000 0%,#000 40%,transparent 95%)}
+.ring-card-front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;padding:2rem;background:#0a0a12}
+.ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(260 90% 75% / .55)}
+#cardInfo{position:fixed;top:50%;left:50%;transform:translate(-50%,-185px);z-index:45;text-align:center;pointer-events:none;transition:opacity .4s ease}
+.card-name{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px rgba(160,130,255,.5);background:rgba(3,3,10,.7);padding:.4rem 1.5rem;border-radius:8px;border:1px solid rgba(139,92,246,.2)}
+.ring-card:hover .ring-card-inner{box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(160,130,255,.3),0 20px 60px rgba(0,0,0,.6)}
+
+.phase-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.8rem}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
+.dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(139,92,246,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
+
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;opacity:0;pointer-events:none;transition:opacity .5s;background:#000;border-bottom:0;display:flex;align-items:center;justify-content:flex-end;padding:0 2rem}
+.top-nav.visible{opacity:1;pointer-events:auto}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--purple)}
+.donate-link{color:var(--purple)!important}
+
+.section-buttons{position:fixed;bottom:calc((50vh - 140px) * 2 / 3);left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:1rem;opacity:0;pointer-events:none;transition:opacity .6s}
+.section-buttons.visible{opacity:1;pointer-events:auto}
+
+/* ── CONTENT ROOMS (whale story, tour, donate, footer) ── */
+.content-room{position:relative;z-index:20;background:#000;padding:6rem 0;border-top:1px solid rgba(139,92,246,.15)}
+.content-room:first-of-type{border-top:0}
+.content-inner{max-width:1000px;margin:0 auto;padding:0 2rem}
+.content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
+.content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.5rem}
+.content-body{max-width:720px;font-size:1.02rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
+.content-body strong{color:var(--text-cream)}
+.content-cta{color:var(--text-cream);font-weight:500}
+.content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(139,92,246,.4)}
+.content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
+.tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
+.tour-date{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
+.tour-card h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream)}
+.tour-card p{font-size:.9rem;color:var(--text-dim);flex:1}
+.tour-card a{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.04em}
+.tour-card a:hover{text-decoration:underline}
+.tour-soon{border-style:dashed}
+.donate-grid{display:flex;flex-wrap:wrap;gap:.7rem}
+.donate-chip{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
+.donate-chip:hover{background:rgba(139,92,246,.25);transform:translateY(-1px)}
+.donate-chip.crypto{border-color:rgba(244,241,234,.22);background:rgba(255,255,255,.05)}
+.donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim)}
+.site-footer{position:relative;z-index:20;background:#000;border-top:1px solid rgba(139,92,246,.15);padding:3rem 0 4rem}
+.footer-brand{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-cream);margin-bottom:1rem}
+.footer-links{display:flex;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.6rem}
+.footer-links a{color:var(--text-dim);text-decoration:none;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.footer-links a:hover{color:var(--purple)}
+.footer-note{font-size:.85rem;color:var(--text-dim)}
+.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(260 90% 75% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
+.sect-btn:hover{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.4);transform:translateY(-2px)}
+.donate-btn{background:var(--purple);border-color:var(--purple);box-shadow:0 0 4px rgba(180,140,255,.35)}
+.donate-btn:hover{background:rgba(139,92,246,.8);box-shadow:0 0 4px rgba(180,140,255,.5)}
+
+.slogan-bar{position:fixed;bottom:calc((50vh - 140px) / 3 - 150px);left:0;right:0;z-index:50;text-align:center;padding:1.5rem 2rem;font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--text-cream);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .6s;text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+.slogan-bar.visible{opacity:1;transition:opacity 7s}
+
+.gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
+.gallery-floor.visible{opacity:1}
+#varprox{position:fixed;top:0;left:0;right:0;height:25vh;z-index:42;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 2.5s}
+#varprox.visible{opacity:1}
+#varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(160,130,255,.4);user-select:none;-webkit-user-select:none}
+
+.r1h{height:1000vh}.r2h{height:1100vh}.r3h{height:1000vh}.r4h{height:500vh}.r5h{height:120vh}.r6h{height:2300vh}
+@media(max-width:768px){.r1h{height:400vh}.r2h{height:1100vh}.r3h{height:667vh}.r4h{height:200vh}.r5h{height:80vh}}
+
+.nav-brand{display:none}
+.menu-toggle{display:none}
+@media(max-width:768px){
+  .lbl-desk{display:none}.lbl-mob{display:inline}
+  .top-nav{justify-content:space-between;padding:0 1rem}
+  .nav-brand{display:block;font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(260 90% 75% / .4)}
+  .nav-links{display:none}
+  .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--text-cream);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
+  .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menu-toggle.open span:nth-child(2){opacity:0}
+  .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  #cardInfo{display:none}
+}
+@media(orientation:portrait){
+  .name-text{line-height:1.12;text-align:center}
+  .name-text .name-space{display:block}
+}
+@media(max-width:768px) and (orientation:portrait){
+  .r6h{height:280vh}
+  #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+  #galleryRoom::-webkit-scrollbar{display:none}
+  .card-ring{width:max-content;min-width:100%;flex-direction:row;align-items:center;gap:18px;transform-style:flat;padding:0 10vw}
+  .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:400px;max-height:270px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
+  .ring-card-reflect{display:none}
+}
+.menu-backdrop{position:fixed;top:3.5rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s ease}
+.menu-backdrop.open{opacity:1;pointer-events:auto}
+.mobile-menu{position:fixed;top:3.5rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(139,92,246,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
+.mobile-menu.open{transform:translateX(0);visibility:visible;pointer-events:auto;transition:transform .35s ease,visibility 0s}
+.mobile-menu a{font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
+.mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+.mobile-menu a.donate-link{color:var(--purple)}
+
+.loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.post-card{width:min(360px,88vw);background:#0a0f18;border:1px solid rgba(244,241,234,.12);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden}
+.post-head{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;border-bottom:1px solid rgba(244,241,234,.08)}
+.post-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ff9db8,#8b5cf6);flex:0 0 auto}
+.post-user{font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;line-height:1.2}
+.post-loc{font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.03em;text-transform:none;color:var(--text-dim);font-weight:400}
+.post-img{position:relative;width:100%;aspect-ratio:4/5;background:#0a0a12}
+.post-img img{width:100%;height:100%;object-fit:cover;display:block}
+.post-fallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:var(--text-dim);font-size:.8rem;text-align:center;padding:1rem;border:1px dashed rgba(244,241,234,.2);margin:1rem;border-radius:10px}
+.post-actions{display:flex;gap:1rem;padding:.6rem 1rem .3rem;color:var(--text-cream);font-size:1.1rem}
+.post-actions .pa-share{transform:rotate(135deg)}
+.post-caption{padding:.2rem 1rem 1rem;font-size:.85rem;color:var(--text-dim)}
+.post-caption strong{color:var(--text-cream);font-weight:600}
+.label-sm{font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.lbl-mob{display:none}
+
+.landscape-overlay{display:none}
+@media(max-width:768px) and (orientation:portrait){
+  .landscape-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem}
+  .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
+  @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
+  .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+  .landscape-overlay p{font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
+  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(139,92,246,.4);background:rgba(139,92,246,.15);color:var(--text-cream);font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .landscape-overlay .lo-btn:hover{background:rgba(139,92,246,.3);box-shadow:0 0 8px rgba(139,92,246,.3)}
+}
+@media(prefers-reduced-motion){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div class="landscape-overlay" id="landscapeOverlay">
+  <div class="lo-icon">📱</div>
+  <h2>Rotate Your Phone</h2>
+  <p>This experience is designed for landscape orientation. Please turn your phone sideways for the best view.</p>
+  <button class="lo-btn" id="loOkBtn">OK</button>
+</div>
+
+<canvas id="scene"></canvas>
+
+<section class="room r1h" id="r1">
+  <div class="sticky">
+    <div class="loading-screen" id="loader">
+      <div class="post-card">
+        <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Portugal · everywhere</span></span></div>
+        <div class="post-img" id="postImg">
+          <img src="images/hero-post.jpg" alt="Margarita Samsonova's most-liked Instagram post — picture coming soon" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
+          <div class="post-fallback" id="postFallback">Drop her most-liked post at images/hero-post.jpg</div>
+        </div>
+        <div class="post-actions" aria-hidden="true"><span class="pa-heart">&#9825;</span><span class="pa-comment">&#128172;</span><span class="pa-share">&#10148;</span></div>
+        <p class="post-caption"><strong>margreenie</strong> &ldquo;We are nature. We often think of nature as something outside of us &mdash; a forest we visit, a landscape we admire, a place we escape to.&rdquo;</p>
+        <div class="label-sm"><span class="lbl-desk">keep scrolling</span><span class="lbl-mob">keep swiping up</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="room r2h" id="r2"><div class="sticky"></div></section>
+<section class="room r3h" id="r3">
+  <div class="sticky">
+    <div class="name-stage" id="nameStage">
+      <h1 class="name-text" id="nameText">Margarita Samsonova</h1>
+    </div>
+  </div>
+</section>
+<section class="room r4h" id="r4">
+  <div class="sticky">
+    <div class="title-stage" id="titleStage">
+      <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
+            <div class="title-slogan" id="sloganText">Connecting green brands with the people who move the planet.</div>
+    </div>
+  </div>
+</section>
+<section class="room r5h" id="r5"><div class="sticky"></div></section>
+<section class="room r6h" id="r6">
+  <div class="sticky">
+    <section id="galleryRoom"><div class="card-ring" id="cardRing"></div></section>
+    <div id="cardInfo"><div class="card-name" id="cardName"></div></div>
+  </div>
+</section>
+
+<section class="content-room" id="whale">
+  <div class="content-inner">
+    <h2 class="content-tag">The Whale Meditation</h2>
+    <h3 class="content-title">Where the ocean becomes a teacher.</h3>
+    <div class="content-body">
+      <p>Margarita&rsquo;s first whales were Alaska&rsquo;s &mdash; spotted from a cruise-ship summer job when she was nineteen. &ldquo;Seeing them for the first time got me fascinated not just by whales themselves, but by how little we understand about their communication, behaviour and relationship with the ocean,&rdquo; she says.</p>
+      <p>That fascination became <strong>Whale Passage</strong>, her ongoing storytelling and research project, and it flows into her guided <strong>whale meditation sessions</strong> &mdash; quiet, immersive immersions themed around the ocean&rsquo;s vastness, breath and sound, offered through &ldquo;Voyage Across the Atlantic for the Whales&rdquo; talks and Sacred Soul Fest collaborations.</p>
+      <p>No preachy eco-lecture. A stillness practice, tuned to the rhythm of the deep &mdash; leaving you calmer, and closer to the planet.</p>
+      <p class="content-cta">Join a session &mdash; announced soon via <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">@margreenie</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-room" id="tour">
+  <div class="content-inner">
+    <h2 class="content-tag">On Tour</h2>
+    <h3 class="content-title">Where Margarita shows up next.</h3>
+    <div class="tour-grid">
+          <div class="tour-card tour-soon">
+            <div class="tour-date">Sat · 7 Nov 2026 · Cape Town</div>
+            <h4>Whale Consciousness Morning</h4>
+            <p>Placeholder &mdash; early session at a rooftop yoga centre near Long Street. Margarita is in town preparing a series of unique events connecting people to whale consciousness, conservation, business and entrepreneurship through quantum field, meditation, body attunement and environmental science. Likely venue: Light House Holistic, 50 Bree St (rooftop retreat), one block from Long Street.</p>
+            <a href="https://www.threads.com/@margreenie/post/Dcx0WmJCNg6/cape-town-right-now-i-am-in-town-preparing-a-series-of-unique-events-connecting/" target="_blank" rel="noopener">Her announcement on Threads</a>
+            <a href="https://www.lighthouseholistic.co.za/" target="_blank" rel="noopener">Light House Holistic</a>
+          </div>
+          <div class="tour-card">
+            <div class="tour-date">Programme</div>
+        <h4>Greenfluencers in the Wild</h4>
+        <p>A 10-day Lisbon immersion teaching creators how to turn environmental passion into a career &mdash; days on the Tagus with Terra Incognita, whale &amp; dolphin watches, camera coaching.</p>
+        <a href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">See it in action</a>
+      </div>
+      <div class="tour-card">
+        <div class="tour-date">Live</div>
+        <h4>Sacred Soul Fest</h4>
+        <p>Fireside &ldquo;Voyage Across the Atlantic for the Whales&rdquo; conversation &mdash; influencer burnout, greenfluencing, and why whales guided her back to purpose.</p>
+        <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Listen to the talk</a>
+      </div>
+      <div class="tour-card">
+        <div class="tour-date">Policy</div>
+        <h4>COP Summits &amp; EU Youth Energy</h4>
+        <p>A regular at COP summits worldwide and a former European Commission Young Energy Ambassador for Latvia &mdash; carrying creator voices into the negotiating rooms.</p>
+        <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+      <div class="tour-card tour-soon">
+        <div class="tour-date">Next dates</div>
+        <h4>Announced soon</h4>
+        <p>New session and event dates are shared first with her community.</p>
+        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-room" id="donate">
+  <div class="content-inner">
+    <h2 class="content-tag">Support the Mission</h2>
+    <h3 class="content-title">Keep the stories swimming.</h3>
+    <p class="content-lede">Every donation funds documentary production, greenfluencer training and ocean &amp; wildlife storytelling &mdash; independent, transparent, planet-first.</p>
+    <div class="donate-grid">
+      <button class="donate-chip" type="button" data-donate="PayPal">PayPal</button>
+      <button class="donate-chip" type="button" data-donate="Stripe">Stripe</button>
+      <button class="donate-chip" type="button" data-donate="Ko-fi">Ko-fi</button>
+      <button class="donate-chip" type="button" data-donate="Buy Me a Coffee">Buy Me a Coffee</button>
+      <button class="donate-chip" type="button" data-donate="SEPA bank transfer">SEPA bank transfer</button>
+      <button class="donate-chip crypto" type="button" data-donate="Bitcoin (BTC)">Bitcoin (BTC)</button>
+      <button class="donate-chip crypto" type="button" data-donate="Ethereum (ETH)">Ethereum (ETH)</button>
+      <button class="donate-chip crypto" type="button" data-donate="USDT (ERC-20)">USDT (ERC-20)</button>
+      <button class="donate-chip crypto" type="button" data-donate="Solana (SOL)">Solana (SOL)</button>
+    </div>
+    <p class="donate-note" id="donateNote">Payment links and wallet addresses are being prepared — check back soon, or follow @margreenie for launch.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="content-inner">
+    <div class="footer-brand">margreenie</div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Behind the Greens</a>
+      <a href="https://www.youtube.com/margreen" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.threads.com/@margreenie" target="_blank" rel="noopener">Threads</a>
+      <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Substack</a>
+      <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Podcast</a>
+    </div>
+    <p class="footer-note">Live consciously, create passionately, act boldly. &mdash; Margarita Samsonova</p>
+  </div>
+</footer>
+
+<nav class="top-nav" id="topNav">
+  <span class="nav-brand">MRG</span>
+    <span class="nav-links">
+      <a href="#r3">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="network.html">Network</a>
+      <a href="#donate" class="donate-link">Donate</a>
+    </span>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+</nav>
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile menu">
+  <a href="#r3">About</a>
+  <a href="blog.html">Blog</a>
+  <a href="network.html">Network</a>
+  <a href="#donate" class="donate-link">Donate</a>
+</nav>
+<div class="slogan-bar" id="sloganBar">Connecting green brands with the people who move the planet.</div>
+<div class="gallery-floor" id="galleryFloor"></div>
+<div id="varprox" aria-hidden="true"></div>
+<div class="section-buttons" id="sectionButtons">
+  <a href="#r3" class="sect-btn">About</a>
+  <a href="blog.html" class="sect-btn">Blog</a>
+  <a href="network.html" class="sect-btn">Network</a>
+  <a href="#donate" class="sect-btn donate-btn">Donate</a>
+</div>
+
+<nav class="phase-dots" id="phaseDots" aria-label="Phase navigation">
+  <button class="dot active" data-room="r1" aria-label="Dot background"></button>
+  <button class="dot" data-room="r2" aria-label="Particle ring"></button>
+  <button class="dot" data-room="r3" aria-label="Name reveal"></button>
+  <button class="dot" data-room="r4" aria-label="Title and slogan"></button>
+  <button class="dot" data-room="r5" aria-label="Cursor effects"></button>
+  <button class="dot" data-room="r6" aria-label="Gallery"></button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+var clamp01=function(v){return Math.max(0,Math.min(1,v));};
+var lerp=function(a,b,t){return a+(b-a)*clamp01(t);};
+var smoothstep=function(t){t=clamp01(t);return t*t*(3-2*t);};
+var DPR=Math.min(window.devicePixelRatio||1,2);
+var viewW=window.innerWidth,viewH=window.innerHeight;
+
+var rooms=['r1','r2','r3','r4','r5','r6'].map(function(id){return document.getElementById(id);});
+var roomData=rooms.map(function(el){return{el:el,progress:0,top:0,height:0};});
+
+function cacheRooms(){
+  roomData.forEach(function(r){
+    var rect=r.el.getBoundingClientRect();
+    r.top=rect.top+window.scrollY;
+    r.height=rect.height;
+  });
+}
+cacheRooms();
+window.addEventListener('resize',function(){viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();});
+
+// ── THREE.JS PARTICLES ──
+var renderer,scene3,cam,pts,pGeo,pMat,bgPts,bgGeo,bgMat;
+var P_COUNT=200,B_COUNT=250,pTgt,pPhase,bgTgt,bgPhase;
+var mx3=0,my3=0,mtx3=0,mty3=0,projV3=null;
+
+try{
+  renderer=new THREE.WebGLRenderer({canvas:document.getElementById('scene'),antialias:true,alpha:true});
+  renderer.setPixelRatio(DPR);
+  renderer.setSize(viewW,viewH);
+  scene3=new THREE.Scene();
+  cam=new THREE.PerspectiveCamera(48,viewW/viewH,.1,1000);
+  cam.position.set(0,.8,7);cam.lookAt(0,0,0);
+
+  var P_RING=7;
+  pGeo=new THREE.BufferGeometry();
+  var pPos=new Float32Array(P_COUNT*3),pTgtArr=new Float32Array(P_COUNT*3),pPhaseArr=new Float32Array(P_COUNT);
+  for(var i=0;i<P_COUNT;i++){
+    var a=(i/P_COUNT)*Math.PI*2;
+    pTgtArr[i*3]=Math.cos(a)*P_RING;pTgtArr[i*3+1]=Math.sin(a)*.5;pTgtArr[i*3+2]=Math.sin(a)*P_RING;
+    pPos[i*3]=(Math.random()-.5)*20;pPos[i*3+1]=(Math.random()-.5)*20;pPos[i*3+2]=(Math.random()-.5)*20;
+    pPhaseArr[i]=Math.random()*Math.PI*2;
+  }
+  pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+
+  var pc=document.createElement('canvas');pc.width=256;pc.height=256;
+    var pctx=pc.getContext('2d');
+    pctx.translate(128,128);
+    var petalPink='#ffc2d1',petalDeep='#ff9db8',petalCore='#fff1e0';
+    for(var pi=0;pi<5;pi++){
+      pctx.save();pctx.rotate(pi*Math.PI*2/5);
+      pctx.beginPath();pctx.ellipse(0,-56,24,56,0,0,Math.PI*2);
+      pctx.fillStyle=pi%2?petalPink:petalDeep;pctx.fill();
+      pctx.restore();
+    }
+    pctx.beginPath();pctx.arc(0,0,15,0,Math.PI*2);pctx.fillStyle=petalCore;pctx.fill();
+  pMat=new THREE.PointsMaterial({size:.65,map:new THREE.CanvasTexture(pc),blending:THREE.NormalBlending,depthWrite:false,transparent:true,opacity:0,color:0xffffff});
+  pGeo.setAttribute('aSize',new THREE.BufferAttribute(new Float32Array(P_COUNT).fill(1),1));
+  pMat.onBeforeCompile=function(sh){
+    sh.vertexShader=sh.vertexShader
+      .replace('#include <common>','#include <common>\nattribute float aSize;')
+      .replace('gl_PointSize = size * ( scale / - mvPosition.z );','gl_PointSize = size * aSize * ( scale / - mvPosition.z );');
+  };
+  pts=new THREE.Points(pGeo,pMat);pts.scale.set(.01,.01,.01);scene3.add(pts);
+
+  var B_RING=10;
+  bgGeo=new THREE.BufferGeometry();
+  var bgPos=new Float32Array(B_COUNT*3),bgTgtArr=new Float32Array(B_COUNT*3),bgPhaseArr=new Float32Array(B_COUNT);
+  for(var i=0;i<B_COUNT;i++){
+    var a=(i/B_COUNT)*Math.PI*2;
+    bgTgtArr[i*3]=Math.cos(a)*B_RING;bgTgtArr[i*3+1]=Math.sin(a)*.5;bgTgtArr[i*3+2]=Math.sin(a)*B_RING;
+    bgPos[i*3]=(Math.random()-.5)*24;bgPos[i*3+1]=(Math.random()-.5)*24;bgPos[i*3+2]=(Math.random()-.5)*24;
+    bgPhaseArr[i]=Math.random()*Math.PI*2;
+  }
+  bgGeo.setAttribute('position',new THREE.BufferAttribute(bgPos,3));
+  var bpc=document.createElement('canvas');bpc.width=256;bpc.height=256;
+    var bctx=bpc.getContext('2d');
+    bctx.translate(128,128);
+    bctx.strokeStyle='rgba(255,255,255,.92)';bctx.lineWidth=11;bctx.lineCap='round';
+    for(var bi=0;bi<6;bi++){
+      bctx.save();bctx.rotate(bi*Math.PI/3);
+      bctx.beginPath();bctx.moveTo(0,0);bctx.lineTo(0,-92);bctx.stroke();
+      bctx.beginPath();bctx.moveTo(0,-44);bctx.lineTo(-17,-58);bctx.moveTo(0,-44);bctx.lineTo(17,-58);bctx.stroke();
+      bctx.beginPath();bctx.moveTo(0,-70);bctx.lineTo(-13,-81);bctx.moveTo(0,-70);bctx.lineTo(13,-81);bctx.stroke();
+      bctx.restore();
+    }
+  bgMat=new THREE.PointsMaterial({size:.7,map:new THREE.CanvasTexture(bpc),blending:THREE.NormalBlending,depthWrite:false,transparent:true,opacity:0,color:0xffffff});
+  bgGeo.setAttribute('aSize',new THREE.BufferAttribute(new Float32Array(B_COUNT).fill(1),1));
+  bgMat.onBeforeCompile=function(sh){
+    sh.vertexShader=sh.vertexShader
+      .replace('#include <common>','#include <common>\nattribute float aSize;')
+      .replace('gl_PointSize = size * ( scale / - mvPosition.z );','gl_PointSize = size * aSize * ( scale / - mvPosition.z );');
+  };
+  bgPts=new THREE.Points(bgGeo,bgMat);bgPts.position.z=-2;bgPts.scale.set(.01,.01,.01);scene3.add(bgPts);
+
+  window.addEventListener('mousemove',function(e){mtx3=(e.clientX/viewW)*2-1;mty3=-(e.clientY/viewH)*2+1;},{passive:true});
+}catch(e){console.error('Three.js:',e);}
+
+function updateParticles(time){
+  if(!pts)return;
+  mx3+=(mtx3-mx3)*.35;my3+=(mty3-my3)*.35;
+  var mag3D=new THREE.Vector3(mx3*28,my3*16,2);
+  var orbitRot=roomData[1].progress*Math.PI/4*Math.max(1,(roomData[1].height-viewH)/viewH)+time*.001*.5;
+
+  var rp1=clamp01(roomData[1].progress);
+  var ps=lerp(.01,1,smoothstep(rp1));
+  var psOp=lerp(.25,1,smoothstep(rp1));
+  var illum=rp1>0 ? (.2+.8*clamp01(rp1*1.4)) : 0;
+
+  var posArr=pGeo.attributes.position.array;
+  for(var i=0;i<P_COUNT;i++){
+    var idx=i*3,a=(i/P_COUNT)*Math.PI*2,w=Math.sin(time*.001*.4+pPhaseArr[i])*1,r=7+w*.8;
+    posArr[idx]=Math.cos(a+orbitRot)*r;posArr[idx+1]=Math.sin(a*2+orbitRot*0.3)*1.5+w+0.55;posArr[idx+2]=Math.sin(a+orbitRot)*r;
+    var dx=posArr[idx]-mag3D.x,dy=posArr[idx+1]-mag3D.y,dz=posArr[idx+2]-mag3D.z;
+    var dist=Math.sqrt(dx*dx+dy*dy+dz*dz)+.001,force=Math.min(12/dist,20);
+    posArr[idx]+=(posArr[idx]+(dx/dist)*force*.9-posArr[idx])*.12;
+    posArr[idx+1]+=(posArr[idx+1]+(dy/dist)*force*.9-posArr[idx+1])*.12;
+    posArr[idx+2]+=(posArr[idx+2]+(dz/dist)*force*.9-posArr[idx+2])*.12;
+  }
+  pGeo.attributes.position.needsUpdate=true;
+
+  if(!projV3)projV3=new THREE.Vector3();
+  var SWELL_R=.22,aSz=pGeo.attributes.aSize.array;
+  for(var i=0;i<P_COUNT;i++){
+    var idx=i*3;
+    projV3.set(posArr[idx],posArr[idx+1],posArr[idx+2]).project(cam);
+    var sdx=projV3.x-mx3,sdy=projV3.y-my3,sd=Math.sqrt(sdx*sdx+sdy*sdy);
+    var sw=clamp01(1-sd/SWELL_R);
+    aSz[i]=1+2*smoothstep(clamp01((sw-(Math.random()*.4))/.6));
+  }
+  pGeo.attributes.aSize.needsUpdate=true;
+
+  pMat.size=(.3+Math.abs(Math.sin(time*.001*.6))*.5)*(.6+1.433*illum);
+  pMat.opacity=illum*psOp*(.8+Math.abs(Math.sin(time*.001*.6))*.2);
+
+  var bgPosArr=bgGeo.attributes.position.array;
+  for(var i=0;i<B_COUNT;i++){
+    var idx=i*3,a=(i/B_COUNT)*Math.PI*2,w=Math.sin(time*.001*.4+bgPhaseArr[i])*1,r=10+w*.8;
+    bgPosArr[idx]=Math.cos(a+orbitRot)*r;bgPosArr[idx+1]=Math.sin(a*2+orbitRot*0.3)*1.5+w+0.55;bgPosArr[idx+2]=Math.sin(a+orbitRot)*r;
+    var dx=bgPosArr[idx]-mag3D.x,dy=bgPosArr[idx+1]-mag3D.y,dz=bgPosArr[idx+2]-mag3D.z;
+    var dist=Math.sqrt(dx*dx+dy*dy+dz*dz)+.001,force=Math.min(14/dist,18);
+    bgPosArr[idx]+=(bgPosArr[idx]+(dx/dist)*force*.9-bgPosArr[idx])*.14;
+    bgPosArr[idx+1]+=(bgPosArr[idx+1]+(dy/dist)*force*.9-bgPosArr[idx+1])*.14;
+    bgPosArr[idx+2]+=(bgPosArr[idx+2]+(dz/dist)*force*.9-bgPosArr[idx+2])*.14;
+  }
+  bgGeo.attributes.position.needsUpdate=true;
+  bgMat.size=(.35+Math.abs(Math.sin(time*.001*.525+1.5))*.65)*(.6+1.433*illum);
+  bgMat.opacity=illum*psOp*(.7+Math.abs(Math.sin(time*.001*.525+1.5))*.3);
+}
+
+// ── TEXT EFFECTS ──
+var nameText=document.getElementById('nameText'),nameStage=document.getElementById('nameStage');
+var roleText=document.getElementById('roleText'),sloganText=document.getElementById('sloganText'),titleStage=document.getElementById('titleStage');
+
+function splitToChars(el,cls){
+  var text=el.textContent;el.textContent='';
+  var chars=[];
+  text.split('').forEach(function(ch){
+    var s=document.createElement('span');
+    if(ch===' '&&cls!=='name-char'){s.className=cls;s.textContent=ch;s.style.display='inline';}
+    else{s.className=cls+(ch===' '?' name-space':'');s.textContent=ch===' '?'\u00a0':ch;}
+    el.appendChild(s);chars.push(s);
+  });
+  return chars;
+}
+var nameVPChars=splitToChars(nameText,'name-char');
+var roleVPChars=splitToChars(roleText,'vp-char');
+var sloganVPChars=splitToChars(sloganText,'vp-char');
+var projectsEl=document.getElementById('varprox');
+var projectsSpan=document.createElement('span');
+projectsSpan.className='variable-proximity';
+projectsEl.appendChild(projectsSpan);
+var projectsVPChars=splitToChars(projectsSpan,'vp-char');
+var allVPChars=[].concat(nameVPChars,roleVPChars,sloganVPChars,projectsVPChars);
+var nameRevealCount=0;
+
+var TITLE_PAD=40;
+function fitName(){
+  if(!nameText)return;
+  nameText.style.fontSize='';
+  var avail=viewW-TITLE_PAD*2;
+  var w=nameText.scrollWidth;
+  if(w>avail&&w>0){
+    var cur=parseFloat(getComputedStyle(nameText).fontSize);
+    nameText.style.fontSize=(cur*avail/w)+'px';
+  }
+}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitName);else fitName();
+window.addEventListener('resize',fitName);
+
+function revealNameChars(count){
+  nameVPChars.forEach(function(c,i){
+    c.style.opacity=i<count?'1':'0';
+    c.style.transform=i<count?'translateY(0)':'translateY(20px)';
+  });
+}
+var curMX=0,curMY=0;
+window.addEventListener('mousemove',function(e){curMX=e.clientX;curMY=e.clientY;},{passive:true});
+
+function updateAllVP(){
+  allVPChars.forEach(function(c){
+    var rect=c.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
+    var dist=Math.hypot(curMX-cx,curMY-cy),radius=150;
+    if(dist<radius){var t=1-dist/radius,wght=400+600*t,opsz=9+31*t;c.style.fontVariationSettings="'wght' "+Math.round(wght)+", 'opsz' "+Math.round(opsz);}
+    else c.style.fontVariationSettings="'wght' 400, 'opsz' 9";
+  });
+}
+
+// ── GALLERY CARDS ──
+var cardData=[
+  {name:'Behind the Greens',img:'images/forest-green.jpg',url:'https://www.instagram.com/behindthegreensmedia/'},
+  {name:'Whale Passage',img:'images/whale-ocean.jpg',url:'https://www.instagram.com/margreenie/'},
+  {name:'Greenfluencers in the Wild',img:'images/sailing-lisbon.jpg',url:'https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/'},
+  {name:'Terra Incognita',img:'images/ocean-lounge.jpg',url:'https://terraincognita.pt/en/'},
+  {name:'Mercedes Oceanic Lounge',img:'images/soul-fest.jpg',url:'https://mboceaniclounge.pt/en/'},
+  {name:'Mangrowth (documentary)',img:'images/mangrove.jpg',url:'https://www.wherevermags.com/news/eco-heroines-in-portugal/'},
+  {name:'The Knysna Quest',img:'images/elephant-kenya.jpg',url:'blog.html'},
+  {name:'Voyage Michigan Story',img:'images/margo-story.jpg',url:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/'},
+  {name:'70 Countries & Counting',img:'images/glacier-alaska.jpg',url:'https://www.instagram.com/margreenie/'}
+];
+var $cardRing=document.getElementById('cardRing'),$cardName=document.getElementById('cardName'),$cardInfo=document.getElementById('cardInfo');
+cardData.forEach(function(card){
+  var el=document.createElement('div');el.className='ring-card';
+  var inner=card.img
+    ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div>'
+    :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div>';
+  el.innerHTML=inner;
+  el.addEventListener('mouseenter',function(){$cardName.textContent=card.name;$cardInfo.style.opacity='1';});
+  el.addEventListener('mouseleave',function(){$cardInfo.style.opacity='0';});
+  if(card.url)el.addEventListener('click',function(e){e.stopPropagation();window.open(card.url,'_blank');});
+  if(card.restart)el.addEventListener('click',function(e){e.stopPropagation();window.scrollTo({top:0,behavior:'smooth'});});
+  el._spring={tx:0,tz:-400,ry:0,sc:1,op:0,vtx:0,vtz:0,vry:0,vsc:0,vop:0};
+  $cardRing.appendChild(el);
+});
+
+// ── PHASE DOTS ──
+var dots=document.querySelectorAll('.phase-dots .dot');
+dots.forEach(function(dot){
+  dot.addEventListener('click',function(){
+    document.getElementById(this.getAttribute('data-room')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// ── MOBILE MENU ──
+var menuToggle=document.getElementById('menuToggle'),mobileMenu=document.getElementById('mobileMenu'),menuBackdrop=document.getElementById('menuBackdrop');
+function setMenu(open){
+  mobileMenu.classList.toggle('open',open);
+  menuBackdrop.classList.toggle('open',open);
+  menuToggle.classList.toggle('open',open);
+  menuToggle.setAttribute('aria-expanded',open?'true':'false');
+}
+if(menuToggle){
+  menuToggle.addEventListener('click',function(){setMenu(!mobileMenu.classList.contains('open'));});
+  menuBackdrop.addEventListener('click',function(){setMenu(false);});
+  mobileMenu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+}
+
+// ── DONATE PLACEHOLDERS ──
+var donateNote=document.getElementById('donateNote');
+document.querySelectorAll('.donate-chip').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    donateNote.textContent=chip.dataset.donate+' is being set up — payment links and wallet addresses will appear here at launch. Follow @margreenie for the announcement.';
+    donateNote.style.color='var(--purple)';
+  });
+});
+
+// ── LANDSCAPE PROMPT ──
+var landscapeOverlay=document.getElementById('landscapeOverlay');
+var loDismissed=false;
+function checkOrientation(){
+  var portraitPhone=window.innerWidth<=768&&window.innerHeight>window.innerWidth;
+  if(!portraitPhone)loDismissed=false;
+  landscapeOverlay.style.display=(portraitPhone&&!loDismissed)?'flex':'none';
+}
+checkOrientation();
+window.addEventListener('orientationchange',function(){setTimeout(checkOrientation,100);});
+var loLastW=window.innerWidth;
+window.addEventListener('resize',function(){
+  if(window.innerWidth!==loLastW){loLastW=window.innerWidth;checkOrientation();}
+});
+document.getElementById('loOkBtn').addEventListener('click',function(){loDismissed=true;landscapeOverlay.style.display='none';});
+
+// ── TICK ──
+var prevTime=0,lastFrame=0,MIN_MS=1000/30;
+
+function tick(now){
+  requestAnimationFrame(tick);
+  if(now-lastFrame<MIN_MS)return;
+  lastFrame=now;
+  var dt=Math.min((now-prevTime)/1000,.1);prevTime=now;if(dt<=0)return;
+
+  // Autoplay
+  if(autoplayActive){
+    var maxY=document.documentElement.scrollHeight-window.innerHeight;
+    var ny=window.scrollY+autoplaySpeed*dt*autoplayDir;
+    if(ny>=maxY){ny=maxY;autoplayDir=-1;}
+    else if(ny<=0){ny=0;autoplayDir=1;}
+    window.scrollTo(0,ny);
+  }
+
+  // Room progress
+  roomData.forEach(function(r){
+    var total=r.height-viewH;
+    r.progress=total<=0?(r.top<=window.scrollY?1:0):clamp01((window.scrollY-r.top)/total);
+  });
+  var rp=roomData.map(function(r){return r.progress;});
+  var mobilePortrait=viewW<=768&&viewH>viewW;
+
+  // Active room for dots
+  var best=-1;
+  roomData.forEach(function(r,i){if(r.progress>0&&r.progress<1||i===0&&r.progress===0){var v=r.progress<.5?r.progress:1-r.progress;if(v<.15&&(best===-1||i>best))best=i;}});
+  if(best===-1)for(var i=0;i<roomData.length;i++)if(roomData[i].progress>=1){best=i;}
+  dots.forEach(function(d,i){d.classList.toggle('active',i===best);});
+
+  // Room 1: intro label
+    var r1p=rp[0],loader=document.getElementById('loader');
+    loader.style.opacity=Math.max(0,Math.min(1,1-r1p*6)).toFixed(3);
+
+    // Room 2: Particles zoom
+  if(pts){var ps2=lerp(.01,1,smoothstep(rp[1]));pts.scale.set(ps2,ps2,ps2);bgPts.scale.set(ps2,ps2,ps2);}
+
+  // Room 3: Name reveal
+  if(rp[2]>.01){
+    var tComp=1/3,tP=Math.min(1,rp[2]/tComp),target=Math.floor(tP*nameVPChars.length);
+    if(target!==nameRevealCount){revealNameChars(target);nameRevealCount=target;}
+    var nFade=clamp01((rp[2]-2/3)/(1/3));
+    nameStage.style.opacity=(1-smoothstep(nFade)).toFixed(3);
+    updateAllVP();
+  }else{nameStage.style.opacity='0';nameRevealCount=0;}
+
+  // Room 4: Title + Slogan
+  if(rp[3]>.02){
+    titleStage.style.opacity='1';
+    var tp=Math.min(1,rp[3]/.35);
+    roleText.style.opacity=tp;
+    sloganText.style.opacity=Math.max(0,Math.min(1,(rp[3]-.2)/.3));
+    updateAllVP();
+  }else titleStage.style.opacity='0';
+
+  // Room 5: Shrink to nav
+  var shrinkP=rp[4],heroEl=document.getElementById('nameStage'),titleEl=document.getElementById('titleStage'),navBar=document.getElementById('topNav'),sloganBar=document.getElementById('sloganBar');
+  if(shrinkP>.01){
+    var shrink=lerp(1,.15,smoothstep(shrinkP)),topY=lerp(50,.3,shrinkP),leftX=lerp(50,1.5,shrinkP);
+    heroEl.style.position='fixed';heroEl.style.top=topY+'vh';heroEl.style.left=leftX+'vw';
+    heroEl.style.transform='translate(0,0) scale('+shrink+')';heroEl.style.transformOrigin='top left';
+    heroEl.style.zIndex='46';heroEl.style.opacity=Math.min(1,shrinkP*4).toFixed(3);
+    titleEl.style.position='fixed';titleEl.style.top=(topY+2.5)+'vh';titleEl.style.left=leftX+'vw';
+    titleEl.style.transform='translate(0,0) scale('+(shrink*.7)+')';titleEl.style.transformOrigin='top left';
+    titleEl.style.zIndex='46';titleEl.style.opacity=shrinkP>.25?'1':'0';
+    sloganBar.classList.remove('visible');
+    navBar.classList.toggle('visible',shrinkP>.75);
+  }else{
+    heroEl.style.position='';heroEl.style.top='';heroEl.style.left='';heroEl.style.transform='';
+    heroEl.style.transformOrigin='';heroEl.style.zIndex='';
+    titleEl.style.position='';titleEl.style.top='';titleEl.style.left='';titleEl.style.transform='';
+    titleEl.style.transformOrigin='';titleEl.style.zIndex='';
+    navBar.classList.remove('visible');sloganBar.classList.remove('visible');
+  }
+
+  // Room 6: Gallery
+  var galP=rp[5],gallery=document.getElementById('galleryRoom'),floor=document.getElementById('galleryFloor'),sectBtns=document.getElementById('sectionButtons'),varprox=document.getElementById('varprox');
+  if(galP>0){
+    gallery.style.opacity='1';gallery.style.visibility='visible';
+    floor.classList.add('visible');varprox.classList.add('visible');
+    var ringCards=document.querySelectorAll('.ring-card'),total=ringCards.length;
+    var sp2=galP*(total-1),activeIdx=Math.max(0,Math.min(total-1,Math.round(sp2)));
+    var STIFF=.08,DAMP=.72;
+    if(!mobilePortrait){
+      ringCards.forEach(function(card,i){
+        var dist=i-activeIdx,s=card._spring,tx,tz,ry,sc,op;
+        if(dist===0){tx=0;tz=120;ry=0;sc=1;op=1;}
+        else if(dist===-1){tx=-370;tz=-130;ry=32;sc=1;op=1;}
+        else if(dist===1){tx=370;tz=-130;ry=-32;sc=1;op=1;}
+        else if(dist===-2){tx=-550;tz=-230;ry=42;sc=1;op=1;}
+        else if(dist===2){tx=550;tz=-230;ry=-42;sc=1;op=1;}
+        else{tx=0;tz=-400;ry=0;sc=1;op=0;}
+        s.vtx+=(tx-s.tx)*STIFF;s.vtx*=DAMP;s.tx+=s.vtx;
+        s.vtz+=(tz-s.tz)*STIFF;s.vtz*=DAMP;s.tz+=s.vtz;
+        s.vry+=(ry-s.ry)*STIFF;s.vry*=DAMP;s.ry+=s.vry;
+        s.vsc+=(sc-s.sc)*STIFF;s.vsc*=DAMP;s.sc+=s.vsc;
+        s.vop+=(op-s.op)*STIFF;s.vop*=DAMP;s.op+=s.vop;
+        card.style.transform='translateX('+s.tx.toFixed(1)+'px) translateZ('+s.tz.toFixed(1)+'px) rotateY('+s.ry.toFixed(1)+'deg) scale('+s.sc.toFixed(2)+')';
+        card.style.opacity=Math.max(0,Math.min(1,s.op)).toFixed(3);
+        card.style.zIndex=dist===0?'100':Math.abs(dist)===1?'50':'30';
+        card.style.pointerEvents=s.op>.3?'auto':'none';
+        card.style.boxShadow='none';
+      });
+    }
+    navBar.classList.add('visible');
+    sectBtns.classList.toggle('visible',galP>(mobilePortrait?0.6:0));
+    updateAllVP();
+  }else{
+    gallery.style.opacity='0';gallery.style.visibility='hidden';
+    floor.classList.remove('visible');sectBtns.classList.remove('visible');varprox.classList.remove('visible');
+  }
+
+  updateParticles(now);
+  if(renderer){renderer.render(scene3,cam);}
+}
+
+prevTime=performance.now();
+
+// ── AUTOPLAY ──
+var autoplayActive=false,autoplaySpeed=0,autoplayDir=1,autoplayTimer=null;
+function armAutoplay(){
+  autoplayTimer=setTimeout(function(){
+    autoplaySpeed=Math.max(50,document.documentElement.scrollHeight/80);
+    autoplayActive=true;
+  },4000);
+}
+function pauseAutoplay(){
+  autoplayActive=false;clearTimeout(autoplayTimer);armAutoplay();
+}
+armAutoplay();
+['wheel','touchstart','touchmove','keydown','pointerdown'].forEach(function(ev){
+  window.addEventListener(ev,pauseAutoplay,{passive:true});
+});
+
+// Scroll reset
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+window.scrollTo(0,0);
+requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
