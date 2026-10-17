@@ -10,22 +10,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <style>
-:root{--purple:#8b5cf6;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(139,92,246,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
 .nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream)}
 .nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
 .nav-links a.donate-link{color:var(--purple)!important}
 .page-hero{padding:9rem 2rem 3rem;max-width:1000px;margin:0 auto}
-.page-kicker{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#b794f4;margin-bottom:1rem}
+.page-kicker{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#ffb98a;margin-bottom:1rem}
 .page-hero h1{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.05;margin-bottom:1rem}
 .page-hero p{max-width:640px;color:var(--text-dim)}
 .net-grid{max-width:1000px;margin:0 auto;padding:2rem 2rem 5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
 .net-card{display:flex;flex-direction:column;background:#0a0a12;border:1px solid rgba(244,241,234,.09);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text-cream);transition:transform .25s,border-color .25s,box-shadow .25s}
-.net-card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.45);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.net-card:hover{transform:translateY(-4px);border-color:rgba(255,138,77,.45);box-shadow:0 14px 40px rgba(0,0,0,.5)}
 .net-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#08080f}
 .net-card-body{padding:1.2rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
 .net-card h2{font-family:'Oswald',sans-serif;font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em}
@@ -33,7 +33,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .net-card-domain{font-size:.72rem;color:var(--purple);letter-spacing:.04em;word-break:break-all}
 .net-card.soon{border-style:dashed;cursor:default}
 .net-card.soon:hover{transform:none;border-color:rgba(244,241,234,.2);box-shadow:none}
-.site-footer{background:#000;border-top:1px solid rgba(139,92,246,.15);padding:3rem 2rem 4rem}
+.site-footer{background:#000;border-top:1px solid rgba(255,138,77,.15);padding:3rem 2rem 4rem}
 .footer-inner{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
 .footer-brand{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.12em}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem}
@@ -41,17 +41,40 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .footer-links a:hover{color:var(--purple)}
 .footer-note{margin-top:1.6rem;font-size:.85rem;color:var(--text-dim)}
 @media(max-width:768px){.nav-links a{margin-left:1rem;font-size:.78rem}}
+
+.content-room{max-width:1000px;margin:0 auto;padding:4rem 2rem}
+.content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#ffb98a;margin-bottom:.8rem}
+.content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,3.4vw,2.4rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.4rem}
+.content-body{display:flex;flex-direction:column;gap:1.2rem;font-size:1.02rem;color:rgba(244,241,234,.82);max-width:760px}
+.content-body a{color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
+.content-body strong{color:var(--text-cream)}
+.content-cta{margin-top:.6rem;padding:1.2rem 1.4rem;border:1px dashed rgba(255,138,77,.4);border-radius:14px;font-size:.95rem}
+.content-lede{max-width:640px;color:var(--text-dim);margin-bottom:1.6rem}
+.tour-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.tour-card{display:flex;flex-direction:column;gap:.6rem;background:#0a0a12;border:1px solid rgba(244,241,234,.09);border-radius:16px;padding:1.3rem}
+.tour-card.tour-soon{border-style:dashed}
+.tour-date{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#ff8a4d}
+.tour-card h4{font-family:'Oswald',sans-serif;font-size:1.05rem;text-transform:uppercase;letter-spacing:.05em}
+.tour-card p{font-size:.86rem;color:var(--text-dim);flex:1}
+.tour-card a{font-size:.8rem;color:#ff8a4d;text-decoration:none;letter-spacing:.04em;text-transform:uppercase}
+.donate-grid{display:flex;flex-wrap:wrap;gap:.8rem;max-width:760px}
+.donate-chip{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.05em;color:var(--text-cream);background:#0a0a12;border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.6rem 1.3rem;cursor:pointer;transition:background .25s,border-color .25s}
+.donate-chip:hover{background:rgba(255,138,77,.14);border-color:#ff8a4d}
+.donate-chip.crypto{border-color:rgba(244,241,234,.18)}
+.donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim);max-width:640px}
+
+
 </style>
 </head>
 <body>
 
 <nav class="top-nav">
-  <span class="nav-brand">MRG</span>
+  <span class="nav-brand">margreenie</span>
   <span class="nav-links">
     <a href="index.html#r3">About</a>
     <a href="blog.html">Blog</a>
     <a href="network.html">Network</a>
-    <a href="index.html#donate" class="donate-link">Donate</a>
+    <a href="network.html#donate" class="donate-link">Donate</a>
   </span>
 </nav>
 
@@ -161,6 +184,48 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   </a>
 </div>
 
+<section class="content-room" id="donate">
+
+  <div class="content-inner">
+
+    <h2 class="content-tag">Support the Mission</h2>
+
+    <h3 class="content-title">Keep the stories swimming.</h3>
+
+    <p class="content-lede">Every donation funds documentary production, greenfluencer training and ocean &amp; wildlife storytelling &mdash; independent, transparent, planet-first.</p>
+
+    <div class="donate-grid">
+
+      <button class="donate-chip" type="button" data-donate="PayPal">PayPal</button>
+
+      <button class="donate-chip" type="button" data-donate="Stripe">Stripe</button>
+
+      <button class="donate-chip" type="button" data-donate="Ko-fi">Ko-fi</button>
+
+      <button class="donate-chip" type="button" data-donate="Buy Me a Coffee">Buy Me a Coffee</button>
+
+      <button class="donate-chip" type="button" data-donate="SEPA bank transfer">SEPA bank transfer</button>
+
+      <button class="donate-chip crypto" type="button" data-donate="Bitcoin (BTC)">Bitcoin (BTC)</button>
+
+      <button class="donate-chip crypto" type="button" data-donate="Ethereum (ETH)">Ethereum (ETH)</button>
+
+      <button class="donate-chip crypto" type="button" data-donate="USDT (ERC-20)">USDT (ERC-20)</button>
+
+      <button class="donate-chip crypto" type="button" data-donate="Solana (SOL)">Solana (SOL)</button>
+
+    </div>
+
+    <p class="donate-note" id="donateNote">Payment links and wallet addresses are being prepared — check back soon, or follow @margreenie for launch.</p>
+
+  </div>
+
+</section>
+
+
+
+
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">margreenie</div>
@@ -174,7 +239,18 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
     </div>
   </div>
   <div class="footer-inner"><p class="footer-note">Live consciously, create passionately, act boldly. — Margarita Samsonova</p></div>
-</footer>
+  </footer>
 
-</body>
+  <script>
+  var donateNote=document.getElementById('donateNote');
+  document.querySelectorAll('.donate-chip').forEach(function(chip){
+    chip.addEventListener('click',function(){
+      if(!donateNote)return;
+      donateNote.textContent=chip.dataset.donate+' is being set up — payment links and wallet addresses will appear here at launch. Follow @margreenie for the announcement.';
+      donateNote.style.color='var(--purple)';
+    });
+  });
+  </script>
+
+  </body>
 </html>

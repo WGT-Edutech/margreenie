@@ -10,11 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <style>
-:root{--purple:#8b5cf6;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(139,92,246,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
 .nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream)}
 .nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
@@ -23,21 +23,21 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .post-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.25) 55%,rgba(0,0,0,.15) 100%)}
 .post-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .post-hero-content{position:relative;z-index:2;max-width:820px;margin:0 auto;width:100%}
-.post-kicker{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#b794f4;margin-bottom:1rem}
+.post-kicker{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#ffb98a;margin-bottom:1rem}
 .post-hero h1{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.05;margin-bottom:1rem}
 .post-meta{font-size:.85rem;color:var(--text-dim);letter-spacing:.05em}
 .post-body{max-width:760px;margin:0 auto;padding:3rem 2rem 4rem;display:flex;flex-direction:column;gap:1.35rem;font-size:1.03rem;color:rgba(244,241,234,.82)}
 .post-body h2{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-top:1.2rem}
-.post-body a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(139,92,246,.4)}
+.post-body a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
 .post-body strong{color:var(--text-cream)}
 .post-body blockquote{border-left:3px solid var(--purple);padding:.4rem 0 .4rem 1.2rem;font-style:italic;color:rgba(244,241,234,.75)}
-.post-sources{padding:2rem;border:1px solid rgba(139,92,246,.2);border-radius:14px;font-size:.82rem;color:var(--text-dim);display:flex;flex-direction:column;gap:.5rem}
+.post-sources{padding:2rem;border:1px solid rgba(255,138,77,.2);border-radius:14px;font-size:.82rem;color:var(--text-dim);display:flex;flex-direction:column;gap:.5rem}
 .post-sources strong{color:var(--text-cream)}
-.post-cta{margin:2rem 0 0;padding:1.6rem;border:1px dashed rgba(139,92,246,.35);border-radius:14px;display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
+.post-cta{margin:2rem 0 0;padding:1.6rem;border:1px dashed rgba(255,138,77,.35);border-radius:14px;display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
 .post-cta a{font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;color:var(--purple);text-decoration:none}
 .next-post{max-width:760px;margin:0 auto;padding:0 2rem 4rem}
 .next-post a{color:var(--purple);text-decoration:none;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}
-.site-footer{background:#000;border-top:1px solid rgba(139,92,246,.15);padding:3rem 2rem 4rem}
+.site-footer{background:#000;border-top:1px solid rgba(255,138,77,.15);padding:3rem 2rem 4rem}
 .footer-inner{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
 .footer-brand{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.12em}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem}
@@ -45,17 +45,38 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .footer-links a:hover{color:var(--purple)}
 .footer-note{margin-top:1.6rem;font-size:.85rem;color:var(--text-dim)}
 @media(max-width:768px){.nav-links a{margin-left:1rem;font-size:.78rem}}
+.content-room{max-width:1000px;margin:0 auto;padding:4rem 2rem}
+.content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#ffb98a;margin-bottom:.8rem}
+.content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,3.4vw,2.4rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.4rem}
+.content-body{display:flex;flex-direction:column;gap:1.2rem;font-size:1.02rem;color:rgba(244,241,234,.82);max-width:760px}
+.content-body a{color:#ff8a4d;text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
+.content-body strong{color:var(--text-cream)}
+.content-cta{margin-top:.6rem;padding:1.2rem 1.4rem;border:1px dashed rgba(255,138,77,.4);border-radius:14px;font-size:.95rem}
+.content-lede{max-width:640px;color:var(--text-dim);margin-bottom:1.6rem}
+.tour-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.tour-card{display:flex;flex-direction:column;gap:.6rem;background:#0a0a12;border:1px solid rgba(244,241,234,.09);border-radius:16px;padding:1.3rem}
+.tour-card.tour-soon{border-style:dashed}
+.tour-date{font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#ff8a4d}
+.tour-card h4{font-family:'Oswald',sans-serif;font-size:1.05rem;text-transform:uppercase;letter-spacing:.05em}
+.tour-card p{font-size:.86rem;color:var(--text-dim);flex:1}
+.tour-card a{font-size:.8rem;color:#ff8a4d;text-decoration:none;letter-spacing:.04em;text-transform:uppercase}
+.donate-grid{display:flex;flex-wrap:wrap;gap:.8rem;max-width:760px}
+.donate-chip{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.05em;color:var(--text-cream);background:#0a0a12;border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.6rem 1.3rem;cursor:pointer;transition:background .25s,border-color .25s}
+.donate-chip:hover{background:rgba(255,138,77,.14);border-color:#ff8a4d}
+.donate-chip.crypto{border-color:rgba(244,241,234,.18)}
+.donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim);max-width:640px}
+
 </style>
 </head>
 <body>
 
 <nav class="top-nav">
-  <span class="nav-brand">MRG</span>
+  <span class="nav-brand">margreenie</span>
   <span class="nav-links">
     <a href="index.html#r3">About</a>
     <a href="blog.html">Blog</a>
     <a href="network.html">Network</a>
-    <a href="index.html#donate" class="donate-link">Donate</a>
+    <a href="network.html#donate" class="donate-link">Donate</a>
   </span>
 </nav>
 
@@ -106,6 +127,60 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   </div>
 </article>
 
+<section class="content-room" id="whale">
+  <div class="content-inner">
+    <h2 class="content-tag">The Whale Meditation</h2>
+    <h3 class="content-title">Where the ocean becomes a teacher.</h3>
+    <div class="content-body">
+      <p>Margarita&rsquo;s first whales were Alaska&rsquo;s &mdash; spotted from a cruise-ship summer job when she was nineteen. &ldquo;Seeing them for the first time got me fascinated not just by whales themselves, but by how little we understand about their communication, behaviour and relationship with the ocean,&rdquo; she says.</p>
+      <p>That fascination became <strong>Whale Passage</strong>, her ongoing storytelling and research project, and it flows into her guided <strong>whale meditation sessions</strong> &mdash; quiet, immersive immersions themed around the ocean&rsquo;s vastness, breath and sound, offered through &ldquo;Voyage Across the Atlantic for the Whales&rdquo; talks and Sacred Soul Fest collaborations.</p>
+      <p>No preachy eco-lecture. A stillness practice, tuned to the rhythm of the deep &mdash; leaving you calmer, and closer to the planet.</p>
+      <p class="content-cta">Join a session &mdash; announced soon via <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">@margreenie</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-room" id="tour">
+  <div class="content-inner">
+    <h2 class="content-tag">On Tour</h2>
+    <h3 class="content-title">Where Margarita shows up next.</h3>
+    <div class="tour-grid">
+          <div class="tour-card tour-soon">
+            <div class="tour-date">Sat · 7 Nov 2026 · Cape Town</div>
+            <h4>Whale Consciousness Morning</h4>
+            <p>Placeholder &mdash; early session at a rooftop yoga centre near Long Street. Margarita is in town preparing a series of unique events connecting people to whale consciousness, conservation, business and entrepreneurship through quantum field, meditation, body attunement and environmental science. Likely venue: Light House Holistic, 50 Bree St (rooftop retreat), one block from Long Street.</p>
+            <a href="https://www.threads.com/@margreenie/post/Dcx0WmJCNg6/cape-town-right-now-i-am-in-town-preparing-a-series-of-unique-events-connecting/" target="_blank" rel="noopener">Her announcement on Threads</a>
+            <a href="https://www.lighthouseholistic.co.za/" target="_blank" rel="noopener">Light House Holistic</a>
+          </div>
+          <div class="tour-card">
+            <div class="tour-date">Programme</div>
+        <h4>Greenfluencers in the Wild</h4>
+        <p>A 10-day Lisbon immersion teaching creators how to turn environmental passion into a career &mdash; days on the Tagus with Terra Incognita, whale &amp; dolphin watches, camera coaching.</p>
+        <a href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">See it in action</a>
+      </div>
+      <div class="tour-card">
+        <div class="tour-date">Live</div>
+        <h4>Sacred Soul Fest</h4>
+        <p>Fireside &ldquo;Voyage Across the Atlantic for the Whales&rdquo; conversation &mdash; influencer burnout, greenfluencing, and why whales guided her back to purpose.</p>
+        <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Listen to the talk</a>
+      </div>
+      <div class="tour-card">
+        <div class="tour-date">Policy</div>
+        <h4>COP Summits &amp; EU Youth Energy</h4>
+        <p>A regular at COP summits worldwide and a former European Commission Young Energy Ambassador for Latvia &mdash; carrying creator voices into the negotiating rooms.</p>
+        <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+      <div class="tour-card tour-soon">
+        <div class="tour-date">Next dates</div>
+        <h4>Announced soon</h4>
+        <p>New session and event dates are shared first with her community.</p>
+        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">margreenie</div>
