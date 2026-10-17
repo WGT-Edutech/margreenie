@@ -16,12 +16,8 @@ html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
-.ocean-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;background:#04121a;
-  background-size:cover;background-position:center;will-change:transform,background-image}
-.whale-bg{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .8s;
-  background-size:contain;background-position:right 4% top 8%;background-repeat:no-repeat;
-  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 50%,#000 42%,transparent 78%);
-  mask-image:radial-gradient(ellipse 62% 58% at 50% 50%,#000 42%,transparent 78%)}
+.whale-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:0;
+  background-size:cover;background-position:center;will-change:transform,background-image,opacity}
 .room{position:relative}
 .sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
 
@@ -30,6 +26,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .name-char{display:inline-block;opacity:0;transform:translateY(20px)}
 
 .title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
+.title-glass{display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2.2rem 3rem;border-radius:22px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
+  box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.14);max-width:min(92vw,860px)}
 .title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(260 90% 75% / .65)}
 .title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(260 90% 75% / .6)}
 
@@ -143,6 +143,13 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative}
 .hero-stencil{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:min(78vh,640px);opacity:.5;pointer-events:none;z-index:0;filter:blur(0.5px)}
 .post-card{position:relative;z-index:1}
+.post-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:3rem;z-index:6;opacity:0;flex-wrap:wrap;padding:2rem}
+.post-more{max-width:340px;display:flex;flex-direction:column;gap:.8rem;text-align:left}
+.post-more h3{font-family:'Oswald',sans-serif;font-size:1.6rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream)}
+.post-more p{font-size:.95rem;color:var(--text-dim)}
+.post-more a{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase}
+.post-more a:hover{text-decoration:underline}
+@media(max-width:768px){.post-stage{gap:1.5rem;flex-direction:column;text-align:center}.post-more{text-align:center;max-width:88vw}}
 .post-card{width:min(360px,88vw);background:#0a0f18;border:1px solid rgba(244,241,234,.12);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden}
 .post-head{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;border-bottom:1px solid rgba(244,241,234,.08)}
 .post-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ff9db8,#8b5cf6);flex:0 0 auto}
@@ -180,23 +187,12 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <button class="lo-btn" id="loOkBtn">OK</button>
 </div>
 
-<div class="ocean-bg" id="oceanWrap" aria-hidden="true"></div>
 <div class="whale-bg" id="whaleWrap" aria-hidden="true"></div>
 
 <section class="room r1h" id="r1">
   <div class="sticky">
     <div class="loading-screen" id="loader">
-          <img class="hero-stencil" src="images/marga-stencil.png" alt="Stencil portrait of Margarita Samsonova" aria-hidden="true">
-          <div class="post-card">
-        <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Portugal · everywhere</span></span></div>
-        <div class="post-img" id="postImg">
-          <img src="images/hero-post.jpg" alt="Margarita Samsonova's most-liked Instagram post — picture coming soon" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
-          <div class="post-fallback" id="postFallback">Drop her most-liked post at images/hero-post.jpg</div>
-        </div>
-        <div class="post-actions" aria-hidden="true"><span class="pa-heart">&#9825;</span><span class="pa-comment">&#128172;</span><span class="pa-share">&#10148;</span></div>
-        <p class="post-caption"><strong>margreenie</strong> &ldquo;We are nature. We often think of nature as something outside of us &mdash; a forest we visit, a landscape we admire, a place we escape to.&rdquo;</p>
-        <div class="label-sm"><span class="lbl-desk">keep scrolling</span><span class="lbl-mob">keep swiping up</span></div>
-      </div>
+      <div class="label-sm"><span class="lbl-desk">keep scrolling</span><span class="lbl-mob">keep swiping up</span></div>
     </div>
   </div>
 </section>
@@ -211,12 +207,33 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r4h" id="r4">
   <div class="sticky">
     <div class="title-stage" id="titleStage">
-      <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
+          <div class="title-glass">
+            <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
             <div class="title-slogan" id="sloganText">Connecting green brands with the people who move the planet.</div>
+          </div>
+        </div>
+  </div>
+</section>
+<section class="room r5h" id="r5">
+  <div class="sticky">
+    <div class="post-stage" id="postStage">
+      <div class="post-card">
+        <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Kenya · on safari</span></span></div>
+        <div class="post-img" id="postImg">
+          <img src="images/hero-post.jpg" alt="Margarita Samsonova on safari in Kenya, watching a giraffe" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
+          <div class="post-fallback" id="postFallback">Post image missing — check images/hero-post.jpg</div>
+        </div>
+        <div class="post-actions" aria-hidden="true"><span class="pa-heart">&#9825;</span><span class="pa-comment">&#128172;</span><span class="pa-share">&#10148;</span></div>
+        <p class="post-caption"><strong>margreenie</strong> &ldquo;We are nature. We often think of nature as something outside of us &mdash; a forest we visit, a landscape we admire, a place we escape to.&rdquo;</p>
+      </div>
+      <div class="post-more">
+        <h3>More than a feed.</h3>
+        <p>Conservationist. Influencer. Whalean Human. 70 countries, one mission: turn creators into eco leaders and green brands into stories people act on.</p>
+        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow the journey &rarr;</a>
+      </div>
     </div>
   </div>
 </section>
-<section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
     <section id="galleryRoom"><div class="card-ring" id="cardRing"></div></section>
@@ -372,20 +389,12 @@ function cacheRooms(){
 cacheRooms();
 window.addEventListener('resize',function(){viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();});
 
-// ── OCEAN FRAME SCRUBBER (real water + whale tail splash, scroll-driven) ──
-var oceanWrap=document.getElementById('oceanWrap'),whaleWrap=document.getElementById('whaleWrap');
-var OCEAN_FRAMES=25,WHALE_FRAMES=13;
-var oceanFrames=[],whaleFrames=[];
-var oceanLoaded=0,whaleLoaded=0;
+// ── WHALE FRAME SCRUBBER (single video: water + whale tail, scroll-driven) ──
+var whaleWrap=document.getElementById('whaleWrap');
+var WHALE_FRAMES=14;
+var whaleFrames=[];
+var whaleLoaded=0;
 function preloadFrames(){
-  for(var i=0;i<OCEAN_FRAMES;i++){
-    (function(idx){
-      var im=new Image();
-      im.onload=function(){oceanLoaded++;};
-      im.src='images/frames/ocean/o'+(idx<10?'0':'')+idx+'.jpg';
-      oceanFrames.push(im);
-    })(i);
-  }
   for(var i=0;i<WHALE_FRAMES;i++){
     (function(idx){
       var im=new Image();
@@ -397,32 +406,26 @@ function preloadFrames(){
 }
 preloadFrames();
 
-// Scroll-driven scrub: ocean frames advance through the zoom room (r2) and
-// hold through the title rooms; whale-tail frames scrub as the title appears.
+// Scroll-driven scrub: the whale video is the FIRST phase (r1) — frames
+// advance and zoom as you scroll through it, then exit as the gallery (r6) enters.
 function updateOceanZoom(){
-  if(!oceanWrap)return;
-  var rp2=clamp01(roomData[1].progress);
-  var rp3=clamp01(roomData[2].progress);
-  var rp4=clamp01(roomData[3].progress);
-  // zoom 1.0 -> 1.35 across the particle room, hold through title rooms
-  var z=1+0.35*smoothstep(rp2);
+  if(!whaleWrap)return;
+  var rp1=clamp01(roomData[0].progress);
+  var rp6=clamp01(roomData[5].progress);
+  // zoom 1.0 -> 1.35 across the first phase, hold through name/title rooms
+  var z=1+0.35*smoothstep(rp1);
   // slight drift so the water feels alive
   var drift=Math.sin(performance.now()*.0004)*.02;
-  oceanWrap.style.transform='scale('+(z+drift).toFixed(4)+')';
-  // ocean frame: scrub 0..24 across r2, hold last frame through title
-  var oi=Math.min(OCEAN_FRAMES-1,Math.floor(smoothstep(rp2)*(OCEAN_FRAMES-1)));
-  if(oceanFrames[oi]&&oceanFrames[oi].complete){
-    oceanWrap.style.backgroundImage='url('+oceanFrames[oi].src+')';
+  whaleWrap.style.transform='scale('+(z+drift).toFixed(4)+')';
+  // whale frame: scrub 0..12 across r1, hold last frame through name/title
+  var wi=Math.min(WHALE_FRAMES-1,Math.floor(smoothstep(rp1)*(WHALE_FRAMES-1)));
+  if(whaleFrames[wi]&&whaleFrames[wi].complete){
+    whaleWrap.style.backgroundImage='url('+whaleFrames[wi].src+')';
   }
-  // whale tail: fade in + scrub frames as the title appears (r3)
-  var whaleOp=clamp01((rp3*2-0.4));
-  if(whaleWrap){
-    whaleWrap.style.opacity=(0.85*whaleOp).toFixed(3);
-    var wi=Math.min(WHALE_FRAMES-1,Math.floor(smoothstep(rp3)*(WHALE_FRAMES-1)));
-    if(whaleFrames[wi]&&whaleFrames[wi].complete){
-      whaleWrap.style.backgroundImage='url('+whaleFrames[wi].src+')';
-    }
-  }
+  // fade in through r1, exit as the gallery (r6) comes in
+  var fadeIn=clamp01(rp1*2);
+  var exit=1-smoothstep(rp6);
+  whaleWrap.style.opacity=(fadeIn*exit).toFixed(3);
 }
 
 // ── TEXT EFFECTS ──
@@ -616,9 +619,11 @@ function tick(now){
     updateAllVP();
   }else titleStage.style.opacity='0';
 
-  // Room 5: Shrink to nav
-  var shrinkP=rp[4],heroEl=document.getElementById('nameStage'),titleEl=document.getElementById('titleStage'),navBar=document.getElementById('topNav'),sloganBar=document.getElementById('sloganBar');
-  if(shrinkP>.01){
+  // Room 5: Post stage (Instagram frame + more info) + shrink to nav
+    var shrinkP=rp[4],heroEl=document.getElementById('nameStage'),titleEl=document.getElementById('titleStage'),navBar=document.getElementById('topNav'),sloganBar=document.getElementById('sloganBar');
+    var postStage=document.getElementById('postStage');
+    if(postStage)postStage.style.opacity=Math.max(0,Math.min(1,(shrinkP-.1)/.5)).toFixed(3);
+        if(shrinkP>.01){
     var shrink=lerp(1,.15,smoothstep(shrinkP)),topY=lerp(50,.3,shrinkP),leftX=lerp(50,1.5,shrinkP);
     heroEl.style.position='fixed';heroEl.style.top=topY+'vh';heroEl.style.left=leftX+'vw';
     heroEl.style.transform='translate(0,0) scale('+shrink+')';heroEl.style.transformOrigin='top left';
