@@ -97,8 +97,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 #varprox.visible{opacity:1}
 #varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(160,130,255,.4);user-select:none;-webkit-user-select:none}
 
-.r1h{height:1000vh}.r2h{height:1100vh}.r3h{height:1000vh}.r4h{height:500vh}.r5h{height:120vh}.r6h{height:2300vh}
-@media(max-width:768px){.r1h{height:400vh}.r2h{height:1100vh}.r3h{height:667vh}.r4h{height:200vh}.r5h{height:80vh}}
+.r1h{height:450vh}.r2h{height:600vh}.r3h{height:550vh}.r4h{height:300vh}.r5h{height:100vh}.r6h{height:2300vh}
+@media(max-width:768px){.r1h{height:250vh}.r2h{height:600vh}.r3h{height:400vh}.r4h{height:180vh}.r5h{height:70vh}}
 
 .nav-brand{display:none}
 .menu-toggle{display:none}
@@ -134,7 +134,9 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(260 90% 75% / .5)}
 .mobile-menu a.donate-link{color:var(--purple)}
 
-.loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative}
+.hero-stencil{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:min(78vh,640px);opacity:.5;pointer-events:none;z-index:0;filter:blur(0.5px)}
+.post-card{position:relative;z-index:1}
 .post-card{width:min(360px,88vw);background:#0a0f18;border:1px solid rgba(244,241,234,.12);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden}
 .post-head{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;border-bottom:1px solid rgba(244,241,234,.08)}
 .post-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ff9db8,#8b5cf6);flex:0 0 auto}
@@ -177,7 +179,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r1h" id="r1">
   <div class="sticky">
     <div class="loading-screen" id="loader">
-      <div class="post-card">
+          <img class="hero-stencil" src="images/marga-stencil.png" alt="Stencil portrait of Margarita Samsonova" aria-hidden="true">
+          <div class="post-card">
         <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Portugal · everywhere</span></span></div>
         <div class="post-img" id="postImg">
           <img src="images/hero-post.jpg" alt="Margarita Samsonova's most-liked Instagram post — picture coming soon" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
