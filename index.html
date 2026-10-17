@@ -10,24 +10,39 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <style>
-:root{--purple:#8b5cf6;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
 .whale-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;
-  background-size:cover;background-position:center;will-change:background-image,opacity}
+  will-change:opacity}
+.whale-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
 .whale-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,8,6,.35) 0%,rgba(2,8,6,.45) 45%,rgba(2,8,6,.72) 100%);z-index:1}
 .room{position:relative}
 .sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
 
 .name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
+/* Title + description slate: two glass boxes, left of the whale */
+.intro-slate{position:absolute;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none}
+.slate-card{position:relative;padding:1.1rem 1.8rem;border-radius:18px;text-align:left;
+  background:rgba(6,14,10,.58);border:1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);
+  box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
+.slate-card .title-role{white-space:nowrap;font-size:clamp(1.2rem,2.4vw,1.8rem)}
+.slate-reflect{transform:scaleY(-1);margin-top:.8rem;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.35),transparent 60%);
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.35),transparent 60%);
+  opacity:.4;filter:blur(1px)}
+.slate-card .name-text{font-size:clamp(1.6rem,3.6vw,2.6rem)}
+.slate-card .title-role{font-size:clamp(.95rem,1.9vw,1.3rem)}
+.slate-card .title-slogan{font-size:clamp(1.2rem,2.6vw,2rem)}
 .name-glass{display:inline-block;padding:1.1rem 2.2rem;border-radius:18px;
   background:rgba(6,14,10,.55);border:1px solid rgba(255,255,255,.22);
   -webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);
   box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
-.name-text{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;color:var(--text-cream);text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px hsl(260 90% 75% / .8),0 0 4px hsl(260 90% 65% / .4)}
+.name-text{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;color:var(--text-cream);text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px hsl(24 100% 72% / .8),0 0 4px hsl(24 100% 62% / .4)}
 .name-char{display:inline-block;opacity:0;transform:translateY(20px)}
 
 .title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
@@ -39,8 +54,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   opacity:.55;filter:blur(1px)}
-.title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(260 90% 75% / .65)}
-.title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(260 90% 75% / .6)}
+.title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(24 100% 72% / .65)}
+.title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(24 100% 72% / .6)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center}
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
@@ -54,14 +69,20 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .ring-card:nth-child(odd) .ring-card-front img{animation-duration:26s;animation-delay:-4s}
 .ring-card:nth-child(3n) .ring-card-front img{animation-duration:19s;animation-delay:-11s}
 @media(prefers-reduced-motion){.ring-card-front img{animation:none}}
-.ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(260 90% 75% / .55)}
+.ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(24 100% 72% / .55)}
+.ring-card-pill{position:absolute;top:-1.15rem;left:50%;transform:translateX(-50%);z-index:5;white-space:nowrap;
+  font-family:'Oswald',sans-serif;font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-cream);
+  background:rgba(6,14,10,.72);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:.35em 1.2em;
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .35s ease;pointer-events:none}
+.ring-card.focused .ring-card-pill{opacity:1}
 #cardInfo{position:fixed;top:50%;left:50%;transform:translate(-50%,-185px);z-index:45;text-align:center;pointer-events:none;transition:opacity .4s ease}
-.card-name{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px rgba(160,130,255,.5);background:rgba(3,3,10,.7);padding:.4rem 1.5rem;border-radius:8px;border:1px solid rgba(139,92,246,.2)}
-.ring-card:hover .ring-card-inner{box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(160,130,255,.3),0 20px 60px rgba(0,0,0,.6)}
+.card-name{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px rgba(255,160,102,.5);background:rgba(3,3,10,.7);padding:.4rem 1.5rem;border-radius:8px;border:1px solid rgba(255,138,77,.2)}
+.ring-card:hover .ring-card-inner{box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(255,160,102,.3),0 20px 60px rgba(0,0,0,.6)}
 
 .phase-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.8rem}
 .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
-.dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(139,92,246,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
+.dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(255,138,77,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
 
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;opacity:0;pointer-events:none;transition:opacity .5s;background:#000;border-bottom:0;display:flex;align-items:center;justify-content:flex-end;padding:0 2rem}
 .top-nav.visible{opacity:1;pointer-events:auto}
@@ -74,7 +95,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .section-buttons.visible{opacity:1;pointer-events:auto}
 
 /* ── CONTENT ROOMS (whale story, tour, donate, footer) ── */
-.content-room{position:relative;z-index:20;background:#000;padding:6rem 0;border-top:1px solid rgba(139,92,246,.15)}
+.content-room{position:relative;z-index:20;background:#000;padding:6rem 0;border-top:1px solid rgba(255,138,77,.15)}
 .content-room:first-of-type{border-top:0}
 .content-inner{max-width:1000px;margin:0 auto;padding:0 2rem}
 .content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
@@ -82,7 +103,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .content-body{max-width:720px;font-size:1.02rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
 .content-body strong{color:var(--text-cream)}
 .content-cta{color:var(--text-cream);font-weight:500}
-.content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(139,92,246,.4)}
+.content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
 .content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
 .tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
 .tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
@@ -93,39 +114,39 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .tour-card a:hover{text-decoration:underline}
 .tour-soon{border-style:dashed}
 .donate-grid{display:flex;flex-wrap:wrap;gap:.7rem}
-.donate-chip{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
-.donate-chip:hover{background:rgba(139,92,246,.25);transform:translateY(-1px)}
+.donate-chip{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(255,138,77,.12);border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
+.donate-chip:hover{background:rgba(255,138,77,.25);transform:translateY(-1px)}
 .donate-chip.crypto{border-color:rgba(244,241,234,.22);background:rgba(255,255,255,.05)}
 .donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim)}
-.site-footer{position:relative;z-index:20;background:#000;border-top:1px solid rgba(139,92,246,.15);padding:3rem 0 4rem}
+.site-footer{position:relative;z-index:20;background:#000;border-top:1px solid rgba(255,138,77,.15);padding:3rem 0 4rem}
 .footer-brand{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-cream);margin-bottom:1rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.6rem}
 .footer-links a{color:var(--text-dim);text-decoration:none;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
 .footer-links a:hover{color:var(--purple)}
 .footer-note{font-size:.85rem;color:var(--text-dim)}
-.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(260 90% 75% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
-.sect-btn:hover{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.4);transform:translateY(-2px)}
-.donate-btn{background:var(--purple);border-color:var(--purple);box-shadow:0 0 4px rgba(180,140,255,.35)}
-.donate-btn:hover{background:rgba(139,92,246,.8);box-shadow:0 0 4px rgba(180,140,255,.5)}
+.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(24 100% 72% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
+.sect-btn:hover{background:rgba(255,138,77,.2);border-color:rgba(255,138,77,.4);transform:translateY(-2px)}
+.donate-btn{background:var(--purple);border-color:var(--purple);box-shadow:0 0 4px rgba(255,170,110,.35)}
+.donate-btn:hover{background:rgba(255,138,77,.8);box-shadow:0 0 4px rgba(255,170,110,.5)}
 
-.slogan-bar{position:fixed;bottom:calc((50vh - 140px) / 3 - 150px);left:0;right:0;z-index:50;text-align:center;padding:1.5rem 2rem;font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--text-cream);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .6s;text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+.slogan-bar{position:fixed;bottom:calc((50vh - 140px) / 3 - 150px);left:0;right:0;z-index:50;text-align:center;padding:1.5rem 2rem;font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--text-cream);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .6s;text-shadow:0 0 2px hsl(24 100% 72% / .5)}
 .slogan-bar.visible{opacity:1;transition:opacity 7s}
 
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 #varprox{position:fixed;top:0;left:0;right:0;height:25vh;z-index:42;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 2.5s}
 #varprox.visible{opacity:1}
-#varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(160,130,255,.4);user-select:none;-webkit-user-select:none}
+#varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(255,160,102,.4);user-select:none;-webkit-user-select:none}
 
-.r1h{height:150vh}.r2h{height:100vh}.r3h{height:200vh}.r4h{height:150vh}.r5h{height:80vh}.r6h{height:900vh}
-@media(max-width:768px){.r1h{height:110vh}.r2h{height:80vh}.r3h{height:160vh}.r4h{height:120vh}.r5h{height:60vh}}
+.r1h{height:120vh}.r2h{height:90vh}.r3h{height:260vh}.r4h{height:140vh}.r5h{height:80vh}.r6h{height:900vh}
+@media(max-width:768px){.r1h{height:90vh}.r2h{height:70vh}.r3h{height:200vh}.r4h{height:110vh}.r5h{height:60vh}}
 
 .nav-brand{display:none}
 .menu-toggle{display:none}
 @media(max-width:768px){
   .lbl-desk{display:none}.lbl-mob{display:inline}
   .top-nav{justify-content:space-between;padding:0 1rem}
-  .nav-brand{display:block;font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(260 90% 75% / .4)}
+  .nav-brand{display:block;font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
   .nav-links{display:none}
   .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
   .menu-toggle span{display:block;width:22px;height:2px;background:var(--text-cream);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
@@ -148,10 +169,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 }
 .menu-backdrop{position:fixed;top:3.5rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s ease}
 .menu-backdrop.open{opacity:1;pointer-events:auto}
-.mobile-menu{position:fixed;top:3.5rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(139,92,246,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
+.mobile-menu{position:fixed;top:3.5rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(255,138,77,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
 .mobile-menu.open{transform:translateX(0);visibility:visible;pointer-events:auto;transition:transform .35s ease,visibility 0s}
 .mobile-menu a{font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
-.mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+.mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
 .mobile-menu a.donate-link{color:var(--purple)}
 
 .loading-screen{display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative}
@@ -184,10 +205,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .landscape-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;text-align:center;padding:2rem}
   .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
   @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
-  .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(260 90% 75% / .5)}
+  .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
   .landscape-overlay p{font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
-  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(139,92,246,.4);background:rgba(139,92,246,.15);color:var(--text-cream);font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
-  .landscape-overlay .lo-btn:hover{background:rgba(139,92,246,.3);box-shadow:0 0 8px rgba(139,92,246,.3)}
+  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(255,138,77,.4);background:rgba(255,138,77,.15);color:var(--text-cream);font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .landscape-overlay .lo-btn:hover{background:rgba(255,138,77,.3);box-shadow:0 0 8px rgba(255,138,77,.3)}
 }
 @media(prefers-reduced-motion){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
@@ -201,7 +222,11 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <button class="lo-btn" id="loOkBtn">OK</button>
 </div>
 
-<div class="whale-bg" id="whaleWrap" aria-hidden="true"></div>
+<div class="whale-bg" id="whaleWrap" aria-hidden="true">
+  <video id="whaleVid" autoplay muted loop playsinline preload="auto">
+    <source src="images/whales-loop.mp4" type="video/mp4">
+  </video>
+</div>
 
 <section class="room r1h" id="r1">
   <div class="sticky">
@@ -213,25 +238,18 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r2h" id="r2"><div class="sticky"></div></section>
 <section class="room r3h" id="r3">
   <div class="sticky">
-    <div class="name-stage" id="nameStage">
-          <div class="name-glass"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
-        </div>
+    <div class="intro-slate" id="slateStage">
+      <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
+      <div class="slate-card" id="titleStage">
+        <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
+      </div>
+      <div class="slate-card slate-reflect" aria-hidden="true">
+        <div class="title-role">Greenfluencer &amp; Storyteller</div>
+      </div>
+    </div>
   </div>
 </section>
-<section class="room r4h" id="r4">
-  <div class="sticky">
-    <div class="title-stage" id="titleStage">
-          <div class="title-glass">
-            <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
-            <div class="title-slogan" id="sloganText">Connecting green brands with the people who move the planet.</div>
-          </div>
-          <div class="title-glass title-reflect" aria-hidden="true">
-            <div class="title-role">Greenfluencer &amp; Storyteller</div>
-            <div class="title-slogan">Connecting green brands with the people who move the planet.</div>
-          </div>
-        </div>
-  </div>
-</section>
+<section class="room r4h" id="r4"><div class="sticky"></div></section>
 <section class="room r5h" id="r5">
   <div class="sticky">
     <div class="post-stage" id="postStage">
@@ -259,79 +277,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   </div>
 </section>
 
-<section class="content-room" id="whale">
-  <div class="content-inner">
-    <h2 class="content-tag">The Whale Meditation</h2>
-    <h3 class="content-title">Where the ocean becomes a teacher.</h3>
-    <div class="content-body">
-      <p>Margarita&rsquo;s first whales were Alaska&rsquo;s &mdash; spotted from a cruise-ship summer job when she was nineteen. &ldquo;Seeing them for the first time got me fascinated not just by whales themselves, but by how little we understand about their communication, behaviour and relationship with the ocean,&rdquo; she says.</p>
-      <p>That fascination became <strong>Whale Passage</strong>, her ongoing storytelling and research project, and it flows into her guided <strong>whale meditation sessions</strong> &mdash; quiet, immersive immersions themed around the ocean&rsquo;s vastness, breath and sound, offered through &ldquo;Voyage Across the Atlantic for the Whales&rdquo; talks and Sacred Soul Fest collaborations.</p>
-      <p>No preachy eco-lecture. A stillness practice, tuned to the rhythm of the deep &mdash; leaving you calmer, and closer to the planet.</p>
-      <p class="content-cta">Join a session &mdash; announced soon via <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">@margreenie</a>.</p>
-    </div>
-  </div>
-</section>
-
-<section class="content-room" id="tour">
-  <div class="content-inner">
-    <h2 class="content-tag">On Tour</h2>
-    <h3 class="content-title">Where Margarita shows up next.</h3>
-    <div class="tour-grid">
-          <div class="tour-card tour-soon">
-            <div class="tour-date">Sat · 7 Nov 2026 · Cape Town</div>
-            <h4>Whale Consciousness Morning</h4>
-            <p>Placeholder &mdash; early session at a rooftop yoga centre near Long Street. Margarita is in town preparing a series of unique events connecting people to whale consciousness, conservation, business and entrepreneurship through quantum field, meditation, body attunement and environmental science. Likely venue: Light House Holistic, 50 Bree St (rooftop retreat), one block from Long Street.</p>
-            <a href="https://www.threads.com/@margreenie/post/Dcx0WmJCNg6/cape-town-right-now-i-am-in-town-preparing-a-series-of-unique-events-connecting/" target="_blank" rel="noopener">Her announcement on Threads</a>
-            <a href="https://www.lighthouseholistic.co.za/" target="_blank" rel="noopener">Light House Holistic</a>
-          </div>
-          <div class="tour-card">
-            <div class="tour-date">Programme</div>
-        <h4>Greenfluencers in the Wild</h4>
-        <p>A 10-day Lisbon immersion teaching creators how to turn environmental passion into a career &mdash; days on the Tagus with Terra Incognita, whale &amp; dolphin watches, camera coaching.</p>
-        <a href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">See it in action</a>
-      </div>
-      <div class="tour-card">
-        <div class="tour-date">Live</div>
-        <h4>Sacred Soul Fest</h4>
-        <p>Fireside &ldquo;Voyage Across the Atlantic for the Whales&rdquo; conversation &mdash; influencer burnout, greenfluencing, and why whales guided her back to purpose.</p>
-        <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Listen to the talk</a>
-      </div>
-      <div class="tour-card">
-        <div class="tour-date">Policy</div>
-        <h4>COP Summits &amp; EU Youth Energy</h4>
-        <p>A regular at COP summits worldwide and a former European Commission Young Energy Ambassador for Latvia &mdash; carrying creator voices into the negotiating rooms.</p>
-        <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">Connect on LinkedIn</a>
-      </div>
-      <div class="tour-card tour-soon">
-        <div class="tour-date">Next dates</div>
-        <h4>Announced soon</h4>
-        <p>New session and event dates are shared first with her community.</p>
-        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="content-room" id="donate">
-  <div class="content-inner">
-    <h2 class="content-tag">Support the Mission</h2>
-    <h3 class="content-title">Keep the stories swimming.</h3>
-    <p class="content-lede">Every donation funds documentary production, greenfluencer training and ocean &amp; wildlife storytelling &mdash; independent, transparent, planet-first.</p>
-    <div class="donate-grid">
-      <button class="donate-chip" type="button" data-donate="PayPal">PayPal</button>
-      <button class="donate-chip" type="button" data-donate="Stripe">Stripe</button>
-      <button class="donate-chip" type="button" data-donate="Ko-fi">Ko-fi</button>
-      <button class="donate-chip" type="button" data-donate="Buy Me a Coffee">Buy Me a Coffee</button>
-      <button class="donate-chip" type="button" data-donate="SEPA bank transfer">SEPA bank transfer</button>
-      <button class="donate-chip crypto" type="button" data-donate="Bitcoin (BTC)">Bitcoin (BTC)</button>
-      <button class="donate-chip crypto" type="button" data-donate="Ethereum (ETH)">Ethereum (ETH)</button>
-      <button class="donate-chip crypto" type="button" data-donate="USDT (ERC-20)">USDT (ERC-20)</button>
-      <button class="donate-chip crypto" type="button" data-donate="Solana (SOL)">Solana (SOL)</button>
-    </div>
-    <p class="donate-note" id="donateNote">Payment links and wallet addresses are being prepared — check back soon, or follow @margreenie for launch.</p>
-  </div>
-</section>
-
 <footer class="site-footer">
   <div class="content-inner">
     <div class="footer-brand">margreenie</div>
@@ -354,7 +299,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
       <a href="#r3">About</a>
       <a href="blog.html">Blog</a>
       <a href="network.html">Network</a>
-      <a href="#donate" class="donate-link">Donate</a>
+      <a href="network.html#donate" class="donate-link">Donate</a>
     </span>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
@@ -363,7 +308,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <a href="#r3">About</a>
   <a href="blog.html">Blog</a>
   <a href="network.html">Network</a>
-  <a href="#donate" class="donate-link">Donate</a>
+  <a href="network.html#donate" class="donate-link">Donate</a>
 </nav>
 <div class="slogan-bar" id="sloganBar">Connecting green brands with the people who move the planet.</div>
 <div class="gallery-floor" id="galleryFloor"></div>
@@ -372,7 +317,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <a href="#r3" class="sect-btn">About</a>
   <a href="blog.html" class="sect-btn">Blog</a>
   <a href="network.html" class="sect-btn">Network</a>
-  <a href="#donate" class="sect-btn donate-btn">Donate</a>
+  <a href="network.html#donate" class="sect-btn donate-btn">Donate</a>
 </div>
 
 <nav class="phase-dots" id="phaseDots" aria-label="Phase navigation">
@@ -407,45 +352,63 @@ function cacheRooms(){
 cacheRooms();
 window.addEventListener('resize',function(){viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();});
 
-// ── WHALE FRAME SCRUBBER (single video: water + whale tail, scroll-driven) ──
+// ── WHALE VIDEO BACKGROUND (buttery 30fps loop + scroll scrub) ──
 var whaleWrap=document.getElementById('whaleWrap');
-var WHALE_FRAMES=108;
-var whaleFrames=[];
-var whaleLoaded=0;
-function preloadFrames(){
-  for(var i=0;i<WHALE_FRAMES;i++){
-    (function(idx){
-      var im=new Image();
-      im.onload=function(){whaleLoaded++;};
-      im.src='images/frames/whale/w'+(idx<10?'00':(idx<100?'0':''))+idx+'.jpg';
-      whaleFrames.push(im);
-    })(i);
+var whaleVid=document.getElementById('whaleVid');
+var vidReady=false;
+function tryPlay(){
+  if(vidReady||!whaleVid)return;
+  if(whaleVid.readyState>=2){
+    vidReady=true;
+    whaleVid.play().catch(function(){});
   }
 }
-preloadFrames();
+if(whaleVid){
+  whaleVid.addEventListener('canplay',tryPlay);
+  whaleVid.addEventListener('loadeddata',tryPlay);
+}
+window.addEventListener('pointerdown',tryPlay,{passive:true});
+window.addEventListener('keydown',tryPlay,{passive:true});
 
-// Scroll-driven scrub: ~24 frames per scrolled viewport, looping through the
-// whole intro (r1..r5) so the whales keep moving until the gallery arrives.
+// Hybrid: the video plays at native 30fps (buttery, never freezes). While the
+// user actively scrolls, we seek currentTime by scroll position (scrub); ~0.6s
+// after scrolling stops, playback resumes from where the scrub left off.
+var lastScrollT=0;
+var scrubbing=false;
+window.addEventListener('scroll',function(){
+  scrubbing=true;
+  lastScrollT=performance.now();
+},{passive:true});
+
 function updateOceanZoom(){
   if(!whaleWrap)return;
-  var spanTop=roomData[0].top;
-  var spanBot=roomData[4].top+roomData[4].height;
-  var span=Math.max(1,spanBot-spanTop);
-  var phase=Math.max(0,(window.scrollY-spanTop)/span);
-  // gentle drift so the water feels alive
-  var drift=Math.sin(performance.now()*.0004)*.02;
-  whaleWrap.style.transform='scale('+(1+drift).toFixed(4)+')';
-  // 24 frames per scrolled viewport, wrap around the video endlessly
-  var wi=Math.floor(((window.scrollY-spanTop)/viewH)*24)%WHALE_FRAMES;
-  if(wi<0)wi+=WHALE_FRAMES;
-  if(whaleFrames[wi]&&whaleFrames[wi].complete){
-    whaleWrap.style.backgroundImage='url('+whaleFrames[wi].src+')';
+  var now=performance.now();
+  if(whaleVid){
+    if(scrubbing&&now-lastScrollT<600){
+      // scroll scrub: map r1..r5 scroll progress onto the video duration
+      var spanTop=roomData[0].top;
+      var spanBot=roomData[4].top+roomData[4].height;
+      var span=Math.max(1,spanBot-spanTop);
+      var p=clamp01((window.scrollY-spanTop)/span);
+      var t=p*whaleVid.duration;
+      if(Math.abs(whaleVid.currentTime-t)>0.05){
+        whaleVid.currentTime=t;
+      }
+      if(!whaleVid.paused)whaleVid.pause();
+    }else{
+      scrubbing=false;
+      if(whaleVid.paused&&vidReady)whaleVid.play().catch(function(){});
+    }
   }
+  // gentle drift so the water feels alive
+  var drift=Math.sin(now*.0004)*.02;
+  whaleWrap.style.transform='scale('+(1+drift).toFixed(4)+')';
   // fade in over the first viewport; fade out through r5 so the gallery (r6) sits on black
-    var fadeIn=clamp01(phase*3);
-    var rp5=clamp01(roomData[4].progress);
-    var exit=1-smoothstep(rp5);
-    whaleWrap.style.opacity=(fadeIn*exit).toFixed(3);
+  var rp1=clamp01(roomData[0].progress);
+  var rp5=clamp01(roomData[4].progress);
+  var fadeIn=clamp01(rp1*2);
+  var exit=1-smoothstep(rp5);
+  whaleWrap.style.opacity=(fadeIn*exit).toFixed(3);
 }
 
 // ── TEXT EFFECTS ──
@@ -465,14 +428,14 @@ function splitToChars(el,cls){
 }
 var nameVPChars=splitToChars(nameText,'name-char');
 var roleVPChars=splitToChars(roleText,'vp-char');
-var sloganVPChars=splitToChars(sloganText,'vp-char');
+var sloganVPChars=sloganText&&sloganText.textContent?splitToChars(sloganText,'vp-char'):[];
 var projectsEl=document.getElementById('varprox');
 var projectsSpan=document.createElement('span');
 projectsSpan.className='variable-proximity';
 projectsEl.appendChild(projectsSpan);
 var projectsVPChars=splitToChars(projectsSpan,'vp-char');
 var allVPChars=[].concat(nameVPChars,roleVPChars,sloganVPChars,projectsVPChars);
-var nameRevealCount=0;
+var nameRevealCount=0,slateEnterT=0;
 
 var TITLE_PAD=40;
 function fitName(){
@@ -522,8 +485,8 @@ var $cardRing=document.getElementById('cardRing'),$cardName=document.getElementB
 cardData.forEach(function(card){
   var el=document.createElement('div');el.className='ring-card';
   var inner=card.img
-    ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div>'
-    :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div>';
+      ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div><div class="ring-card-pill">'+card.name+'</div>'
+      :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div><div class="ring-card-pill">'+card.name+'</div>';
   el.innerHTML=inner;
   el.addEventListener('mouseenter',function(){$cardName.textContent=card.name;$cardInfo.style.opacity='1';});
   el.addEventListener('mouseleave',function(){$cardInfo.style.opacity='0';});
@@ -621,45 +584,31 @@ function tick(now){
   // Room 2: Ocean zoom
     updateOceanZoom();
 
-  // Room 3: Name reveal
+  // Rooms 3+4: Title slate — slide in (r3), hold 3s, slow slide out (r4 or timer)
+  var slate=document.getElementById('slateStage');
   if(rp[2]>.01){
-    var tComp=1/3,tP=Math.min(1,rp[2]/tComp),target=Math.floor(tP*nameVPChars.length);
+    var enter=clamp01(rp[2]/0.45);
+    var target=Math.floor(enter*nameVPChars.length);
     if(target!==nameRevealCount){revealNameChars(target);nameRevealCount=target;}
-    var nFade=clamp01((rp[2]-2/3)/(1/3));
-    nameStage.style.opacity=(1-smoothstep(nFade)).toFixed(3);
+    if(enter>=1&&slateEnterT===0)slateEnterT=performance.now();
     updateAllVP();
-  }else{nameStage.style.opacity='0';nameRevealCount=0;}
+  }else{nameRevealCount=0;}
+  var timerExit=slateEnterT>0?clamp01((performance.now()-slateEnterT-3000)/1500):0;
+  var ex=Math.max(rp[3],timerExit);
+  var enter=clamp01(rp[2]/0.45);
+  var inX=-14*(1-smoothstep(enter));
+  var outX=-110*smoothstep(ex);
+  if(slate){
+    slate.style.transform='translate('+(inX+outX).toFixed(1)+'vw, -50%)';
+    slate.style.opacity=clamp01(enter*2)*(1-smoothstep(ex)).toFixed(3);
+  }
 
-  // Room 4: Title + Slogan
-  if(rp[3]>.02){
-    titleStage.style.opacity='1';
-    var tp=Math.min(1,rp[3]/.35);
-    roleText.style.opacity=tp;
-    sloganText.style.opacity=Math.max(0,Math.min(1,(rp[3]-.2)/.3));
-    updateAllVP();
-  }else titleStage.style.opacity='0';
-
-  // Room 5: Post stage (Instagram frame + more info) + shrink to nav
-    var shrinkP=rp[4],heroEl=document.getElementById('nameStage'),titleEl=document.getElementById('titleStage'),navBar=document.getElementById('topNav'),sloganBar=document.getElementById('sloganBar');
+  // Room 5: Post stage (Instagram frame + more info)
+    var shrinkP=rp[4],navBar=document.getElementById('topNav'),sloganBar=document.getElementById('sloganBar');
     var postStage=document.getElementById('postStage');
     if(postStage)postStage.style.opacity=Math.max(0,Math.min(1,(shrinkP-.1)/.5)).toFixed(3);
-        if(shrinkP>.01){
-    var shrink=lerp(1,.15,smoothstep(shrinkP)),topY=lerp(50,.3,shrinkP),leftX=lerp(50,1.5,shrinkP);
-    heroEl.style.position='fixed';heroEl.style.top=topY+'vh';heroEl.style.left=leftX+'vw';
-    heroEl.style.transform='translate(0,0) scale('+shrink+')';heroEl.style.transformOrigin='top left';
-    heroEl.style.zIndex='46';heroEl.style.opacity=Math.min(1,shrinkP*4).toFixed(3);
-    titleEl.style.position='fixed';titleEl.style.top=(topY+2.5)+'vh';titleEl.style.left=leftX+'vw';
-    titleEl.style.transform='translate(0,0) scale('+(shrink*.7)+')';titleEl.style.transformOrigin='top left';
-    titleEl.style.zIndex='46';titleEl.style.opacity=shrinkP>.25?'1':'0';
     sloganBar.classList.remove('visible');
     navBar.classList.toggle('visible',shrinkP>.75);
-  }else{
-    heroEl.style.position='';heroEl.style.top='';heroEl.style.left='';heroEl.style.transform='';
-    heroEl.style.transformOrigin='';heroEl.style.zIndex='';
-    titleEl.style.position='';titleEl.style.top='';titleEl.style.left='';titleEl.style.transform='';
-    titleEl.style.transformOrigin='';titleEl.style.zIndex='';
-    navBar.classList.remove('visible');sloganBar.classList.remove('visible');
-  }
 
   // Room 6: Gallery
   var galP=rp[5],gallery=document.getElementById('galleryRoom'),floor=document.getElementById('galleryFloor'),sectBtns=document.getElementById('sectionButtons'),varprox=document.getElementById('varprox');
@@ -668,7 +617,8 @@ function tick(now){
     floor.classList.add('visible');varprox.classList.add('visible');
     var ringCards=document.querySelectorAll('.ring-card'),total=ringCards.length;
     var sp2=galP*(total-1),activeIdx=Math.max(0,Math.min(total-1,Math.round(sp2)));
-    var STIFF=.08,DAMP=.72;
+        ringCards.forEach(function(card,i){card.classList.toggle('focused',i===activeIdx);});
+        var STIFF=.08,DAMP=.72;
     if(!mobilePortrait){
       ringCards.forEach(function(card,i){
         var dist=i-activeIdx,s=card._spring,tx,tz,ry,sc,op;
