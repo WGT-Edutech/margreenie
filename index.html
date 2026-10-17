@@ -16,8 +16,9 @@ html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
-.whale-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:0;
-  background-size:contain;background-position:center;background-repeat:no-repeat;will-change:background-image,opacity}
+.whale-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;
+  background-size:cover;background-position:center;will-change:background-image,opacity}
+.whale-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,8,6,.35) 0%,rgba(2,8,6,.45) 45%,rgba(2,8,6,.72) 100%);z-index:1}
 .room{position:relative}
 .sticky{position:sticky;top:0;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:10;will-change:transform}
 
@@ -31,19 +32,28 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 
 .title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
 .title-glass{display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2.2rem 3rem;border-radius:22px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  background:rgba(6,14,10,.58);border:1px solid rgba(255,255,255,.2);
   -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
   box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.14);max-width:min(92vw,860px)}
+.title-reflect{transform:scaleY(-1);margin-top:2.2rem;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
+  opacity:.55;filter:blur(1px)}
 .title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(260 90% 75% / .65)}
 .title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(260 90% 75% / .6)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center}
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
-.ring-card{position:absolute;left:50%;top:50%;width:420px;height:280px;margin-left:-210px;margin-top:-140px;transform-style:preserve-3d;cursor:pointer}
+.ring-card{position:absolute;left:50%;top:50%;width:600px;height:400px;margin-left:-300px;margin-top:-200px;transform-style:preserve-3d;cursor:pointer}
 .ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease}
 .ring-card-reflect{position:absolute;top:calc(100% + 150px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
 .ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:.55;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 40%,transparent 95%);mask-image:linear-gradient(to bottom,#000 0%,#000 40%,transparent 95%)}
 .ring-card-front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;padding:2rem;background:#0a0a12}
+.ring-card-front img{animation:kenburns 22s ease-in-out infinite alternate;will-change:transform}
+@keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.14) translate(-2.2%,-1.6%)}}
+.ring-card:nth-child(odd) .ring-card-front img{animation-duration:26s;animation-delay:-4s}
+.ring-card:nth-child(3n) .ring-card-front img{animation-duration:19s;animation-delay:-11s}
+@media(prefers-reduced-motion){.ring-card-front img{animation:none}}
 .ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(260 90% 75% / .55)}
 #cardInfo{position:fixed;top:50%;left:50%;transform:translate(-50%,-185px);z-index:45;text-align:center;pointer-events:none;transition:opacity .4s ease}
 .card-name{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px rgba(160,130,255,.5);background:rgba(3,3,10,.7);padding:.4rem 1.5rem;border-radius:8px;border:1px solid rgba(139,92,246,.2)}
@@ -107,8 +117,8 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 #varprox.visible{opacity:1}
 #varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(160,130,255,.4);user-select:none;-webkit-user-select:none}
 
-.r1h{height:450vh}.r2h{height:600vh}.r3h{height:550vh}.r4h{height:300vh}.r5h{height:100vh}.r6h{height:2300vh}
-@media(max-width:768px){.r1h{height:250vh}.r2h{height:600vh}.r3h{height:400vh}.r4h{height:180vh}.r5h{height:70vh}}
+.r1h{height:150vh}.r2h{height:100vh}.r3h{height:200vh}.r4h{height:150vh}.r5h{height:80vh}.r6h{height:900vh}
+@media(max-width:768px){.r1h{height:110vh}.r2h{height:80vh}.r3h{height:160vh}.r4h{height:120vh}.r5h{height:60vh}}
 
 .nav-brand{display:none}
 .menu-toggle{display:none}
@@ -129,7 +139,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .name-text .name-space{display:block}
 }
 @media(max-width:768px) and (orientation:portrait){
-  .r6h{height:280vh}
+  .r6h{height:120vh}
   #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
   #galleryRoom::-webkit-scrollbar{display:none}
   .card-ring{width:max-content;min-width:100%;flex-direction:row;align-items:center;gap:18px;transform-style:flat;padding:0 10vw}
@@ -214,6 +224,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
           <div class="title-glass">
             <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
             <div class="title-slogan" id="sloganText">Connecting green brands with the people who move the planet.</div>
+          </div>
+          <div class="title-glass title-reflect" aria-hidden="true">
+            <div class="title-role">Greenfluencer &amp; Storyteller</div>
+            <div class="title-slogan">Connecting green brands with the people who move the planet.</div>
           </div>
         </div>
   </div>
@@ -410,24 +424,28 @@ function preloadFrames(){
 }
 preloadFrames();
 
-// Scroll-driven scrub: the whale video is the FIRST phase (r1) — frames
-// advance and zoom as you scroll through it, then exit as the gallery (r6) enters.
+// Scroll-driven scrub: ~24 frames per scrolled viewport, looping through the
+// whole intro (r1..r5) so the whales keep moving until the gallery arrives.
 function updateOceanZoom(){
   if(!whaleWrap)return;
-  var rp1=clamp01(roomData[0].progress);
-  var rp6=clamp01(roomData[5].progress);
-  // original size — no zoom, no crop; gentle drift only
-    var drift=Math.sin(performance.now()*.0004)*.02;
-    whaleWrap.style.transform='scale('+(1+drift).toFixed(4)+')';
-  // whale frame: scrub 0..12 across r1, hold last frame through name/title
-  var wi=Math.min(WHALE_FRAMES-1,Math.floor(smoothstep(rp1)*(WHALE_FRAMES-1)));
+  var spanTop=roomData[0].top;
+  var spanBot=roomData[4].top+roomData[4].height;
+  var span=Math.max(1,spanBot-spanTop);
+  var phase=Math.max(0,(window.scrollY-spanTop)/span);
+  // gentle drift so the water feels alive
+  var drift=Math.sin(performance.now()*.0004)*.02;
+  whaleWrap.style.transform='scale('+(1+drift).toFixed(4)+')';
+  // 24 frames per scrolled viewport, wrap around the video endlessly
+  var wi=Math.floor(((window.scrollY-spanTop)/viewH)*24)%WHALE_FRAMES;
+  if(wi<0)wi+=WHALE_FRAMES;
   if(whaleFrames[wi]&&whaleFrames[wi].complete){
     whaleWrap.style.backgroundImage='url('+whaleFrames[wi].src+')';
   }
-  // fade in through r1, exit as the gallery (r6) comes in
-  var fadeIn=clamp01(rp1*2);
-  var exit=1-smoothstep(rp6);
-  whaleWrap.style.opacity=(fadeIn*exit).toFixed(3);
+  // fade in over the first viewport; fade out through r5 so the gallery (r6) sits on black
+    var fadeIn=clamp01(phase*3);
+    var rp5=clamp01(roomData[4].progress);
+    var exit=1-smoothstep(rp5);
+    whaleWrap.style.opacity=(fadeIn*exit).toFixed(3);
 }
 
 // ── TEXT EFFECTS ──
@@ -655,10 +673,10 @@ function tick(now){
       ringCards.forEach(function(card,i){
         var dist=i-activeIdx,s=card._spring,tx,tz,ry,sc,op;
         if(dist===0){tx=0;tz=120;ry=0;sc=1;op=1;}
-        else if(dist===-1){tx=-370;tz=-130;ry=32;sc=1;op=1;}
-        else if(dist===1){tx=370;tz=-130;ry=-32;sc=1;op=1;}
-        else if(dist===-2){tx=-550;tz=-230;ry=42;sc=1;op=1;}
-        else if(dist===2){tx=550;tz=-230;ry=-42;sc=1;op=1;}
+                else if(dist===-1){tx=-480;tz=-130;ry=32;sc=1;op=1;}
+                else if(dist===1){tx=480;tz=-130;ry=-32;sc=1;op=1;}
+                else if(dist===-2){tx=-720;tz=-230;ry=42;sc=1;op=1;}
+                else if(dist===2){tx=720;tz=-230;ry=-42;sc=1;op=1;}
         else{tx=0;tz=-400;ry=0;sc=1;op=0;}
         s.vtx+=(tx-s.tx)*STIFF;s.vtx*=DAMP;s.tx+=s.vtx;
         s.vtz+=(tz-s.tz)*STIFF;s.vtz*=DAMP;s.tz+=s.vtz;
