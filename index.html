@@ -369,7 +369,6 @@ cardData.forEach(function(card){
   el.innerHTML=inner;
   if(card.url)el.addEventListener('click',function(e){e.stopPropagation();window.open(card.url,'_blank');});
   if(card.restart)el.addEventListener('click',function(e){e.stopPropagation();window.scrollTo({top:0,behavior:'smooth'});});
-  el._spring={tx:0,tz:-400,ry:0,sc:1,op:0,vtx:0,vtz:0,vry:0,vsc:0,vop:0};
   $cardRing.appendChild(el);
 });
 
@@ -560,14 +559,15 @@ gsap.to('#topNav', {
   scrollTrigger: { trigger: '#r4', start: 'top bottom', end: 'top top', scrub: 1 }
 });
 
-// Gallery ring scrub: active card follows scroll progress through r6
+// Gallery ring scrub: a CONTINUOUS focus position follows scroll through r6
+// (no discrete rounding — the ring glides between cards instead of ratcheting)
 var ringCards = document.querySelectorAll('.ring-card');
 var total = ringCards.length;
+var focusTarget = 0, focus = 0;
 ScrollTrigger.create({
   trigger: '#r6', start: 'top top', end: 'bottom bottom', scrub: 1,
   onUpdate: function(self){
-    var idx = Math.max(0, Math.min(total - 1, Math.round(self.progress * (total - 1))));
-    ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
+    focusTarget = Math.max(0, Math.min(total - 1, self.progress * (total - 1)));
   }
 });
 // Mobile: the horizontal swipe drives the focused card (scroll-snap row)
@@ -581,35 +581,32 @@ if(galleryEl){
   }, {passive:true});
 }
 
-// Keep the gallery spring physics running on a lightweight rAF (transform-only).
-// On mobile portrait the gallery is a horizontal scroll-snap row — the 3D
-// spring would fight the native swipe, so it is skipped there.
+// Continuous cover flow on a lightweight rAF (transform-only). The focus
+// position itself is spring-smoothed, then every card is laid out from its
+// FLOAT distance to the focus via eased slot functions — cards glide through
+// the ring continuously; there is no discrete slot step to ratchet.
+// On mobile portrait the gallery is a native scroll-snap row — skipped there.
 var mobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+function smooth01(v){ v = v < 0 ? 0 : v > 1 ? 1 : v; return v * v * (3 - 2 * v); }
 var gallerySpring = function(){
   if(mobilePortrait) return;
-  var active = document.querySelector('.ring-card.focused');
-  if(active){
-    var idx = Array.prototype.indexOf.call(ringCards, active);
-    ringCards.forEach(function(card, i){
-      var dist = i - idx, tx, tz, ry, sc, op;
-      if(dist === 0){ tx = 0; tz = 120; ry = 0; sc = 1; op = 1; }
-      else if(dist === -1){ tx = -480; tz = -130; ry = 32; sc = 1; op = 1; }
-      else if(dist === 1){ tx = 480; tz = -130; ry = -32; sc = 1; op = 1; }
-      else if(dist === -2){ tx = -720; tz = -230; ry = 42; sc = 1; op = 1; }
-      else if(dist === 2){ tx = 720; tz = -230; ry = -42; sc = 1; op = 1; }
-      else { tx = 0; tz = -400; ry = 0; sc = 1; op = 0; }
-      var s = card._spring;
-      s.vtx += (tx - s.tx) * 0.08; s.vtx *= 0.72; s.tx += s.vtx;
-      s.vtz += (tz - s.tz) * 0.08; s.vtz *= 0.72; s.tz += s.vtz;
-      s.vry += (ry - s.ry) * 0.08; s.vry *= 0.72; s.ry += s.vry;
-      s.vsc += (sc - s.sc) * 0.08; s.vsc *= 0.72; s.sc += s.vsc;
-      s.vop += (op - s.op) * 0.08; s.vop *= 0.72; s.op += s.vop;
-      card.style.transform = 'translateX(' + s.tx.toFixed(1) + 'px) translateZ(' + s.tz.toFixed(1) + 'px) rotateY(' + s.ry.toFixed(1) + 'deg) scale(' + s.sc.toFixed(2) + ')';
-      card.style.opacity = Math.max(0, Math.min(1, s.op)).toFixed(3);
-      card.style.zIndex = dist === 0 ? '100' : Math.abs(dist) === 1 ? '50' : '30';
-      card.style.pointerEvents = s.op > 0.3 ? 'auto' : 'none';
-    });
-  }
+  focus += (focusTarget - focus) * 0.12;          // spring toward the target
+  if(Math.abs(focusTarget - focus) < 0.0005) focus = focusTarget;
+  ringCards.forEach(function(card, i){
+    var dist = i - focus;                          // float distance (0 = center)
+    var e = smooth01(Math.abs(dist) / 3);          // 0 focused .. 1 at the edge
+    var dir = dist < 0 ? -1 : 1;
+    var tx = dir * e * 760;
+    var tz = 120 - e * 520;                        // 120 center .. -400 edge
+    var ry = dir * e * 36;
+    var sc = 1 - 0.12 * e;
+    var op = 1 - smooth01((e - 0.4) / 0.6);        // fades in the outermost band
+    card.style.transform = 'translateX(' + tx.toFixed(1) + 'px) translateZ(' + tz.toFixed(1) + 'px) rotateY(' + ry.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
+    card.style.opacity = Math.max(0, op).toFixed(3);
+    card.style.zIndex = e < 0.2 ? '100' : e < 0.55 ? '50' : '30';
+    card.style.pointerEvents = op > 0.3 ? 'auto' : 'none';
+    card.classList.toggle('focused', e < 0.6);
+  });
   requestAnimationFrame(gallerySpring);
 };
 requestAnimationFrame(gallerySpring);
