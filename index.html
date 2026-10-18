@@ -540,22 +540,22 @@ gsap.timeline({
   }
 })
 .to('#whaleWrap', { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power2.in' })
+.to('#slateStage', { y: '-60vh', opacity: 0, duration: 0.5, ease: 'power2.in', overwrite: 'auto' }, '<')
 .fromTo('#galleryRoom',
   { yPercent: 100, opacity: 0 },
   { yPercent: 0, opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.out' }
 )
 .to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<');
 
-// Title + slogan: ONE scrubbed timeline — enters through r3, exits through r4.
-// The title fades in place (no left/up drift); the slogan slides down from the
-// top line into place. Exit: title slides left to make way for the gallery.
+// Title: rises into place through early r3, holds through r4. It leaves only
+// in the '#r5' ocean timeline (rides up with the whale; overwrite:'auto' takes
+// sole control when that starts). So it can never linger into r6.
 gsap.timeline({
   scrollTrigger: {
     trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: 1
   }
 })
-.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out' })
-.to('#slateStage', { opacity: 0, duration: 0.75, ease: 'power1.in' });
+.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.15, ease: 'power2.out' });
 
 
 
