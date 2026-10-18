@@ -386,7 +386,7 @@ var cardData=[
   {name:'Mercedes Oceanic Lounge',img:'images/mercedes-oceanic.jpg',url:'https://mboceaniclounge.pt/en/'},
   {name:'Mangrowth (documentary)',img:'images/mangrove.jpg',url:'https://www.wherevermags.com/news/eco-heroines-in-portugal/'},
   {name:'The Knysna Quest',img:'images/knysna-quest.jpg',url:'blog.html'},
-  {name:'Voyage Michigan Story',img:'images/margo-story.jpg',url:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/'},
+  {name:'Voyage Michigan Story',img:'images/voyage-michigan.jpg',url:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/'},
   {name:'70 Countries & Counting',img:'images/70-countries.jpg',url:'https://www.instagram.com/margreenie/'}
 ];
 var $cardRing=document.getElementById('cardRing');
@@ -482,7 +482,8 @@ function introSpan(){
   return { top: top, span: Math.max(1, bot - top) };
 }
 var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function userInputNow(){ lastInputT = performance.now(); autoTicking = false; }
+var armAt = performance.now() + 6000;   // hero breathes first; arming after 6s idle
+function userInputNow(){ lastInputT = performance.now(); armAt = 0; autoTicking = false; }
 ['wheel','touchstart','touchmove','keydown','pointerdown'].forEach(function(ev){
   window.addEventListener(ev, userInputNow, {passive:true});
 });
@@ -496,6 +497,7 @@ var autoLastT = 0;
 function autoscrollStep(){
   if(!autoScrollOn || REDUCED) return;
   var now = performance.now();
+  if(now < armAt) return;              // rooms 1-3 play first, no forced skip
   var idle = now - lastInputT >= AUTO_IDLE_MS;
   var s = introSpan(), galleryTop = s.top + s.span;
   var inIntro = window.scrollY < galleryTop - 2;
