@@ -471,7 +471,6 @@ gsap.ticker.lagSmoothing(0);
 // Uses Lenis scrollTo (eased, interruptible) — no hand-rolled velocity ramp.
 var lastInputT = 0;
 var AUTO_IDLE_MS = 700;
-var autoVelVh = 21.6;                 // vh per second (intro synced to video)
 var autoScrollOn = true;
 function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
 function smoothstep(v){ v = clamp01(v); return v * v * (3 - 2 * v); }
@@ -507,7 +506,7 @@ function autoscrollStep(){
     if(!autoLastT) autoLastT = now;
     var dtMs = Math.min(50, now - autoLastT);
     autoLastT = now;
-    var cruise = autoVelVh * window.innerHeight;
+    var cruise = s.span / 14;                 // intro traversed in ~14s (video time)
     var remain = galleryTop - window.scrollY;
     if(remain < window.innerHeight * 2){                 // ease out near gallery
       cruise *= Math.max(0, remain / (window.innerHeight * 2));
