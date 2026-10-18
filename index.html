@@ -481,20 +481,42 @@ function userInputNow(){ lastInputT = performance.now(); autoTicking = false; }
   window.addEventListener(ev, userInputNow, {passive:true});
 });
 var autoTicking = false;
-// Autoscroll runs inside the gsap.ticker (every frame, cannot die). When the
-// user is idle in the intro, glide to the gallery; resync Lenis first because
-// a native scroll-back leaves its internal state stale (scrollTo would no-op).
+var autoV = 0;                        // current autoscroll velocity (px/s)
+var autoLastT = 0;
+// Autoscroll runs inside the gsap.ticker (every frame, cannot die).
+// Contract: while the user is idle inside the intro, THE SITE SCROLLS ITSELF.
+// Lenis is stopped so its smoothing cannot fight the native scroll; on any
+// user input, Lenis is restarted and resynced instantly, handing control back.
 function autoscrollStep(){
   if(!autoScrollOn || REDUCED) return;
-  if(performance.now() - lastInputT < AUTO_IDLE_MS){ autoTicking = false; return; }
+  var now = performance.now();
+  var idle = now - lastInputT >= AUTO_IDLE_MS;
   var s = introSpan(), galleryTop = s.top + s.span;
-  if(window.scrollY >= galleryTop - 2){ autoTicking = false; return; } // in gallery: hold, stay armed
-  if(!autoTicking){
-    autoTicking = true;
-    lenis.scrollTo(window.scrollY, { immediate: true });
-    lenis.scrollTo(galleryTop, {
-      onComplete: function(){ autoTicking = false; }
-    });
+  var inIntro = window.scrollY < galleryTop - 2;
+  if(idle && inIntro){
+    // user idle + intro: take over and glide
+    if(!lenis.isStopped) lenis.stop();
+    if(!autoLastT) autoLastT = now;
+    var dtMs = Math.min(50, now - autoLastT);
+    autoLastT = now;
+    var cruise = autoVelVh * window.innerHeight;
+    var remain = galleryTop - window.scrollY;
+    if(remain < window.innerHeight * 2){                 // ease out near gallery
+      cruise *= Math.max(0, remain / (window.innerHeight * 2));
+    }
+    autoV += (cruise - autoV) * Math.min(1, dtMs / 400); // buttery ramp
+    if(autoV < 1) autoV = 0;
+    window.scrollBy(0, autoV * dtMs / 1000);
+    autoTicking = autoV > 0;
+  }else{
+    // user active (or at gallery): release control back to Lenis
+    autoV = 0;
+    autoLastT = 0;
+    autoTicking = false;
+    if(lenis.isStopped){
+      lenis.start();
+      lenis.scrollTo(window.scrollY, { immediate: true }); // resync Lenis
+    }
   }
 }
 gsap.ticker.add(autoscrollStep);
