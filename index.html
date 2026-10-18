@@ -28,15 +28,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 
 .name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
 /* Title + description slate: two glass boxes, left of the whale */
-.slogan-top{position:fixed;left:5vw;top:13vh;z-index:6;opacity:0;pointer-events:none;will-change:transform,opacity;
-  padding:.55rem 1.4rem;border-radius:14px;background:rgba(5,12,9,.82);border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
-.slogan-top .title-role{font-size:clamp(1.1rem,2.2vw,1.6rem)}
 .intro-slate{position:fixed;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none;will-change:transform,opacity}
 .slate-card{position:relative;padding:1.1rem 1.8rem;border-radius:18px;text-align:left;
   background:rgba(5,12,9,.82);border:1px solid rgba(255,255,255,.22);
   box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
-.slate-card .title-role{white-space:nowrap;font-size:clamp(1.2rem,2.4vw,1.8rem)}
 .slate-card .name-text{font-size:clamp(1.6rem,3.6vw,2.6rem)}
 #nameStage{background:transparent;border:0;box-shadow:none;padding:.4rem 0}
 #nameStage .name-text{font-size:clamp(2rem,6vw,4.5rem);white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px hsl(24 100% 72% / .8),0 0 6px hsl(24 100% 62% / .4)}
@@ -57,7 +52,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   opacity:.55;filter:blur(1px)}
-.title-role{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:600;color:var(--purple);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 2px hsl(24 100% 72% / .65)}
 .title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(24 100% 72% / .6)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
@@ -209,9 +203,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r2h" id="r2"><div class="sticky"></div></section>
 <section class="room r3h" id="r3">
   <div class="sticky"></div>
-  <div class="slogan-top" id="sloganTop">
-    <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
-  </div>
   <div class="intro-slate" id="slateStage">
     <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
   </div>
@@ -315,7 +306,6 @@ window.addEventListener('keydown',tryPlay,{passive:true});
 
 // ── TEXT EFFECTS ──
 var nameText=document.getElementById('nameText'),nameStage=document.getElementById('nameStage');
-var roleText=document.getElementById('roleText'),titleStage=document.getElementById('titleStage');
 
 function splitToChars(el,cls){
   var text=el.textContent;el.textContent='';
@@ -329,7 +319,7 @@ function splitToChars(el,cls){
   return chars;
 }
 var nameVPChars=splitToChars(nameText,'name-char');
-var roleVPChars=splitToChars(roleText,'vp-char');
+var roleVPChars=[];
 var projectsEl=document.getElementById('varprox');
 var projectsSpan=document.createElement('span');
 projectsSpan.className='variable-proximity';
@@ -505,10 +495,8 @@ gsap.timeline({
     trigger: '#r3', start: 'top bottom', end: 'bottom top', scrub: 1
   }
 })
-.fromTo('#sloganTop', { y: -26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' })
-.fromTo('#slateStage', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.1)
-.to('#slateStage', { opacity: 0, duration: 0.5, ease: 'power1.in' })
-.to('#sloganTop', { y: -34, opacity: 0, duration: 0.4, ease: 'power2.in' }, '<');
+.fromTo('#slateStage', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
+.to('#slateStage', { opacity: 0, duration: 0.5, ease: 'power1.in' });
 
 // Gallery: show ring + floor when r6 enters
 gsap.to('#galleryRoom', {
