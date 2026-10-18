@@ -457,7 +457,6 @@ var lenis = new Lenis({
   wheelMultiplier: 1,
   touchMultiplier: 1.4
 });
-window.__lenis = lenis; window.__auto = {get on(){return autoScrollOn;}, get tick(){return autoTicking;}, get last(){return lastInputT;}};
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
