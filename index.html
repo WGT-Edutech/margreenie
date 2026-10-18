@@ -164,7 +164,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .intro-slate{left:50%;top:20vh;transform:translateX(-50%);width:min(92vw,660px);align-items:center;text-align:center}
   .desc-line{left:50%;top:32vh;transform:translateX(-50%);text-align:center;max-width:94vw;white-space:nowrap;font-size:clamp(.95rem,4.2vw,1.3rem)}
 }
-@media(max-width:768px) and (orientation:portrait){
+@media(max-width:900px) and (orientation:portrait){
   .r6h{height:60vh}
   #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
   #galleryRoom::-webkit-scrollbar{display:none}
@@ -309,6 +309,7 @@ window.addEventListener('resize',function(){
   viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();
   cardK=Math.min(1.35,Math.max(1,window.innerWidth/1280));
   document.documentElement.style.setProperty('--k',cardK);
+  mobilePortrait=window.innerWidth<=900&&window.innerHeight>window.innerWidth;
 });
 
 // ── WHALE VIDEO BACKGROUND (buttery 30fps loop + scroll scrub) ──
@@ -433,8 +434,9 @@ var landscapeOverlay=document.getElementById('landscapeOverlay');
 var loDismissed=false;
 function checkOrientation(){
   var portraitPhone=window.innerHeight>window.innerWidth&&window.innerWidth<=900;
-  if(!portraitPhone)loDismissed=false;
-  landscapeOverlay.style.display=(portraitPhone&&!loDismissed)?'flex':'none';
+  var showOverlay=window.innerHeight>window.innerWidth&&window.innerWidth<=768;
+  if(!showOverlay)loDismissed=false;
+  landscapeOverlay.style.display=(showOverlay&&!loDismissed)?'flex':'none';
 }
 checkOrientation();
 window.addEventListener('orientationchange',function(){setTimeout(checkOrientation,100);});
@@ -461,7 +463,7 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 
-// Autoscroll: when idle, glide the page down synced to the video (21.6vh/s).
+// Autoscroll: when idle, glide the page down — intro traversed in ~14s.
 // Uses Lenis scrollTo (eased, interruptible) — no hand-rolled velocity ramp.
 var lastInputT = 0;
 var AUTO_IDLE_MS = 700;
@@ -609,8 +611,13 @@ var galleryEl = document.getElementById('galleryRoom');
 if(galleryEl){
   galleryEl.addEventListener('scroll', function(){
     if(!mobilePortrait) return;
-    var step = galleryEl.scrollWidth / total;
-    var idx = Math.max(0, Math.min(total - 1, Math.round(galleryEl.scrollLeft / step)));
+    var vc = galleryEl.clientWidth / 2;
+    var idx = 0, best = Infinity;
+    ringCards.forEach(function(card, i){
+      var c = card.offsetLeft + card.offsetWidth / 2 - galleryEl.scrollLeft;
+      var d = Math.abs(c - vc);
+      if(d < best){ best = d; idx = i; }
+    });
     ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
   }, {passive:true});
 }
@@ -620,7 +627,7 @@ if(galleryEl){
 // FLOAT distance to the focus via eased slot functions — cards glide through
 // the ring continuously; there is no discrete slot step to ratchet.
 // On mobile portrait the gallery is a native scroll-snap row — skipped there.
-var mobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+var mobilePortrait = window.innerWidth <= 900 && window.innerHeight > window.innerWidth;
 function smooth01(v){ v = v < 0 ? 0 : v > 1 ? 1 : v; return v * v * (3 - 2 * v); }
 var gallerySpring = function(){
   if(mobilePortrait) return;
