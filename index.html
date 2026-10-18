@@ -550,8 +550,7 @@ gsap.timeline({
 var r4el = document.getElementById('r4');
 var quoteTl = gsap.timeline({ paused: true })
   .to('#quoteStage', { opacity: 1, duration: 0.6, ease: 'power2.out' })
-  .to({}, { duration: 2.4 })
-  .to('#quoteStage', { opacity: 0, duration: 0.6, ease: 'power2.in' });
+  .to({}, { duration: 2.4 });   // hold; exit is scrubbed with the gallery rise
 ScrollTrigger.create({
   trigger: '#r4',
   start: function(){ return r4el.offsetTop + 0.35 * r4el.offsetHeight - window.innerHeight; },
@@ -576,7 +575,8 @@ gsap.timeline({
   { yPercent: 100, opacity: 0 },
   { yPercent: 0, opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.out' }
 )
-.to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<');
+.to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<')
+.to('#quoteStage', { opacity: 0, duration: 0.5, ease: 'power2.in' }, '<');
 
 
 
