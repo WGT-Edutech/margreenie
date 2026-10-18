@@ -529,6 +529,27 @@ gsap.to('#galleryFloor', {
   scrollTrigger: { trigger: '#r6', start: 'top bottom', end: 'top 60%', scrub: 1 }
 });
 
+// Title chars: reveal progressively as r3 is scrolled (scrubbed, re-enters).
+// Without this the name chars stay at their CSS default opacity:0.
+ScrollTrigger.create({
+  trigger: '#r3', start: 'top bottom', end: 'bottom top', scrub: true,
+  onUpdate: function(self){
+    var target = Math.floor(Math.min(1, self.progress / 0.45) * nameVPChars.length);
+    if(target !== nameRevealCount){ revealNameChars(target); nameRevealCount = target; }
+  }
+});
+
+// Mouse-proximity variable-font effect (rAF-throttled mousemove, plus on scroll)
+var vpRaf = null;
+window.addEventListener('mousemove', function(){
+  if(vpRaf) return;
+  vpRaf = requestAnimationFrame(function(){ vpRaf = null; updateAllVP(); });
+}, {passive:true});
+ScrollTrigger.create({
+  trigger: '#r6', start: 'top bottom', end: 'bottom top',
+  onUpdate: updateAllVP
+});
+
 // Nav bar: fade in once past the intro
 gsap.to('#topNav', {
   opacity: 1, pointerEvents: 'auto', ease: 'none',
