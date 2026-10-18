@@ -495,7 +495,7 @@ gsap.timeline({
     trigger: '#r3', start: 'top bottom', end: 'bottom top', scrub: 1
   }
 })
-.fromTo('#slateStage', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
+.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' })
 .to('#slateStage', { opacity: 0, duration: 0.5, ease: 'power1.in' });
 
 // Gallery: show ring + floor when r6 enters
