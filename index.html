@@ -39,30 +39,22 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
 /* Title + description slate: two glass boxes, left of the whale */
 .intro-slate{position:fixed;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none;will-change:transform,opacity}
+.desc-line{position:fixed;left:5vw;top:calc(50% + 110px);z-index:6;opacity:0;pointer-events:none;will-change:transform,opacity;
+  font-family:'Roboto Flex',sans-serif;font-size:clamp(1.05rem,1.9vw,1.35rem);letter-spacing:.05em;line-height:1.5;
+  color:rgba(244,241,234,.88);max-width:min(46vw,520px);text-shadow:0 2px 14px rgba(0,0,0,.5)}
 .slate-card{position:relative;padding:1.1rem 1.8rem;border-radius:18px;text-align:left;
   background:rgba(5,12,9,.82);border:1px solid rgba(255,255,255,.22);
   box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
-.slate-card .name-text{font-size:clamp(1.6rem,3.6vw,2.6rem)}
 #nameStage{background:transparent;border:0;box-shadow:none;padding:.4rem 0}
 #nameStage .name-text{font-size:clamp(2rem,6vw,4.5rem);white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px hsl(24 100% 72% / .8),0 0 6px hsl(24 100% 62% / .4)}
-.slate-card .title-slogan{font-size:clamp(1.2rem,2.6vw,2rem)}
-.name-glass{display:inline-block;padding:1.1rem 2.2rem;border-radius:18px;
-  background:rgba(6,14,10,.55);border:1px solid rgba(255,255,255,.22);
-  -webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);
-  box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12)}
 .name-text{font-family:'Roboto Flex',sans-serif;font-size:clamp(1.6rem,4.5vw,3rem);font-weight:700;color:var(--text-cream);text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px hsl(24 100% 72% / .8),0 0 4px hsl(24 100% 62% / .4)}
 .name-char{display:inline-block;opacity:0;transform:translateY(20px)}
 
 .title-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;z-index:6;opacity:0;transform:translateY(150px)}
-.title-glass{display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2.2rem 3rem;border-radius:22px;
-  background:rgba(6,14,10,.58);border:1px solid rgba(255,255,255,.2);
-  -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
-  box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.14);max-width:min(92vw,860px)}
 .title-reflect{transform:scaleY(-1);margin-top:2.2rem;
   -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   opacity:.55;filter:blur(1px)}
-.title-slogan{font-family:'Roboto Flex',sans-serif;font-size:clamp(2.4rem,5.6vw,4rem);color:var(--text-cream);letter-spacing:.04em;text-align:center;text-shadow:0 0 2px hsl(24 100% 72% / .6)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
 #r6 .sticky{overflow:visible}
@@ -138,12 +130,9 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
-#varprox{position:fixed;top:0;left:0;right:0;height:25vh;z-index:42;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 2.5s}
-#varprox.visible{opacity:1}
-#varprox .variable-proximity{font-family:'Roboto Flex',sans-serif;font-size:clamp(2rem,8vw,6rem);font-weight:400;letter-spacing:.04em;line-height:1.2;text-align:center;white-space:nowrap;color:rgba(91,77,255,.8);text-shadow:0 0 2px rgba(255,160,102,.4);user-select:none;-webkit-user-select:none}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:120vh}.r4h{height:60vh}.r5h{height:40vh}.r6h{height:900vh}
-@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:90vh}.r4h{height:50vh}.r5h{height:30vh}}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:900vh}
+@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}}
 
 .nav-brand{display:none}
 .menu-toggle{display:none}
@@ -169,6 +158,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   #nameStage .name-text{white-space:nowrap;font-size:clamp(1.2rem,5vw,2rem)}
   .name-text .name-space{display:inline}
   .intro-slate{left:50%;top:20vh;transform:translateX(-50%);width:min(92vw,660px);align-items:center;text-align:center}
+  .desc-line{left:50%;top:32vh;transform:translateX(-50%);text-align:center;max-width:88vw}
 }
 @media(max-width:768px) and (orientation:portrait){
   .r6h{height:120vh}
@@ -224,6 +214,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <div class="intro-slate" id="slateStage">
     <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
   </div>
+  <div class="desc-line" id="descLine">Conservationist. Storyteller. Turning green passion into action.</div>
 </section>
 <section class="room r4h" id="r4"><div class="sticky"></div></section>
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
@@ -264,7 +255,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 </nav>
 <div class="slogan-bar" id="sloganBar">Connecting green brands with the people who move the planet.</div>
 <div class="gallery-floor" id="galleryFloor"></div>
-<div id="varprox" aria-hidden="true"></div>
 <div class="section-buttons" id="sectionButtons">
   <a href="#r3" class="sect-btn">About</a>
   <a href="blog.html" class="sect-btn">Blog</a>
@@ -337,13 +327,6 @@ function splitToChars(el,cls){
   return chars;
 }
 var nameVPChars=splitToChars(nameText,'name-char');
-var roleVPChars=[];
-var projectsEl=document.getElementById('varprox');
-var projectsSpan=document.createElement('span');
-projectsSpan.className='variable-proximity';
-projectsEl.appendChild(projectsSpan);
-var projectsVPChars=splitToChars(projectsSpan,'vp-char');
-var allVPChars=[].concat(nameVPChars,roleVPChars,projectsVPChars);
 var nameRevealCount=0;
 
 var TITLE_PAD=40;
@@ -366,18 +349,6 @@ function revealNameChars(count){
     c.style.transform=i<count?'translateY(0)':'translateY(20px)';
   });
 }
-var curMX=0,curMY=0;
-window.addEventListener('mousemove',function(e){curMX=e.clientX;curMY=e.clientY;},{passive:true});
-
-function updateAllVP(){
-  allVPChars.forEach(function(c){
-    var rect=c.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
-    var dist=Math.hypot(curMX-cx,curMY-cy),radius=150;
-    if(dist<radius){var t=1-dist/radius,wght=400+600*t,opsz=9+31*t;c.style.fontVariationSettings="'wght' "+Math.round(wght)+", 'opsz' "+Math.round(opsz);}
-    else c.style.fontVariationSettings="'wght' 400, 'opsz' 9";
-  });
-}
-
 // ── GALLERY CARDS ──
 var cardData=[
   {name:'Whale Passage',img:'images/whale-ocean.jpg',url:'https://www.instagram.com/margreenie/'},
@@ -406,7 +377,13 @@ cardData.forEach(function(card){
 var dots=document.querySelectorAll('.phase-dots .dot');
 dots.forEach(function(dot){
   dot.addEventListener('click',function(){
-    document.getElementById(this.getAttribute('data-room')).scrollIntoView({behavior:'smooth'});
+    var el=document.getElementById(this.getAttribute('data-room'));
+    if(typeof lenis!=='undefined'&&lenis){
+      lenis.scrollTo(window.scrollY,{immediate:true});   // resync Lenis first
+      lenis.scrollTo(el.offsetTop,{duration:1.2});
+    }else{
+      el.scrollIntoView({behavior:'smooth'});
+    }
   });
 });
 
@@ -475,9 +452,9 @@ var autoScrollOn = true;
 function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
 function smoothstep(v){ v = clamp01(v); return v * v * (3 - 2 * v); }
 function introSpan(){
-  // intro = r1..r5, gallery r6 is excluded
+  // 14s phase = r1..r3 (whale video, title, description); transition is r4
   var top = roomData[0].top;
-  var bot = roomData[4].top + roomData[4].height;
+  var bot = roomData[2].top + roomData[2].height;
   return { top: top, span: Math.max(1, bot - top) };
 }
 var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -531,54 +508,50 @@ gsap.ticker.add(autoscrollStep);
 // ScrollTrigger: room progress -> animations (scrub easing, transform/opacity only)
 gsap.registerPlugin(ScrollTrigger);
 
-// Ocean -> gallery transition: ONE scrubbed timeline, strictly sequential in
-// BOTH directions. First half: the ocean slides up out of view. Second half:
-// the gallery rises from underneath. Scrolling back up reverses it exactly —
-// the gallery fully exits before the ocean returns. No crossfade, ever.
+// Title: enters exactly over room 2 (rises into place while the whale plays)
+// r2 top = 30vh; 'top 0%' -> starts at 30vh, 'top -30%' -> done by 60vh.
 gsap.timeline({
   scrollTrigger: {
-    trigger: '#r5', start: 'top bottom', end: 'bottom top', scrub: 1
+    trigger: '#r2', start: 'top 0%', end: 'top -30%', scrub: 1
   }
 })
-.to('#whaleWrap', { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power2.in' })
-.to('#slateStage', { y: '-60vh', opacity: 0, duration: 0.5, ease: 'power2.in', overwrite: 'auto' }, '<')
+.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+
+// Description: enters exactly over room 3 (r3 top = 60vh; 60..110vh).
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#r3', start: 'top 0%', end: 'top -50%', scrub: 1
+  }
+})
+.fromTo('#descLine', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+
+// Room 4: the slow EVEN slide-up. Whole hero (ocean + title + description)
+// glides up together at linear ease over the first half of r4's 3-viewport
+// span, then the gallery rises from underneath in the second half. Scrolling
+// back reverses it exactly — gallery exits before the hero returns.
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#r4', start: 'top top', end: 'bottom bottom', scrub: 1
+  }
+})
+.to('#whaleWrap', { yPercent: -100, opacity: 0, duration: 0.5, ease: 'none' })
+.to('#slateStage', { y: '-70vh', opacity: 0, duration: 0.5, ease: 'none', overwrite: 'auto' }, '<')
+.to('#descLine', { y: '-70vh', opacity: 0, duration: 0.5, ease: 'none', overwrite: 'auto' }, '<')
 .fromTo('#galleryRoom',
   { yPercent: 100, opacity: 0 },
   { yPercent: 0, opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.out' }
 )
 .to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<');
 
-// Title: rises into place through early r3, holds through r4. It leaves only
-// in the '#r5' ocean timeline (rides up with the whale; overwrite:'auto' takes
-// sole control when that starts). So it can never linger into r6.
-gsap.timeline({
-  scrollTrigger: {
-    trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: 1
-  }
-})
-.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.15, ease: 'power2.out' });
 
 
-
-// Title chars: reveal progressively as r3 is scrolled (scrubbed, re-enters).
-// Without this the name chars stay at their CSS default opacity:0.
+// Title chars: reveal progressively as r2 is scrolled (scrubbed, re-enters).
 ScrollTrigger.create({
-  trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: true,
+  trigger: '#r2', start: 'top 0%', end: 'top -30%', scrub: true,
   onUpdate: function(self){
     var target = Math.floor(Math.min(1, self.progress / 0.2) * nameVPChars.length);
     if(target !== nameRevealCount){ revealNameChars(target); nameRevealCount = target; }
   }
-});
-
-// Mouse-proximity variable-font effect (rAF-throttled mousemove, plus on scroll)
-var vpRaf = null;
-window.addEventListener('mousemove', function(){
-  if(vpRaf) return;
-  vpRaf = requestAnimationFrame(function(){ vpRaf = null; updateAllVP(); });
-}, {passive:true});
-ScrollTrigger.create({
-  trigger: '#r6', start: 'top bottom', end: 'bottom top',
-  onUpdate: updateAllVP
 });
 
 // Nav bar: fade in once past the intro
