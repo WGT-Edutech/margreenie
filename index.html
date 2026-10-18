@@ -39,6 +39,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .name-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:6;opacity:0}
 /* Title + description slate: two glass boxes, left of the whale */
 .intro-slate{position:fixed;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.3rem;z-index:6;opacity:0;width:min(54vw,660px);align-items:flex-start;pointer-events:none;will-change:transform,opacity}
+.quote-stage{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;opacity:0;pointer-events:none;will-change:opacity;text-align:center;padding:0 6vw}
+.quote-stage blockquote{font-family:'Roboto Flex',sans-serif;font-weight:500;font-style:italic;font-size:clamp(1.6rem,3.6vw,2.9rem);line-height:1.35;letter-spacing:.02em;color:var(--text-cream);max-width:min(78vw,900px);text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.quote-stage .quote-mark{font-family:Georgia,serif;font-size:clamp(3.4rem,7vw,5.6rem);line-height:0;color:var(--accent-coral);opacity:.9;transform:translateY(1.2rem)}
+.quote-stage cite{font-family:'Oswald',sans-serif;font-style:normal;font-size:clamp(.9rem,1.4vw,1.1rem);text-transform:uppercase;letter-spacing:.22em;color:rgba(244,241,234,.62)}
 .desc-line{position:fixed;left:5vw;top:calc(50% + 110px);z-index:6;opacity:0;pointer-events:none;will-change:transform,opacity;
   font-family:'Roboto Flex',sans-serif;font-size:clamp(1.05rem,1.9vw,1.35rem);letter-spacing:.05em;line-height:1.5;
   color:rgba(244,241,234,.88);max-width:min(60vw,720px);white-space:nowrap;text-shadow:0 2px 14px rgba(0,0,0,.5)}
@@ -216,7 +220,14 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   </div>
   <div class="desc-line" id="descLine">Conservationist. Storyteller. Turning green passion into action.</div>
 </section>
-<section class="room r4h" id="r4"><div class="sticky"></div></section>
+<section class="room r4h" id="r4">
+  <div class="sticky"></div>
+  <div class="quote-stage" id="quoteStage">
+    <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+    <blockquote>I have learned to slow down, learned to appreciate earth and nature.</blockquote>
+    <cite>&mdash; Margarita Samsonova</cite>
+  </div>
+</section>
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
@@ -529,6 +540,22 @@ gsap.timeline({
   }
 })
 .fromTo('#descLine', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+
+// Quote: a big line from her Wherever Magazine interview plays for ~3s in the
+// middle of room 4 — after the hero has slid up, before the gallery rises.
+// Timed (not scrubbed) so it reads for its full 3 seconds at any scroll speed.
+var r4el = document.getElementById('r4');
+var quoteTl = gsap.timeline({ paused: true })
+  .to('#quoteStage', { opacity: 1, duration: 0.6, ease: 'power2.out' })
+  .to({}, { duration: 2.4 })
+  .to('#quoteStage', { opacity: 0, duration: 0.6, ease: 'power2.in' });
+ScrollTrigger.create({
+  trigger: '#r4',
+  start: function(){ return r4el.offsetTop + 0.35 * r4el.offsetHeight - window.innerHeight; },
+  end:   function(){ return r4el.offsetTop + 0.55 * r4el.offsetHeight - window.innerHeight; },
+  onEnter: function(){ quoteTl.restart(); },
+  onLeaveBack: function(){ quoteTl.pause(0); }
+});
 
 // Room 4: the slow EVEN slide-up. Whole hero (ocean + title + description)
 // glides up together at linear ease over the first half of r4's 3-viewport
