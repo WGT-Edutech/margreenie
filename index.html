@@ -478,10 +478,10 @@ setTimeout(autoscrollLoop, AUTO_IDLE_MS);
 // ScrollTrigger: room progress -> animations (scrub easing, transform/opacity only)
 gsap.registerPlugin(ScrollTrigger);
 
-// Whale background: visible immediately, fades out through r5 (gallery on black)
+// Whale background: visible immediately; through r5 it SLIDES UP out of view
+// (ocean lifts away, black revealed underneath) — no crossfade with the gallery.
 gsap.to('#whaleWrap', {
-  opacity: 0,
-  ease: 'none',
+  yPercent: -100, opacity: 0, ease: 'power2.in',
   scrollTrigger: {
     trigger: '#r5', start: 'top bottom', end: 'top top', scrub: 1
   }
@@ -498,14 +498,16 @@ gsap.timeline({
 .fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' })
 .to('#slateStage', { opacity: 0, duration: 0.5, ease: 'power1.in' });
 
-// Gallery: show ring + floor when r6 enters
-gsap.to('#galleryRoom', {
-  opacity: 1, visibility: 'visible', ease: 'none',
-  scrollTrigger: { trigger: '#r6', start: 'top bottom', end: 'top 80%', scrub: 1 }
-});
+// Gallery: rises from underneath AFTER the ocean has slid away (r6 top at 40%
+// viewport = 240vh, exactly when the whale exit completes). Clean sequence.
+gsap.fromTo('#galleryRoom',
+  { yPercent: 100, opacity: 0 },
+  { yPercent: 0, opacity: 1, visibility: 'visible', ease: 'power2.out',
+    scrollTrigger: { trigger: '#r6', start: 'top 40%', end: 'top 0%', scrub: 1 } }
+);
 gsap.to('#galleryFloor', {
   opacity: 1, ease: 'none',
-  scrollTrigger: { trigger: '#r6', start: 'top bottom', end: 'top 60%', scrub: 1 }
+  scrollTrigger: { trigger: '#r6', start: 'top 40%', end: 'top 0%', scrub: 1 }
 });
 
 // Title chars: reveal progressively as r3 is scrolled (scrubbed, re-enters).
