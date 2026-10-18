@@ -40,7 +40,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .slate-card .name-text{font-size:clamp(1.6rem,3.6vw,2.6rem)}
 #nameStage{background:transparent;border:0;box-shadow:none;padding:.4rem 0}
 #nameStage .name-text{font-size:clamp(2rem,6vw,4.5rem);white-space:nowrap;text-shadow:0 2px 24px rgba(0,0,0,.55),0 0 2px hsl(24 100% 72% / .8),0 0 6px hsl(24 100% 62% / .4)}
-.slate-card .title-role{font-size:clamp(.95rem,1.9vw,1.3rem)}
 .slate-card .title-slogan{font-size:clamp(1.2rem,2.6vw,2rem)}
 .name-glass{display:inline-block;padding:1.1rem 2.2rem;border-radius:18px;
   background:rgba(6,14,10,.55);border:1px solid rgba(255,255,255,.22);
@@ -65,7 +64,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 #r6 .sticky{overflow:visible}
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
 .ring-card{position:absolute;left:50%;top:50%;width:600px;height:400px;margin-left:-300px;margin-top:-200px;transform-style:preserve-3d;cursor:pointer}
-.ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease}
+.ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease,transform .35s cubic-bezier(.2,.7,.3,1.3);transform-origin:center}
 .ring-card-reflect{position:absolute;top:calc(100% + 40px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
 .ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%)}
 .ring-card-front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;background:#0a0a12}
@@ -80,9 +79,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   background:rgba(5,12,9,.85);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.35em 1.2em;
   box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .35s ease;pointer-events:none}
 .ring-card.focused .ring-card-pill{opacity:1}
-#cardInfo{position:fixed;top:50%;left:50%;transform:translate(-50%,-185px);z-index:45;text-align:center;pointer-events:none;transition:opacity .4s ease}
-.card-name{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em;text-shadow:0 0 2px rgba(255,160,102,.5);background:rgba(3,3,10,.7);padding:.4rem 1.5rem;border-radius:8px;border:1px solid rgba(255,138,77,.2)}
-.ring-card:hover .ring-card-inner{box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(255,160,102,.3),0 20px 60px rgba(0,0,0,.6)}
+.ring-card:hover .ring-card-inner{transform:scale(1.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(255,160,102,.3),0 20px 60px rgba(0,0,0,.6)}
 
 .phase-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.8rem}
 .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
@@ -156,7 +153,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .menu-toggle.open span:nth-child(2){opacity:0}
   .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  #cardInfo{display:none}
 }
 @media(orientation:portrait){
   .name-text{line-height:1.12;text-align:center}
@@ -214,10 +210,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r3h" id="r3">
   <div class="sticky">
     <div class="intro-slate" id="slateStage">
-      <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
       <div class="slate-card" id="titleStage">
         <div class="title-role" id="roleText">Greenfluencer &amp; Storyteller</div>
       </div>
+      <div class="slate-card" id="nameStage"><h1 class="name-text" id="nameText">Margarita Samsonova</h1></div>
       <div class="slate-card slate-reflect" aria-hidden="true">
         <div class="title-role">Greenfluencer &amp; Storyteller</div>
       </div>
@@ -229,7 +225,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r6h" id="r6">
   <div class="sticky">
     <section id="galleryRoom"><div class="card-ring" id="cardRing"></div></section>
-    <div id="cardInfo"><div class="card-name" id="cardName"></div></div>
   </div>
 </section>
 
@@ -390,15 +385,13 @@ var cardData=[
   {name:'Voyage Michigan Story',img:'images/margo-story.jpg',url:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/'},
   {name:'70 Countries & Counting',img:'images/glacier-alaska.jpg',url:'https://www.instagram.com/margreenie/'}
 ];
-var $cardRing=document.getElementById('cardRing'),$cardName=document.getElementById('cardName'),$cardInfo=document.getElementById('cardInfo');
+var $cardRing=document.getElementById('cardRing');
 cardData.forEach(function(card){
   var el=document.createElement('div');el.className='ring-card';
   var inner=card.img
       ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div><div class="ring-card-pill">'+card.name+'</div>'
       :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div><div class="ring-card-pill">'+card.name+'</div>';
   el.innerHTML=inner;
-  el.addEventListener('mouseenter',function(){$cardName.textContent=card.name;$cardInfo.style.opacity='1';});
-  el.addEventListener('mouseleave',function(){$cardInfo.style.opacity='0';});
   if(card.url)el.addEventListener('click',function(e){e.stopPropagation();window.open(card.url,'_blank');});
   if(card.restart)el.addEventListener('click',function(e){e.stopPropagation();window.scrollTo({top:0,behavior:'smooth'});});
   el._spring={tx:0,tz:-400,ry:0,sc:1,op:0,vtx:0,vtz:0,vry:0,vsc:0,vop:0};
