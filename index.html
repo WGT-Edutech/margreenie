@@ -165,10 +165,10 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .desc-line{left:50%;top:32vh;transform:translateX(-50%);text-align:center;max-width:94vw;white-space:nowrap;font-size:clamp(.95rem,4.2vw,1.3rem)}
 }
 @media(max-width:768px) and (orientation:portrait){
-  .r6h{height:120vh}
+  .r6h{height:60vh}
   #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
   #galleryRoom::-webkit-scrollbar{display:none}
-  .card-ring{width:max-content;min-width:100%;flex-direction:row;align-items:center;gap:18px;transform-style:flat;padding:0 10vw}
+  .card-ring{width:max-content;min-width:100%;height:100%;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;transform-style:flat;padding:0 10vw}
   .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:400px;max-height:270px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
   .ring-card-reflect{display:none}
 }
@@ -231,7 +231,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
-    <section id="galleryRoom"><div class="card-ring" id="cardRing"></div></section>
+    <section id="galleryRoom" data-lenis-prevent><div class="card-ring" id="cardRing"></div></section>
   </div>
 </section>
 
