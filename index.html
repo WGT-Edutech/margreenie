@@ -314,6 +314,7 @@ window.addEventListener('resize',function(){
 // ── WHALE VIDEO BACKGROUND (buttery 30fps loop + scroll scrub) ──
 var whaleWrap=document.getElementById('whaleWrap');
 var whaleVid=document.getElementById('whaleVid');
+whaleVid.playbackRate=0.75;   // calmer glide (Safari ignores the attribute)
 var vidReady=false;
 function tryPlay(){
   if(vidReady||!whaleVid)return;
