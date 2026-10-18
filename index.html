@@ -492,7 +492,7 @@ gsap.to('#whaleWrap', {
 // top line into place. Exit: title slides left to make way for the gallery.
 gsap.timeline({
   scrollTrigger: {
-    trigger: '#r3', start: 'top bottom', end: 'bottom top', scrub: 1
+    trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: 1
   }
 })
 .fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' })
@@ -511,7 +511,7 @@ gsap.to('#galleryFloor', {
 // Title chars: reveal progressively as r3 is scrolled (scrubbed, re-enters).
 // Without this the name chars stay at their CSS default opacity:0.
 ScrollTrigger.create({
-  trigger: '#r3', start: 'top bottom', end: 'bottom top', scrub: true,
+  trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: true,
   onUpdate: function(self){
     var target = Math.floor(Math.min(1, self.progress / 0.45) * nameVPChars.length);
     if(target !== nameRevealCount){ revealNameChars(target); nameRevealCount = target; }
