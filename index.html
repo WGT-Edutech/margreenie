@@ -488,14 +488,21 @@ setTimeout(autoscrollLoop, AUTO_IDLE_MS);
 // ScrollTrigger: room progress -> animations (scrub easing, transform/opacity only)
 gsap.registerPlugin(ScrollTrigger);
 
-// Whale background: visible immediately; through r5 it SLIDES UP out of view
-// (ocean lifts away, black revealed underneath) — no crossfade with the gallery.
-gsap.to('#whaleWrap', {
-  yPercent: -100, opacity: 0, ease: 'power2.in',
+// Ocean -> gallery transition: ONE scrubbed timeline, strictly sequential in
+// BOTH directions. First half: the ocean slides up out of view. Second half:
+// the gallery rises from underneath. Scrolling back up reverses it exactly —
+// the gallery fully exits before the ocean returns. No crossfade, ever.
+gsap.timeline({
   scrollTrigger: {
-    trigger: '#r5', start: 'top bottom', end: 'top top', scrub: 1
+    trigger: '#r5', start: 'top bottom', end: 'bottom top', scrub: 1
   }
-});
+})
+.to('#whaleWrap', { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power2.in' })
+.fromTo('#galleryRoom',
+  { yPercent: 100, opacity: 0 },
+  { yPercent: 0, opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.out' }
+)
+.to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<');
 
 // Title + slogan: ONE scrubbed timeline — enters through r3, exits through r4.
 // The title fades in place (no left/up drift); the slogan slides down from the
@@ -505,27 +512,17 @@ gsap.timeline({
     trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: 1
   }
 })
-.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75, ease: 'power2.out' })
-.to('#slateStage', { opacity: 0, duration: 0.5, ease: 'power1.in' });
+.fromTo('#slateStage', { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out' })
+.to('#slateStage', { opacity: 0, duration: 0.75, ease: 'power1.in' });
 
-// Gallery: rises from underneath AFTER the ocean has slid away (r6 top at 40%
-// viewport = 240vh, exactly when the whale exit completes). Clean sequence.
-gsap.fromTo('#galleryRoom',
-  { yPercent: 100, opacity: 0 },
-  { yPercent: 0, opacity: 1, visibility: 'visible', ease: 'power2.out',
-    scrollTrigger: { trigger: '#r6', start: 'top 40%', end: 'top 0%', scrub: 1 } }
-);
-gsap.to('#galleryFloor', {
-  opacity: 1, ease: 'none',
-  scrollTrigger: { trigger: '#r6', start: 'top 40%', end: 'top 0%', scrub: 1 }
-});
+
 
 // Title chars: reveal progressively as r3 is scrolled (scrubbed, re-enters).
 // Without this the name chars stay at their CSS default opacity:0.
 ScrollTrigger.create({
   trigger: '#r3', start: 'top 60%', end: 'bottom top', scrub: true,
   onUpdate: function(self){
-    var target = Math.floor(Math.min(1, self.progress / 0.45) * nameVPChars.length);
+    var target = Math.floor(Math.min(1, self.progress / 0.2) * nameVPChars.length);
     if(target !== nameRevealCount){ revealNameChars(target); nameRevealCount = target; }
   }
 });
