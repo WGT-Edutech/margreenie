@@ -160,9 +160,9 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 }
 @media(orientation:portrait){
   .name-text{line-height:1.12;text-align:center}
-  #nameStage .name-text{white-space:normal;font-size:clamp(1.5rem,6.5vw,2.6rem)}
-  .name-text .name-space{display:block;font-size:0;line-height:0;height:0}
-  .intro-slate{left:50%;transform:translateX(-50%) translateY(-50%);width:min(92vw,660px);align-items:center;text-align:center}
+  #nameStage .name-text{white-space:nowrap;font-size:clamp(1.2rem,5vw,2rem)}
+  .name-text .name-space{display:inline}
+  .intro-slate{left:50%;top:20vh;transform:translateX(-50%);width:min(92vw,660px);align-items:center;text-align:center}
 }
 @media(max-width:768px) and (orientation:portrait){
   .r6h{height:120vh}
@@ -432,7 +432,7 @@ document.querySelectorAll('.donate-chip').forEach(function(chip){
 var landscapeOverlay=document.getElementById('landscapeOverlay');
 var loDismissed=false;
 function checkOrientation(){
-  var portraitPhone=window.innerWidth<=768&&window.innerHeight>window.innerWidth;
+  var portraitPhone=window.innerHeight>window.innerWidth&&window.innerWidth<=900;
   if(!portraitPhone)loDismissed=false;
   landscapeOverlay.style.display=(portraitPhone&&!loDismissed)?'flex':'none';
 }
@@ -457,6 +457,7 @@ var lenis = new Lenis({
   wheelMultiplier: 1,
   touchMultiplier: 1.4
 });
+window.__lenis = lenis; window.__auto = {get on(){return autoScrollOn;}, get tick(){return autoTicking;}, get last(){return lastInputT;}};
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
@@ -465,27 +466,39 @@ gsap.ticker.lagSmoothing(0);
 // Uses Lenis scrollTo (eased, interruptible) — no hand-rolled velocity ramp.
 var lastInputT = 0;
 var AUTO_IDLE_MS = 700;
+var autoVelVh = 21.6;                 // vh per second (intro synced to video)
 var autoScrollOn = true;
+function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+function smoothstep(v){ v = clamp01(v); return v * v * (3 - 2 * v); }
+function introSpan(){
+  // intro = r1..r5, gallery r6 is excluded
+  var top = roomData[0].top;
+  var bot = roomData[4].top + roomData[4].height;
+  return { top: top, span: Math.max(1, bot - top) };
+}
 var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function userInputNow(){ lastInputT = performance.now(); }
+function userInputNow(){ lastInputT = performance.now(); autoTicking = false; }
 ['wheel','touchstart','touchmove','keydown','pointerdown'].forEach(function(ev){
   window.addEventListener(ev, userInputNow, {passive:true});
 });
 var autoTicking = false;
-function autoscrollLoop(){
+// Autoscroll runs inside the gsap.ticker (every frame, cannot die). When the
+// user is idle in the intro, glide to the gallery; resync Lenis first because
+// a native scroll-back leaves its internal state stale (scrollTo would no-op).
+function autoscrollStep(){
   if(!autoScrollOn || REDUCED) return;
   if(performance.now() - lastInputT < AUTO_IDLE_MS){ autoTicking = false; return; }
   var s = introSpan(), galleryTop = s.top + s.span;
-  if(window.scrollY >= galleryTop - 2){ autoScrollOn = false; autoTicking = false; return; }
+  if(window.scrollY >= galleryTop - 2){ autoTicking = false; return; } // in gallery: hold, stay armed
   if(!autoTicking){
     autoTicking = true;
-    lenis.scrollTo(window.scrollY + window.innerHeight * 0.5, {
-      duration: 0.5, easing: function(t){ return t; }
+    lenis.scrollTo(window.scrollY, { immediate: true });
+    lenis.scrollTo(galleryTop, {
+      onComplete: function(){ autoTicking = false; }
     });
   }
-  setTimeout(autoscrollLoop, 500);
 }
-setTimeout(autoscrollLoop, AUTO_IDLE_MS);
+gsap.ticker.add(autoscrollStep);
 
 // ScrollTrigger: room progress -> animations (scrub easing, transform/opacity only)
 gsap.registerPlugin(ScrollTrigger);
@@ -556,9 +569,23 @@ ScrollTrigger.create({
     ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
   }
 });
+// Mobile: the horizontal swipe drives the focused card (scroll-snap row)
+var galleryEl = document.getElementById('galleryRoom');
+if(galleryEl){
+  galleryEl.addEventListener('scroll', function(){
+    if(!mobilePortrait) return;
+    var step = galleryEl.scrollWidth / total;
+    var idx = Math.max(0, Math.min(total - 1, Math.round(galleryEl.scrollLeft / step)));
+    ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
+  }, {passive:true});
+}
 
-// Keep the gallery spring physics running on a lightweight rAF (transform-only)
+// Keep the gallery spring physics running on a lightweight rAF (transform-only).
+// On mobile portrait the gallery is a horizontal scroll-snap row — the 3D
+// spring would fight the native swipe, so it is skipped there.
+var mobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 var gallerySpring = function(){
+  if(mobilePortrait) return;
   var active = document.querySelector('.ring-card.focused');
   if(active){
     var idx = Array.prototype.indexOf.call(ringCards, active);
