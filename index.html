@@ -18,15 +18,17 @@
 <title>Margarita Samsonova — Greenfluencer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <script src="js/gsap.min.js"></script>
 <script src="js/ScrollTrigger.min.js"></script>
 <script src="js/lenis.min.js"></script>
+<script src="js/lil-gui.min.js"></script>
+<script src="js/vp-engine.js"></script>
 <style>
-:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
+:root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5);--body-font:'Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
-body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 #scene{position:fixed;inset:0;z-index:2;pointer-events:none}
 .whale-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:1;
@@ -61,12 +63,12 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   opacity:.55;filter:blur(1px)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
-#r6 .sticky{overflow:visible}
+#r7 .sticky{overflow:visible}
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
-.ring-card{position:absolute;left:50%;top:50%;width:calc(600px * var(--k,1));height:calc(400px * var(--k,1));margin-left:calc(-300px * var(--k,1));margin-top:calc(-200px * var(--k,1));transform-style:preserve-3d;cursor:pointer}
+.ring-card{position:absolute;left:50%;top:50%;width:calc(360px * var(--k,1));height:calc(240px * var(--k,1));margin-left:calc(-180px * var(--k,1));margin-top:calc(-120px * var(--k,1));transform-style:preserve-3d;cursor:pointer}
 .ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease,transform .35s cubic-bezier(.2,.7,.3,1.3);transform-origin:center}
-.ring-card-reflect{position:absolute;top:calc(100% + 140px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
-.ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%)}
+.ring-card-reflect{position:absolute;top:calc(100% + 84px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
+.ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:var(--reflect-op,.45);-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%)}
 .ring-card-front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;background:#0a0a12}
 .ring-card-front img{animation:kenburns 22s ease-in-out infinite alternate;will-change:transform}
 @keyframes kenburns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.14) translate(-2.2%,-1.6%)}}
@@ -74,28 +76,26 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .ring-card:nth-child(3n) .ring-card-front img{animation-duration:19s;animation-delay:-11s}
 @media(prefers-reduced-motion){.ring-card-front img{animation:none}}
 .ring-card-title{font-family:'Oswald',sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream);text-align:center;line-height:1.2;text-shadow:0 0 1px hsl(24 100% 72% / .55)}
-.ring-card-pill{position:absolute;top:-1.7rem;left:50%;transform:translateX(-50%);z-index:5;white-space:nowrap;
-  font-family:'Oswald',sans-serif;font-size:2.1rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-cream);
+.ring-card-pill{position:absolute;top:-1.02rem;left:50%;transform:translateX(-50%);z-index:5;white-space:nowrap;
+  font-family:'Oswald',sans-serif;font-size:1.26rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-cream);
   background:rgba(5,12,9,.85);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.45em 1.4em;
   box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .35s ease;pointer-events:none}
 .ring-card.focused .ring-card-pill{opacity:1}
+.ring-card:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
 .ring-card:hover .ring-card-inner{transform:scale(1.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4),0 0 3px rgba(255,160,102,.3),0 20px 60px rgba(0,0,0,.6)}
 
 .phase-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.8rem}
 .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
 .dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(255,138,77,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
 
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;opacity:0;pointer-events:none;transition:opacity .5s;background:rgba(0,0,0,.85);border-bottom:1px solid rgba(255,255,255,.08);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;padding:.55rem 2rem .35rem;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.nav-strip{display:flex;flex:1 1 100%;align-items:center;justify-content:flex-end;gap:1rem;margin-top:.4rem;padding-top:.4rem;border-top:1px solid rgba(255,255,255,.08)}
-.nav-motto{font-size:.72rem;color:var(--text-dim);font-style:italic;letter-spacing:.03em;flex:1 1 100%;text-align:left}
-.nav-socials{display:flex;flex-wrap:wrap;gap:.9rem;margin-left:auto;max-width:62%}
-.nav-socials a{font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.07em;text-decoration:none;transition:color .3s}
-.nav-socials a:hover{color:var(--purple)}
-.top-nav.visible{opacity:1;pointer-events:auto}
-.nav-links{display:flex;gap:1.5rem}
-.nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .3s}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+.nav-links{display:flex;align-items:center}
+.nav-links a{font-family:var(--body-font),sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
-.donate-link{color:var(--purple)!important}
+.nav-links a.donate-link{color:var(--purple)!important}
+.menu-toggle{display:none}
+.nav-strip,.nav-motto{display:none}
 
 .section-buttons{position:fixed;bottom:calc((50vh - 140px) * 2 / 3);left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:1rem;opacity:0;pointer-events:none;transition:opacity .6s}
 .section-buttons.visible{opacity:1;pointer-events:auto}
@@ -104,7 +104,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .content-room{position:relative;z-index:20;background:#000;padding:6rem 0;border-top:1px solid rgba(255,138,77,.15)}
 .content-room:first-of-type{border-top:0}
 .content-inner{max-width:1000px;margin:0 auto;padding:0 2rem}
-.content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
+.content-tag{font-family:var(--body-font),sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem}
 .content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.5rem}
 .content-body{max-width:720px;font-size:1.02rem;color:var(--text-dim);display:flex;flex-direction:column;gap:1rem}
 .content-body strong{color:var(--text-cream)}
@@ -113,18 +113,18 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
 .tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
 .tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
-.tour-date{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
+.tour-date{font-family:var(--body-font),sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
 .tour-card h4{font-family:'Oswald',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-cream)}
 .tour-card p{font-size:.9rem;color:var(--text-dim);flex:1}
 .tour-card a{color:var(--purple);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.04em}
 .tour-card a:hover{text-decoration:underline}
 .tour-soon{border-style:dashed}
 .donate-grid{display:flex;flex-wrap:wrap;gap:.7rem}
-.donate-chip{font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(255,138,77,.12);border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
+.donate-chip{font-family:var(--body-font),sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.04em;color:var(--text-cream);background:rgba(255,138,77,.12);border:1px solid rgba(255,138,77,.35);border-radius:999px;padding:.55em 1.3em;cursor:pointer;transition:all .25s}
 .donate-chip:hover{background:rgba(255,138,77,.25);transform:translateY(-1px)}
 .donate-chip.crypto{border-color:rgba(244,241,234,.22);background:rgba(255,255,255,.05)}
 .donate-note{margin-top:1.4rem;font-size:.85rem;color:var(--text-dim)}
-.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(24 100% 72% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
+.sect-btn{display:inline-block;padding:.6em 1.8em;border-radius:999px;font-family:var(--body-font),sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);text-shadow:0 0 1px hsl(24 100% 72% / .45);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:all .3s}
 .sect-btn:hover{background:rgba(255,138,77,.2);border-color:rgba(255,138,77,.4);transform:translateY(-2px)}
 .donate-btn{background:var(--purple);border-color:var(--purple);box-shadow:0 0 4px rgba(255,170,110,.35)}
 .donate-btn:hover{background:rgba(255,138,77,.8);box-shadow:0 0 4px rgba(255,170,110,.5)}
@@ -135,22 +135,11 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:900vh}
-@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:420vh}.r7h{height:1200vh}
+@media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
 
-.nav-brand{display:none}
-.menu-toggle{display:none}
-@media(min-width:769px){
-  .nav-links a{font-size:2.55rem}
-  .nav-motto{font-size:2.16rem}
-  .nav-socials a{font-size:2.04rem}
-  .nav-strip{margin-top:.8rem;padding-top:.8rem}
-}
 @media(max-width:768px){
-  .top-nav{justify-content:space-between;padding:.55rem 1rem .35rem}
-  .nav-strip{display:none}
-  .nav-motto{display:none}
-  .nav-brand{display:block;font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+  .top-nav{padding:0 1rem}
   .nav-links{display:none}
   .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
   .menu-toggle span{display:block;width:22px;height:2px;background:var(--text-cream);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
@@ -166,18 +155,18 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .desc-line{left:50%;top:32vh;transform:translateX(-50%);text-align:center;max-width:94vw;white-space:nowrap;font-size:clamp(.95rem,4.2vw,1.3rem)}
 }
 @media(max-width:900px) and (orientation:portrait){
-  .r6h{height:60vh}
-  #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+  .r7h{height:60vh}
+  #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}
   #galleryRoom::-webkit-scrollbar{display:none}
   .card-ring{width:max-content;min-width:100%;height:100%;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;transform-style:flat;padding:0 10vw}
-  .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:400px;max-height:270px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
+  .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:240px;max-height:162px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
   .ring-card-reflect{display:none}
 }
-.menu-backdrop{position:fixed;top:3.5rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s ease}
-.menu-backdrop.open{opacity:1;pointer-events:auto}
+.menu-backdrop{position:fixed;top:3.5rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s}
+.menu-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease,visibility 0s}
 .mobile-menu{position:fixed;top:3.5rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(255,138,77,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
 .mobile-menu.open{transform:translateX(0);visibility:visible;pointer-events:auto;transition:transform .35s ease,visibility 0s}
-.mobile-menu a{font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
+.mobile-menu a{font-family:var(--body-font),sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
 .mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
 .mobile-menu a.donate-link{color:var(--purple)}
 
@@ -190,11 +179,71 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   .landscape-overlay .lo-icon{font-size:3rem;animation:loRotate 2s ease-in-out infinite}
   @keyframes loRotate{0%,20%{transform:rotate(0deg)}60%,100%{transform:rotate(90deg)}}
   .landscape-overlay h2{font-family:'Oswald',sans-serif;font-size:1.4rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
-  .landscape-overlay p{font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
-  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(255,138,77,.4);background:rgba(255,138,77,.15);color:var(--text-cream);font-family:'Inter',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+  .landscape-overlay p{font-family:var(--body-font),sans-serif;font-size:.9rem;color:var(--text-dim);max-width:320px;line-height:1.6}
+  .landscape-overlay .lo-btn{padding:.7em 2em;border-radius:999px;border:1px solid rgba(255,138,77,.4);background:rgba(255,138,77,.15);color:var(--text-cream);font-family:var(--body-font),sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s}
   .landscape-overlay .lo-btn:hover{background:rgba(255,138,77,.3);box-shadow:0 0 8px rgba(255,138,77,.3)}
 }
 @media(prefers-reduced-motion){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== ORBIT ROOM (r6): matte teal sphere + aquamarine orbit rings ===== */
+:root{
+  --teal-deep:#04211f; --teal:#0f766e; --teal-bright:#14b8a6;
+  --aqua:#6ee7d8; --aqua-bright:#a7f3ec;
+  --sphere-px:250px; --sphere-m:-125px;
+  --ring1-px:430px; --ring1-m:-215px; --ring2-px:560px; --ring2-m:-280px; --ring3-px:690px; --ring3-m:-345px;
+  --glow-px:700px; --glow-m:-350px;
+  --tilt1:74deg; --tilt2:70deg; --tilt3:78deg;
+  --glow-a1:0.22; --glow-a2:0.12; --glow-a3:0.38; --ring-glow:0.14;
+  --sat-px:13px; --caption-y:190px;
+  --reflect-op:.45;
+}
+#orbitRoom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  opacity:0;perspective:1100px;transform-style:preserve-3d;will-change:transform,opacity;z-index:1}
+.orbit-glow{position:absolute;left:50%;top:50%;width:var(--glow-px);height:var(--glow-px);
+  margin:var(--glow-m) 0 0 var(--glow-m);border-radius:50%;
+  background:radial-gradient(circle,rgba(110,231,216,var(--glow-a1)) 0%,rgba(15,118,110,var(--glow-a2)) 42%,rgba(15,118,110,0) 68%)}
+.orbit-sphere{position:absolute;left:50%;top:50%;width:var(--sphere-px);height:var(--sphere-px);
+  margin:var(--sphere-m) 0 0 var(--sphere-m);border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.30),rgba(255,255,255,0) 44%),
+    radial-gradient(circle at 50% 50%,var(--teal-bright) 0%,var(--teal) 46%,var(--teal-deep) 100%);
+  box-shadow:inset -20px -26px 60px rgba(0,0,0,.55),inset 10px 12px 44px rgba(255,255,255,.10),
+    0 0 110px rgba(110,231,216,var(--glow-a3));
+  transform:translateZ(0)}
+.orbit-ring{position:absolute;left:50%;top:50%;border-radius:50%;
+  border:1px solid rgba(110,231,216,.55);transform-style:preserve-3d;
+  box-shadow:0 0 24px rgba(110,231,216,var(--ring-glow))}
+.orbit-ring-1{width:var(--ring1-px);height:var(--ring1-px);margin:var(--ring1-m) 0 0 var(--ring1-m);
+  transform:rotateX(var(--tilt1))}
+.orbit-ring-2{width:var(--ring2-px);height:var(--ring2-px);margin:var(--ring2-m) 0 0 var(--ring2-m);
+  transform:rotateX(var(--tilt2)) rotateZ(24deg);border-color:rgba(110,231,216,.38)}
+.orbit-ring-3{width:var(--ring3-px);height:var(--ring3-px);margin:var(--ring3-m) 0 0 var(--ring3-m);
+  transform:rotateX(var(--tilt3)) rotateZ(-18deg);border-color:rgba(110,231,216,.24);border-style:dashed}
+.orbit-spin{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.orbit-sat{position:absolute;left:50%;top:0;width:var(--sat-px);height:var(--sat-px);
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ffffff,var(--aqua-bright) 45%,var(--aqua) 100%);
+  box-shadow:0 0 14px var(--aqua)}
+.orbit-sat-b{top:100%}
+.orbit-caption{position:absolute;left:50%;top:50%;transform:translate(-50%,var(--caption-y));
+  font-family:'Oswald',sans-serif;font-size:clamp(.95rem,1.6vw,1.25rem);text-transform:uppercase;
+  letter-spacing:.28em;color:var(--aqua);opacity:0;white-space:nowrap;
+  text-shadow:0 0 2px rgba(110,231,216,.5)}
+@media(prefers-reduced-motion){#orbitRoom{opacity:1}}
+
+/* ===== ANIMATION LAB PANEL ===== */
+#labToggle{position:fixed;right:1.1rem;bottom:1.1rem;z-index:120;width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--aqua);background:rgba(4,33,31,.88);color:var(--aqua-bright);
+  font:600 12px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;cursor:pointer;
+  box-shadow:0 0 18px rgba(110,231,216,.25);display:block;-webkit-appearance:none}
+#labToggle:hover{background:rgba(15,118,110,.55)}
+#labToggle:focus-visible{outline:2px solid var(--aqua-bright);outline-offset:2px}
+.lil-gui{--width:300px;--name-width:46%;--background-color:rgba(4,26,25,.94);--text-color:#d7f5f0;
+  --title-background-color:rgba(15,118,110,.55);--widget-color:rgba(110,231,216,.20);
+  --hover-color:rgba(110,231,216,.30);--focus-color:rgba(110,231,216,.42);
+  --number-color:#8ff0e2;--string-color:#8ff0e2;--font-family:ui-monospace,Menlo,Consolas,monospace;
+  z-index:121!important}
+.lil-gui.root>.title{letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:768px){.lil-gui{--width:min(300px,86vw)}}
 </style>
 </head>
 <body>
@@ -232,38 +281,38 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
+    <div id="orbitRoom">
+      <div class="orbit-glow" aria-hidden="true"></div>
+      <div class="orbit-ring orbit-ring-3" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span></div></div>
+      <div class="orbit-ring orbit-ring-2" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span><span class="orbit-sat orbit-sat-b"></span></div></div>
+      <div class="orbit-sphere" id="orbitSphere" aria-hidden="true"></div>
+      <div class="orbit-ring orbit-ring-1" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span></div></div>
+      <div class="orbit-caption" id="orbitCaption">70 countries. One mission.</div>
+    </div>
+  </div>
+</section>
+<section class="room r7h" id="r7">
+  <div class="sticky">
     <section id="galleryRoom" data-lenis-prevent><div class="card-ring" id="cardRing"></div></section>
   </div>
 </section>
 
 <nav class="top-nav" id="topNav">
-  <span class="nav-motto">Live consciously, create passionately, act boldly.</span>
   <span class="nav-brand">margreenie</span>
-    <span class="nav-links">
-      <a href="#r3">About</a>
-      <a href="blog.html">Blog</a>
-      <a href="network.html">Network</a>
-      <a href="network.html#donate" class="donate-link">Donate</a>
-    </span>
+  <span class="nav-links">
+    <a href="#r3">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="network.html">Network</a>
+    <a href="donate.html" class="donate-link">Donate</a>
+  </span>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
-  <div class="nav-strip">
-    <span class="nav-socials">
-      <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Behind the Greens</a>
-      <a href="https://www.youtube.com/margreen" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://www.threads.com/@margreenie" target="_blank" rel="noopener">Threads</a>
-      <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Substack</a>
-      <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Podcast</a>
-    </span>
-  </div>
 </nav>
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile menu">
   <a href="#r3">About</a>
   <a href="blog.html">Blog</a>
   <a href="network.html">Network</a>
-  <a href="network.html#donate" class="donate-link">Donate</a>
+  <a href="donate.html" class="donate-link">Donate</a>
 </nav>
 <div class="slogan-bar" id="sloganBar">Connecting green brands with the people who move the planet.</div>
 <div class="gallery-floor" id="galleryFloor"></div>
@@ -271,7 +320,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <a href="#r3" class="sect-btn">About</a>
   <a href="blog.html" class="sect-btn">Blog</a>
   <a href="network.html" class="sect-btn">Network</a>
-  <a href="network.html#donate" class="sect-btn donate-btn">Donate</a>
+  <a href="donate.html" class="sect-btn donate-btn">Donate</a>
 </div>
 
 <nav class="phase-dots" id="phaseDots" aria-label="Phase navigation">
@@ -280,21 +329,43 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <button class="dot" data-room="r3" aria-label="Name reveal"></button>
   <button class="dot" data-room="r4" aria-label="Title and slogan"></button>
   <button class="dot" data-room="r5" aria-label="Cursor effects"></button>
-  <button class="dot" data-room="r6" aria-label="Gallery"></button>
+  <button class="dot" data-room="r6" aria-label="Orbit room"></button>
+  <button class="dot" data-room="r7" aria-label="Gallery"></button>
 </nav>
+<button id="labToggle" aria-expanded="false" aria-controls="labHost" title="Animation lab">lab</button>
+<div id="labHost"></div>
 
 <script>
 (function(){
 'use strict';
 
 var clamp01=function(v){return Math.max(0,Math.min(1,v));};
-var lerp=function(a,b,t){return a+(b-a)*clamp01(t);};
-var smoothstep=function(t){t=clamp01(t);return t*t*(3-2*t);};
 var DPR=Math.min(window.devicePixelRatio||1,2);
 var viewW=window.innerWidth,viewH=window.innerHeight;
 
-var rooms=['r1','r2','r3','r4','r5','r6'].map(function(id){return document.getElementById(id);});
+// ── SITE PARAMS — one source of truth, driven live by the animation lab ──
+// The lab panel writes here; every engine reads from here. Nothing is duplicated.
+var SITE={
+  orbit:{size:1,radius:1,tilt:1,glow:.5,teal:'#0f766e',aqua:'#6ee7d8'},
+  scroll:{lenisDuration:1.1,wheelMult:1,idleMs:700,cruiseSec:14},
+  gallery:{stiff:.05,damp:.64,gap:.85,cardK:1,reflect:.45,depth:1},
+  vp:{radius:260,swing:.35,strength:1,family:'Inter',text:'#f4f1ea',accent:'#ff8a4d'}
+};
+var DEFAULTS=JSON.parse(JSON.stringify(SITE));
+
+// Card scale: viewport-derived base, multiplied by the lab's cardK control.
+function computeCardK(){
+  return Math.min(1.35,Math.max(1,window.innerWidth/1280))*SITE.gallery.cardK;
+}
+
+// Rooms are read from the DOM in document order, so inserting a room never
+// re-indexes the engine: the orbit room is r6, the gallery is r7.
+var rooms=Array.prototype.slice.call(document.querySelectorAll('.room'));
 var roomData=rooms.map(function(el){return{el:el,progress:0,top:0,height:0};});
+
+// The gallery room is looked up BY ID, not by a magic index.
+var galRoomEl=document.getElementById('r7');
+var galRoomData=null;
 
 function cacheRooms(){
   roomData.forEach(function(r){
@@ -302,13 +373,15 @@ function cacheRooms(){
     r.top=rect.top+window.scrollY;
     r.height=rect.height;
   });
+  galRoomData=roomData.filter(function(r){return r.el===galRoomEl;})[0]||null;
 }
 cacheRooms();
-var cardK = Math.min(1.35, Math.max(1, window.innerWidth / 1280));
+var cardK = computeCardK();
 document.documentElement.style.setProperty('--k', cardK);
 window.addEventListener('resize',function(){
   viewW=window.innerWidth;viewH=window.innerHeight;cacheRooms();
-  cardK=Math.min(1.35,Math.max(1,window.innerWidth/1280));
+  if(typeof vpCache==='function')vpCache();   // rects are layout-derived
+  cardK=computeCardK();
   document.documentElement.style.setProperty('--k',cardK);
   mobilePortrait=window.innerWidth<=900&&window.innerHeight>window.innerWidth;
 });
@@ -382,17 +455,17 @@ var cardData=[
 ];
 var $cardRing=document.getElementById('cardRing');
 cardData.forEach(function(card){
-  var el=document.createElement('div');el.className='ring-card';
+  // REAL LINKS, not clickable divs (a11y): keyboard activation, screen readers,
+  // middle-click and copy-link all work. CSS and the engine treat <a> identically.
+  var el=document.createElement('a');el.className='ring-card';
+  el.href=card.url||'/';el.target='_blank';el.rel='noopener';
+  el.setAttribute('aria-label','Open '+card.name);
   var inner=card.img
       ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div><div class="ring-card-pill">'+card.name+'</div>'
       :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div><div class="ring-card-pill">'+card.name+'</div>';
   el.innerHTML=inner;
-  // Per-card spring integrator (the reference gallery's model). Every animated
-  // property carries a velocity, so a card ARRIVES at its slot with a soft
-  // settle instead of tracking the focus scalar rigidly.
-  el._spring={tx:0,tz:-400,ry:0,sc:1,op:0,vtx:0,vtz:0,vry:0,vsc:0,vop:0};
-  if(card.url)el.addEventListener('click',function(e){e.stopPropagation();window.open(card.url,'_blank');});
-  if(card.restart)el.addEventListener('click',function(e){e.stopPropagation();window.scrollTo({top:0,behavior:'smooth'});});
+  // No per-card spring state: the ring is driven by a single focus scalar (see
+  // GALLERY ENGINE below), so cards cannot drift out of alignment.
   $cardRing.appendChild(el);
 });
 
@@ -437,6 +510,9 @@ document.querySelectorAll('.donate-chip').forEach(function(chip){
 // ── LANDSCAPE PROMPT ──
 var landscapeOverlay=document.getElementById('landscapeOverlay');
 var loDismissed=false;
+// Persist the dismissal: repeat visitors should not re-dismiss the rotate gate
+// on every visit. try/catch guards privacy modes where localStorage throws.
+try{ loDismissed=localStorage.getItem('marg-lo')==='1'; }catch(e){}
 function checkOrientation(){
   var portraitPhone=window.innerHeight>window.innerWidth&&window.innerWidth<=900;
   var showOverlay=window.innerHeight>window.innerWidth&&window.innerWidth<=768;
@@ -449,7 +525,10 @@ var loLastW=window.innerWidth;
 window.addEventListener('resize',function(){
   if(window.innerWidth!==loLastW){loLastW=window.innerWidth;checkOrientation();}
 });
-document.getElementById('loOkBtn').addEventListener('click',function(){loDismissed=true;landscapeOverlay.style.display='none';});
+document.getElementById('loOkBtn').addEventListener('click',function(){
+  loDismissed=true;landscapeOverlay.style.display='none';
+  try{ localStorage.setItem('marg-lo','1'); }catch(e){}
+});
 
 // ── SCROLL ENGINE: Lenis (inertial smooth scroll) + GSAP ScrollTrigger ──
 // One system drives scroll. Lenis lerps the scroll value (compositor-friendly,
@@ -458,10 +537,10 @@ document.getElementById('loOkBtn').addEventListener('click',function(){loDismiss
 
 // Lenis: buttery inertial scrolling
 var lenis = new Lenis({
-  duration: 1.1,            // lerp duration — higher = floatier
+  duration: SITE.scroll.lenisDuration,   // lab: Scroll engine → Smooth duration
   easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
   smoothWheel: true,
-  wheelMultiplier: 1,
+  wheelMultiplier: SITE.scroll.wheelMult, // lab: Scroll engine → Wheel multiplier
   touchMultiplier: 1.4
 });
 lenis.on('scroll', ScrollTrigger.update);
@@ -471,10 +550,8 @@ gsap.ticker.lagSmoothing(0);
 // Autoscroll: when idle, glide the page down — intro traversed in ~14s.
 // Uses Lenis scrollTo (eased, interruptible) — no hand-rolled velocity ramp.
 var lastInputT = 0;
-var AUTO_IDLE_MS = 700;
+var AUTO_IDLE_MS = SITE.scroll.idleMs;
 var autoScrollOn = true;
-function clamp01(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
-function smoothstep(v){ v = clamp01(v); return v * v * (3 - 2 * v); }
 function introSpan(){
   // 14s phase = r1..r3 (whale video, title, description); transition is r4
   var top = roomData[0].top;
@@ -507,7 +584,7 @@ function autoscrollStep(){
     if(!autoLastT) autoLastT = now;
     var dtMs = Math.min(50, now - autoLastT);
     autoLastT = now;
-    var cruise = s.span / 14;                 // intro traversed in ~14s (video time)
+    var cruise = s.span / SITE.scroll.cruiseSec;   // intro traversed in ~cruiseSec s
     var remain = galleryTop - window.scrollY;
     if(remain < window.innerHeight * 2){                 // ease out near gallery
       cruise *= Math.max(0, remain / (window.innerHeight * 2));
@@ -576,14 +653,36 @@ gsap.timeline({
 .to('#whaleWrap', { yPercent: -100, opacity: 0, duration: 0.5, ease: 'none' })
 .to('#slateStage', { y: '-70vh', opacity: 0, duration: 0.5, ease: 'none', overwrite: 'auto' }, '<')
 .to('#descLine', { y: '-70vh', opacity: 0, duration: 0.5, ease: 'none', overwrite: 'auto' }, '<')
-.fromTo('#galleryRoom',
-  { yPercent: 100, opacity: 0 },
-  { yPercent: 0, opacity: 1, visibility: 'visible', duration: 0.5, ease: 'power2.out' }
-)
-.to('#galleryFloor', { opacity: 1, duration: 0.5, ease: 'power2.out' }, '<')
 .to('#quoteStage', { opacity: 0, duration: 0.5, ease: 'power2.in' }, '<');
 
 
+
+// ── ORBIT ROOM (r6): matte teal sphere + aquamarine orbit rings ──
+// Scroll-driven only: every motion here is a scrubbed function of r6's progress,
+// so it reverses exactly with the scroll. No time-based animation.
+gsap.timeline({
+  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'bottom top', scrub:1 }
+})
+.fromTo('#orbitRoom',{opacity:0,scale:.86},{opacity:1,scale:1,duration:.3,ease:'none'},0)
+.fromTo('#orbitCaption',{opacity:0,y:26},{opacity:1,y:0,duration:.22,ease:'none'},.16)
+.to('.orbit-ring-1 .orbit-spin',{rotationZ:'+=360deg',duration:1,ease:'none'},0)
+.to('.orbit-ring-2 .orbit-spin',{rotationZ:'+=540deg',duration:1,ease:'none'},0)
+.to('.orbit-ring-3 .orbit-spin',{rotationZ:'-=300deg',duration:1,ease:'none'},0)
+.to('#orbitSphere',{scale:1.08,duration:1,ease:'none'},0)
+.to('#orbitRoom',{opacity:0,scale:1.05,duration:.22,ease:'none'},.78);
+
+// ── GALLERY (r7): rises into view as the room arrives ──
+// Tied to r7, not r4: #galleryRoom is absolutely positioned inside r7's sticky,
+// so it only enters the viewport as r7 arrives. Driving it from r4 left the
+// rise invisible AND left the fixed #galleryFloor black band on screen for the
+// whole orbit room. One owner per property.
+gsap.timeline({
+  scrollTrigger:{ trigger:'#r7', start:'top bottom', end:'top top', scrub:1 }
+})
+.fromTo('#galleryRoom',
+  { yPercent:100, opacity:0 },
+  { yPercent:0, opacity:1, visibility:'visible', duration:1, ease:'power2.out' }, 0)
+.to('#galleryFloor', { opacity:1, duration:1, ease:'power2.out' }, 0);
 
 // Title chars: reveal progressively as r2 is scrolled (scrubbed, re-enters).
 ScrollTrigger.create({
@@ -594,123 +693,184 @@ ScrollTrigger.create({
   }
 });
 
-// Nav bar: fade in once past the intro
-gsap.to('#topNav', {
-  opacity: 1, pointerEvents: 'auto', ease: 'none',
-  scrollTrigger: { trigger: '#r4', start: 'top bottom', end: 'top top', scrub: 1 }
-});
+// Nav bar: matches the network/blog top bar — a fixed bar that is always
+// visible, no scroll fade.
 
 // ── GALLERY ENGINE ────────────────────────────────────────────────────────────
-// Per-card springs in a fixed timestep, laid out from each card's FLOAT distance
-// to a continuous focus. Three things make it behave like the reference gallery:
+// Two sprung scalars drive the ring; every card's transform is derived from
+// them, so the ring moves as a rigid body and cannot jank.
 //
-//  1. LINEAR HORIZONTAL SPREAD. The old spread was `dir * smooth01(|dist|/3) *
-//     760`. smooth01 is FLAT at distance 0, so the focused card and its neighbour
-//     moved in lockstep and interpenetrated ~67% — two cards fused into one,
-//     which read as cards cutting through each other. Linear spacing keeps every
-//     adjacent pair at a constant ~15% overlap.
+//  1. POSITION spring (focus) → horizontal glide; DEPTH spring (depthFocus,
+//     sprung toward the rounded slot) → depth/rotation. Two cards flanking the
+//     focus are symmetric in |distance|, so a single depth function of distance
+//     would make them coplanar — the dropped slot keeps one card clearly in
+//     front. Sharing the tuning also means both springs lag together.
 //
-//  2. PER-CARD SPRINGS. The old code lerped only the scalar `focus` and derived
-//     every card's transform directly from it, so a card tracked the focus
-//     rigidly and never arrived anywhere. Here each card has its own velocity
-//     integrator (_spring): the slot position is a TARGET, and the card eases
-//     into it with STIFF/DAMP. Cards settle instead of trailing.
+//  2. LINEAR HORIZONTAL SPREAD. `dir * min(d,3) * gap` keeps a constant ~15%
+//     overlap per adjacent pair. The old eased `smooth01` was flat at 0, so the
+//     focused card and its neighbour moved in lockstep and fused together.
 //
-//  3. FIXED TIMESTEP. The integrator always advances in 1/60s chunks regardless
+//  3. PROGRESS FROM RAW SCROLL. Read `window.scrollY` inside the tick, like the
+//     reference. ScrollTrigger's onUpdate only fires on scroll events, so between
+//     events the old `focusTarget` went stale and the ring trailed a frame behind.
+//
+//  4. STABLE STACKING. z-index / pointer-events use the ROUNDED slot, so the
+//     3D order never flickers while the ring is gliding between slots.
+//
+//  5. FIXED TIMESTEP. The integrator always advances in 1/60s chunks regardless
 //     of refresh rate, so the constants behave identically at 60/120/144Hz.
 //
 // On mobile portrait the gallery is a native scroll-snap row; the desktop spring
 // is skipped there and the scroll listener below drives the focused pill.
 var ringCards = Array.prototype.slice.call(document.querySelectorAll('.ring-card'));
 var total = ringCards.length;
-var focusTarget = 0, focus = 0;
+var galP = 0;          // raw gallery progress 0..1, read straight from scrollY
+var focusTarget = 0;   // scroll position in card units (continuous)
+var focus = 0;         // spring-integrated focus — drives horizontal position
+var focusVel = 0;
+var depthFocus = 0;    // sprung toward the rounded slot — drives depth
+var depthVel = 0;
 
-// Spring tuning — matched to the reference gallery (STIFF 0.08 / DAMP 0.72).
-var G_STIFF = 0.08, G_DAMP = 0.72, FOCUS_LERP = 0.12;
+// Spring tuning — near-critical damping, no overshoot. Research (spring-physics
+// tutorials: Heckel, kvin) says smooth UI motion = little/no overshoot + a
+// longer, gentler settle; bounce reads as twitchy. Simulated: 0.0% overshoot,
+// 0.65s settle. The depth spring shares this tuning — the shared lag is what
+// keeps adjacent cards from ever being coplanar.
+var G_STIFF = SITE.gallery.stiff, G_DAMP = SITE.gallery.damp;
 var G_FIXED_DT = 1 / 60, MAX_CATCHUP = 5;
 
-// Scrub 0: focus follows the REAL scroll with no 1s tail. A laggy scrub stacked
-// on top of the lerp is what made the ring trail the scroll.
-var galleryST = ScrollTrigger.create({
-  trigger: '#r6', start: 'top top', end: 'bottom bottom', scrub: 0,
-  onUpdate: function(self){
-    focusTarget = Math.max(0, Math.min(total - 1, self.progress * (total - 1)));
-  }
-});
 // DEBUG HOOK: lets probes read the live focus instead of assigning an
 // unreachable global.
 window.__marg = {
   get focus(){ return focus; },
   get focusTarget(){ return focusTarget; },
-  get prog(){ return galleryST.progress; },
-  setFocus: function(v){ focusTarget = Math.max(0, Math.min(total - 1, v)); }
+  get prog(){ return galP; },
+  setFocus: function(v){
+    var r6 = galRoomData;
+    window.scrollTo(0, r6.top + (v / (total - 1)) * Math.max(1, r6.height - viewH));
+  }
 };
 
-// Mobile: the horizontal swipe drives the focused card (scroll-snap row)
+// Mobile: the horizontal swipe drives the focused card (scroll-snap row).
+// Card centres are cached on resize — reading offsetLeft per card per scroll
+// event forced a layout read every frame (layout thrash on mobile).
+var mobilePortrait = window.innerWidth <= 900 && window.innerHeight >= window.innerWidth;
 var galleryEl = document.getElementById('galleryRoom');
+var cardCentres = [];
+function cacheCardCentres(){
+  cardCentres = ringCards.map(function(card){
+    return card.offsetLeft + card.offsetWidth / 2;
+  });
+}
+// Nearest-card picker, shared by the swipe handler AND the initial paint, so
+// the pill is lit on first load without requiring a scroll event.
+function pickFocused(){
+  if(!galleryEl || !mobilePortrait) return;
+  var vc = galleryEl.clientWidth / 2, idx = 0, best = Infinity;
+  for(var i = 0; i < cardCentres.length; i++){
+    var d = Math.abs(cardCentres[i] - galleryEl.scrollLeft - vc);
+    if(d < best){ best = d; idx = i; }
+  }
+  ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
+}
+cacheCardCentres();
+pickFocused();
+window.addEventListener('resize', function(){ cacheCardCentres(); pickFocused(); });
 if(galleryEl){
-  galleryEl.addEventListener('scroll', function(){
-    if(!mobilePortrait) return;
-    var vc = galleryEl.clientWidth / 2;
-    var idx = 0, best = Infinity;
-    ringCards.forEach(function(card, i){
-      var c = card.offsetLeft + card.offsetWidth / 2 - galleryEl.scrollLeft;
-      var d = Math.abs(c - vc);
-      if(d < best){ best = d; idx = i; }
-    });
-    ringCards.forEach(function(card, i){ card.classList.toggle('focused', i === idx); });
-  }, {passive:true});
+  galleryEl.addEventListener('scroll', pickFocused, {passive:true});
 }
 
-var mobilePortrait = window.innerWidth <= 900 && window.innerHeight > window.innerWidth;
 function smooth01(v){ v = v < 0 ? 0 : v > 1 ? 1 : v; return v * v * (3 - 2 * v); }
 
 // One fixed simulation step. Pure integration — no DOM writes.
 function galleryStep(){
-  focus += (focusTarget - focus) * FOCUS_LERP;
-  if(Math.abs(focusTarget - focus) < 0.0005) focus = focusTarget;
-  for(var i = 0; i < ringCards.length; i++){
-    var sp = ringCards[i]._spring;
-    if(!sp) continue;
-    var dist = i - focus;
-    var d = Math.abs(dist);
-    var dir = dist < 0 ? -1 : 1;
-    var depth = smooth01(d / 3);                   // eased falloff
-    // LINEAR horizontal spread — constant overlap per adjacent pair.
-    var gap = 600 * cardK * 0.85;
-    var txT = dir * Math.min(d, 3) * gap;
-    var tzT = (120 - depth * 520) * cardK;         // 120 centre .. -400 edge
-    var ryT = dir * depth * 36;
-    var scT = 1 - 0.12 * depth;
-    var opT = 1 - smooth01((depth - 0.4) / 0.6);   // fades the outermost band
-    // v += (target - pos) * STIFF; v *= DAMP; pos += v
-    sp.vtx += (txT - sp.tx) * G_STIFF; sp.vtx *= G_DAMP; sp.tx += sp.vtx;
-    sp.vtz += (tzT - sp.tz) * G_STIFF; sp.vtz *= G_DAMP; sp.tz += sp.vtz;
-    sp.vry += (ryT - sp.ry) * G_STIFF; sp.vry *= G_DAMP; sp.ry += sp.vry;
-    sp.vsc += (scT - sp.sc) * G_STIFF; sp.vsc *= G_DAMP; sp.sc += sp.vsc;
-    sp.vop += (opT - sp.op) * G_STIFF; sp.vop *= G_DAMP; sp.op += sp.vop;
+  // Room progress read straight from the scroll position, exactly like the
+  // reference. ScrollTrigger's onUpdate only fires on scroll events, so between
+  // events the old focusTarget went stale and the ring lagged a frame behind.
+  var r6 = galRoomData;
+  var span = r6.height - viewH;
+  galP = span <= 0 ? (r6.top <= window.scrollY ? 1 : 0) : clamp01((window.scrollY - r6.top) / span);
+  focusTarget = galP * (total - 1);
+
+  // ONE spring drives the horizontal position, so the ring glides as a single
+  // rigid body. The previous version gave every card its own spring chasing a
+  // continuously-moving target, so each card lagged by a different amount and the
+  // cards fell out of alignment — that misalignment is what read as jank.
+  focusVel += (focusTarget - focus) * G_STIFF;
+  focusVel *= G_DAMP;
+  focus += focusVel;
+  if(Math.abs(focusTarget - focus) < 0.001 && Math.abs(focusVel) < 0.001){
+    focus = focusTarget; focusVel = 0;
+  }
+
+  // DEPTH follows the ROUNDED slot, through its own spring. Two cards flanking
+  // the focus are symmetric, so a depth function of |distance| alone gives them
+  // the SAME depth — a coplanar pair, which is what reads as clipping. Springing
+  // toward the integer slot means the depth centre is always one specific card,
+  // and the lag naturally separates a would-be coplanar pair.
+  var slotTarget = Math.max(0, Math.min(total - 1, Math.round(focus)));
+  depthVel += (slotTarget - depthFocus) * G_STIFF;
+  depthVel *= G_DAMP;
+  depthFocus += depthVel;
+  if(Math.abs(slotTarget - depthFocus) < 0.001 && Math.abs(depthVel) < 0.001){
+    depthFocus = slotTarget; depthVel = 0;
   }
 }
 
-// Render the current spring state; write only when a rounded value changed, so
-// a ring at rest costs no style flush.
+// Depth stops, matched to the reference gallery's proportions (its 420px cards
+// scaled to our 360px). The centre card sits well in front and neighbours recede
+// sharply — that separation is what makes an overlap read as "in front" rather
+// than as one card cutting through another.
+var DEPTH_STOPS = [
+  { tz: 103,  ry: 0,  sc: 1,    op: 1 },   // centred
+  { tz: -111, ry: 27, sc: 0.94, op: 1 },   // neighbour
+  { tz: -197, ry: 36, sc: 0.88, op: 1 },   // far
+  { tz: -343, ry: 40, sc: 0.82, op: 0 }    // back (hidden)
+];
+function depthAt(d){
+  var a, b, f;
+  if(d <= 0){ a = b = DEPTH_STOPS[0]; f = 0; }
+  else if(d >= 3){ a = b = DEPTH_STOPS[3]; f = 0; }
+  else{
+    var i = Math.floor(d); f = smooth01(d - i);
+    a = DEPTH_STOPS[i]; b = DEPTH_STOPS[i + 1];
+  }
+  // Shared scratch object — no per-frame allocation in the render loop.
+  _dst.tz = a.tz + (b.tz - a.tz) * f;
+  _dst.ry = a.ry + (b.ry - a.ry) * f;
+  _dst.sc = a.sc + (b.sc - a.sc) * f;
+  _dst.op = a.op + (b.op - a.op) * f;
+  return _dst;
+}
+var _dst = { tz: 0, ry: 0, sc: 0, op: 0 };
+
+// Render the ring. Horizontal position follows the CONTINUOUS focus (smooth
+// glide); depth follows the sprung slot scalar (never coplanar).
 function galleryRender(){
+  var slot = Math.round(depthFocus);   // stable z-order, no flicker
+  var gap = 360 * cardK * SITE.gallery.gap;   // LINEAR spread step (constant per layout)
   for(var i = 0; i < ringCards.length; i++){
     var card = ringCards[i];
-    var sp = card._spring;
-    if(!sp) continue;
-    var depth = smooth01(Math.abs(i - focus) / 3);
-    var tStr = 'translateX(' + sp.tx.toFixed(1) + 'px) translateZ(' + sp.tz.toFixed(1) +
-               'px) rotateY(' + sp.ry.toFixed(1) + 'deg) scale(' + sp.sc.toFixed(3) + ')';
+    var sd = i - focus;                  // continuous — smooth horizontal glide
+    var st = depthAt(Math.abs(i - depthFocus));
+    var dir = sd < 0 ? -1 : 1;
+    var tx = dir * Math.min(Math.abs(sd), 3) * gap;
+    var tz = st.tz * cardK * SITE.gallery.depth;
+    var ry = dir * st.ry;
+    var sc = st.sc;
+    var op = st.op;
+    var tStr = 'translateX(' + tx.toFixed(1) + 'px) translateZ(' + tz.toFixed(1) +
+               'px) rotateY(' + ry.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
     if(card._lastT !== tStr){ card.style.transform = tStr; card._lastT = tStr; }
-    var oStr = Math.max(0, Math.min(1, sp.op)).toFixed(3);
+    var oStr = Math.max(0, Math.min(1, op)).toFixed(3);
     if(card._lastO !== oStr){ card.style.opacity = oStr; card._lastO = oStr; }
-    var zStr = depth < 0.2 ? '100' : depth < 0.55 ? '50' : '30';
+    var sdd = Math.abs(i - slot);
+    var zStr = sdd === 0 ? '100' : sdd === 1 ? '50' : '30';
     if(card._lastZ !== zStr){ card.style.zIndex = zStr; card._lastZ = zStr; }
-    var pStr = sp.op > 0.3 ? 'auto' : 'none';
+    var pStr = op > 0.3 ? 'auto' : 'none';
     if(card._lastP !== pStr){ card.style.pointerEvents = pStr; card._lastP = pStr; }
-    var fCls = depth < 0.6;
-    if(card._lastF !== fCls){ card.classList.toggle('focused', fCls); card._lastF = fCls; }
+    var fCls = sdd === 0;   // one lit pill at a time — matches the mobile row
+        if(card._lastF !== fCls){ card.classList.toggle('focused', fCls); card._lastF = fCls; }
   }
 }
 
@@ -729,6 +889,230 @@ function galleryTick(now){
   galleryRender();
 }
 requestAnimationFrame(galleryTick);
+
+
+// ── VARIABLE PROXIMITY: cursor distance -> variable font weight (all text) ──
+// Pure maths lives in js/vp-engine.js (window.VPEngine) so it is unit-testable in Node.
+// Body/UI text gets one VP value per element; the name is already split into
+// per-character spans by the reveal code, so it gets the velvety per-char effect.
+var VP=window.VPEngine;
+var vpCfg=SITE.vp;
+var vpCursor={x:-9999,y:-9999};
+var vpEls=[];
+var VP_SELECTORS=[
+  '#descLine','#quoteStage blockquote','#quoteStage cite','#sloganBar',
+  '.content-tag','.content-title','.content-body p','.content-lede','.tour-date',
+  '.tour-card h4','.tour-card p','.tour-card a','.donate-note','.nav-brand',
+  '.nav-links a','.mobile-menu a','.ring-card-pill','.ring-card-title','.sect-btn'
+];
+
+// An element is "anchored" when its visual position does not track the document
+// scroll: position:fixed always, and position:sticky while it is stuck (the gallery
+// pills live inside r7's sticky). Anchored elements cache their VIEWPORT rect;
+// everything else caches a document-space top and is resolved per frame.
+function vpIsFixed(el){
+  var n=el;
+  while(n&&n!==document.body){
+    var p=getComputedStyle(n).position;
+    if(p==='fixed'||p==='sticky')return true;
+    n=n.parentNode;
+  }
+  return false;
+}
+
+function vpCache(){
+  if(!VP)return;
+  vpEls=[];
+  function add(el){
+    var r=el.getBoundingClientRect();
+    var cs=getComputedStyle(el);
+    var sz=parseFloat(cs.fontSize)||16;
+    vpEls.push({
+      el:el, fixed:vpIsFixed(el), left:r.left, top:r.top, w:r.width, h:r.height,
+      docTop:r.top+window.scrollY,
+      baseW:parseFloat(cs.fontWeight)||400,
+      // opsz is only driven where the font actually has an optical axis
+      opszBase:cs.fontFamily.indexOf('Roboto Flex')!==-1?Math.round(sz):null
+    });
+  }
+  VP_SELECTORS.forEach(function(sel){
+    var list=document.querySelectorAll(sel);
+    for(var i=0;i<list.length;i++)add(list[i]);
+  });
+  if(nameVPChars)for(var j=0;j<nameVPChars.length;j++)add(nameVPChars[j]);
+}
+
+function vpStep(){
+  if(!VP||REDUCED)return;
+  var cx=vpCursor.x,cy=vpCursor.y,sy=window.scrollY;
+  for(var i=0;i<vpEls.length;i++){
+    var e=vpEls[i];
+    var top=e.fixed?e.top:e.docTop-sy;
+    var r=VP.compute({cx:cx,cy:cy,ex:e.left+e.w/2,ey:top+e.h/2,
+      radius:vpCfg.radius,baseW:e.baseW,swing:vpCfg.swing,strength:vpCfg.strength,
+      opszBase:e.opszBase,opszSwing:.2});
+    if(r.t<=0.001){
+      if(e.on){e.el.style.fontVariationSettings=VP.formatSettings(e.baseW,e.opszBase);e.on=false;}
+      continue;
+    }
+    e.on=true;
+    e.el.style.fontVariationSettings=VP.formatSettings(r.wght,r.opsz);
+  }
+}
+window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCursor.y=ev.clientY;},{passive:true});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
+vpCache();
+gsap.ticker.add(vpStep);
+
+// ── ANIMATION LAB: lil-gui panel driving SITE live ──
+var labToggle=document.getElementById('labToggle');
+var labHost=document.getElementById('labHost');
+var gui=null;
+
+function hexRgb(hex){
+  var m=/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(hex||'').trim());
+  return m?[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)]:[244,241,234];
+}
+
+function orbitApply(){
+  var o=SITE.orbit,st=document.documentElement.style;
+  var sz=Math.round(250*o.size), gl=Math.round(700*o.radius);
+  var r1=Math.round(430*o.radius),r2=Math.round(560*o.radius),r3=Math.round(690*o.radius);
+  st.setProperty('--sphere-px',sz+'px');            st.setProperty('--sphere-m',(-sz/2)+'px');
+  st.setProperty('--ring1-px',r1+'px');             st.setProperty('--ring1-m',(-r1/2)+'px');
+  st.setProperty('--ring2-px',r2+'px');             st.setProperty('--ring2-m',(-r2/2)+'px');
+  st.setProperty('--ring3-px',r3+'px');             st.setProperty('--ring3-m',(-r3/2)+'px');
+  st.setProperty('--glow-px',gl+'px');              st.setProperty('--glow-m',(-gl/2)+'px');
+  st.setProperty('--tilt1',(74*o.tilt).toFixed(2)+'deg');
+  st.setProperty('--tilt2',(70*o.tilt).toFixed(2)+'deg');
+  st.setProperty('--tilt3',(78*o.tilt).toFixed(2)+'deg');
+  st.setProperty('--glow-a1',(0.22*o.glow).toFixed(3));
+  st.setProperty('--glow-a2',(0.12*o.glow).toFixed(3));
+  st.setProperty('--glow-a3',(0.38*o.glow).toFixed(3));
+  st.setProperty('--ring-glow',(0.14*o.glow).toFixed(3));
+  st.setProperty('--teal',o.teal);
+  st.setProperty('--aqua',o.aqua);
+  st.setProperty('--caption-y',Math.round(190*o.radius)+'px');
+}
+
+function applyAll(){
+  orbitApply();
+  if(lenis&&lenis.options){
+    lenis.options.duration=SITE.scroll.lenisDuration;
+    lenis.options.wheelMultiplier=SITE.scroll.wheelMult;
+  }
+  AUTO_IDLE_MS=SITE.scroll.idleMs;
+  G_STIFF=SITE.gallery.stiff; G_DAMP=SITE.gallery.damp;
+  cardK=computeCardK();
+  var st=document.documentElement.style;
+  st.setProperty('--k',cardK);
+  st.setProperty('--reflect-op',SITE.gallery.reflect);
+  st.setProperty('--body-font',"'"+SITE.vp.family+"',sans-serif");
+  st.setProperty('--purple',SITE.vp.accent);
+  st.setProperty('--text-cream',SITE.vp.text);
+  var rgb=hexRgb(SITE.vp.text);
+  st.setProperty('--text-dim','rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',.5)');
+  vpCfg=SITE.vp;
+  vpCache();
+}
+
+// base64url config codec — the lab's share link bakes the state into the URL
+function cfgEncode(){
+  var s=JSON.stringify(SITE);
+  return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function cfgDecode(str){
+  try{
+    var b=String(str).replace(/-/g,'+').replace(/_/g,'/');
+    while(b.length%4)b+='=';
+    return JSON.parse(decodeURIComponent(escape(atob(b))));
+  }catch(e){return null;}
+}
+function deepMerge(dst,src){
+  Object.keys(src).forEach(function(k){
+    if(src[k]&&typeof src[k]==='object'&&!Array.isArray(src[k])&&dst[k]&&typeof dst[k]==='object'){
+      deepMerge(dst[k],src[k]);
+    }else{dst[k]=src[k];}
+  });
+  return dst;
+}
+function shareUrl(){ return location.href.split('?')[0]+'?lab=1&cfg='+cfgEncode(); }
+
+var cfgMatch=/[?&]cfg=([^&]+)/.exec(location.search);
+if(cfgMatch){var decodedCfg=cfgDecode(cfgMatch[1]);if(decodedCfg)deepMerge(SITE,decodedCfg);}
+
+function buildLab(){
+  if(!window.lil||!window.lil.GUI)return;
+  if(gui){gui.destroy();gui=null;}
+  gui=new window.lil.GUI({title:'margreenie \u00b7 animation lab',container:labHost,width:300});
+
+  var fOrbit=gui.addFolder('Orbit room');
+  fOrbit.add(SITE.orbit,'size',0.4,2,0.01).name('Sphere size').onChange(applyAll);
+  fOrbit.add(SITE.orbit,'radius',0.5,1.8,0.01).name('Ring radius').onChange(applyAll);
+  fOrbit.add(SITE.orbit,'tilt',0.4,1.6,0.01).name('Ring tilt').onChange(applyAll);
+  fOrbit.add(SITE.orbit,'glow',0,2,0.01).name('Glow').onChange(applyAll);
+  fOrbit.addColor(SITE.orbit,'teal').name('Teal').onChange(applyAll);
+  fOrbit.addColor(SITE.orbit,'aqua').name('Aquamarine').onChange(applyAll);
+
+  var fScroll=gui.addFolder('Scroll engine');
+  fScroll.add(SITE.scroll,'lenisDuration',0.4,2.5,0.05).name('Smooth duration').onChange(applyAll);
+  fScroll.add(SITE.scroll,'wheelMult',0.4,2,0.05).name('Wheel multiplier').onChange(applyAll);
+  fScroll.add(SITE.scroll,'idleMs',200,3000,50).name('Autoscroll idle ms').onChange(applyAll);
+  fScroll.add(SITE.scroll,'cruiseSec',6,30,1).name('Intro seconds').onChange(applyAll);
+
+  var fGal=gui.addFolder('Gallery');
+  fGal.add(SITE.gallery,'stiff',0.01,0.2,0.005).name('Spring stiffness').onChange(applyAll);
+  fGal.add(SITE.gallery,'damp',0.3,0.95,0.01).name('Spring damping').onChange(applyAll);
+  fGal.add(SITE.gallery,'gap',0.4,1.4,0.01).name('Card gap').onChange(applyAll);
+  fGal.add(SITE.gallery,'cardK',0.5,1.6,0.01).name('Card size').onChange(applyAll);
+  fGal.add(SITE.gallery,'reflect',0,1,0.01).name('Reflection opacity').onChange(applyAll);
+  fGal.add(SITE.gallery,'depth',0.2,2.5,0.05).name('Depth spread').onChange(applyAll);
+
+  var fType=gui.addFolder('Text \u00b7 proximity');
+  fType.add(SITE.vp,'radius',60,700,10).name('Proximity radius').onChange(applyAll);
+  fType.add(SITE.vp,'swing',0,1,0.01).name('Weight swing').onChange(applyAll);
+  fType.add(SITE.vp,'strength',0,1,0.01).name('Proximity strength').onChange(applyAll);
+  fType.add(SITE.vp,'family',['Inter','Roboto Flex','Oswald']).name('Body font').onChange(applyAll);
+  fType.addColor(SITE.vp,'text').name('Text colour').onChange(applyAll);
+  fType.addColor(SITE.vp,'accent').name('Accent colour').onChange(applyAll);
+
+  gui.add({
+    reset:function(){
+      deepMerge(SITE,DEFAULTS);
+      applyAll();
+      if(gui&&gui.controllersRecursive)gui.controllersRecursive().forEach(function(c){if(c.updateDisplay)c.updateDisplay();});
+    },
+    copy:function(){
+      var url=shareUrl();
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url);
+      window.__labUrl=url;
+    }
+  },'reset').name('Reset to defaults');
+  gui.add({
+    copy:function(){
+      var url=shareUrl();
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url);
+      window.__labUrl=url;
+    }
+  },'copy').name('Copy share link');
+}
+
+applyAll();   // initial apply — picks up ?cfg= and the defaults
+
+var labOn=/[?&]lab=1/.test(location.search);
+var savedLab=false;
+try{savedLab=localStorage.getItem('marg.lab')==='1';}catch(e){}
+function labShow(on){
+  labToggle.setAttribute('aria-expanded',on?'true':'false');
+  if(on){buildLab();}
+  else if(gui){gui.destroy();gui=null;}
+}
+labToggle.addEventListener('click',function(){
+  var on=labToggle.getAttribute('aria-expanded')!=='true';
+  try{localStorage.setItem('marg.lab',on?'1':'0');}catch(e){}
+  labShow(on);
+});
+if(labOn||savedLab)labShow(true);
 
 // Scroll reset
 if('scrollRestoration' in history) history.scrollRestoration = 'manual';

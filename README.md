@@ -29,6 +29,25 @@ Live: https://wgt-edutech.github.io/margreenie/
 - The 7 Nov 2026 Cape Town tour card is a placeholder — venue (likely Light House
   Holistic, 50 Bree St) and time to be confirmed via @margreenie.
 
+## Orbit room + animation lab + variable proximity
+
+Three additions to `index.html` (see `.hermes/plans/orbit-room-and-lab-controls.md`):
+
+- **Orbit room (r6)** — a matte teal sphere with three aquamarine orbit rings and
+  orbiting satellites, pure CSS 3D (`preserve-3d`), scrubbed by GSAP on r6's scroll
+  progress. No canvas, no Three.js — scroll-driven only. The gallery moved to **r7**
+  (rooms are read from the DOM in document order; the gallery is looked up by id).
+- **Animation lab** — a vendored lil-gui 0.21 panel (`js/lil-gui.min.js`, MIT) driving
+  every engine parameter live. Open it with the floating **lab** button, or with
+  `?lab=1`. Folders: Orbit room / Scroll engine / Gallery / Text · proximity, plus
+  **Reset to defaults** and **Copy share link** (bakes the state into `?cfg=<base64url>`).
+- **Variable proximity on all text** — cursor distance drives variable-font weight
+  (and opsz where the font has an optical axis). Body text uses variable Inter
+  (`Inter:opsz,wght@14..32,100..900`); the name keeps its per-character treatment.
+  Pure maths lives in `js/vp-engine.js` and is unit-tested in Node.
+
+One source of truth: the lab writes `SITE`, every engine reads `SITE`.
+
 ## Colophon
 
 Cloned from the owner's portfolio (WGT-Edutech/Portfolio) scroll-story pattern.
