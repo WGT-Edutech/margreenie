@@ -63,7 +63,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   opacity:.55;filter:blur(1px)}
 
 #galleryRoom{position:absolute;inset:0;z-index:30;perspective:1200px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
-#r7 .sticky{overflow:visible}
+#r6 .sticky{overflow:visible}
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
 .ring-card{position:absolute;left:50%;top:50%;width:calc(360px * var(--k,1));height:calc(240px * var(--k,1));margin-left:calc(-180px * var(--k,1));margin-top:calc(-120px * var(--k,1));transform-style:preserve-3d;cursor:pointer}
 .ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease,transform .35s cubic-bezier(.2,.7,.3,1.3);transform-origin:center}
@@ -135,7 +135,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:420vh}.r7h{height:1200vh}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1200vh}
 @media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
 
 @media(max-width:768px){
@@ -155,7 +155,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   .desc-line{left:50%;top:32vh;transform:translateX(-50%);text-align:center;max-width:94vw;white-space:nowrap;font-size:clamp(.95rem,4.2vw,1.3rem)}
 }
 @media(max-width:900px) and (orientation:portrait){
-  .r7h{height:60vh}
+  .r6h{height:60vh}
   #galleryRoom{perspective:none;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}
   #galleryRoom::-webkit-scrollbar{display:none}
   .card-ring{width:max-content;min-width:100%;height:100%;flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;transform-style:flat;padding:0 10vw}
@@ -185,50 +185,12 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 }
 @media(prefers-reduced-motion){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-/* ===== ORBIT ROOM (r6): matte teal sphere + aquamarine orbit rings ===== */
+/* ===== room + lab colour tokens (orbit room removed) ===== */
 :root{
   --teal-deep:#04211f; --teal:#0f766e; --teal-bright:#14b8a6;
   --aqua:#6ee7d8; --aqua-bright:#a7f3ec;
-  --sphere-px:250px; --sphere-m:-125px;
-  --ring1-px:430px; --ring1-m:-215px; --ring2-px:560px; --ring2-m:-280px; --ring3-px:690px; --ring3-m:-345px;
-  --glow-px:700px; --glow-m:-350px;
-  --tilt1:74deg; --tilt2:70deg; --tilt3:78deg;
-  --glow-a1:0.22; --glow-a2:0.12; --glow-a3:0.38; --ring-glow:0.14;
-  --sat-px:13px; --caption-y:190px;
   --reflect-op:.45;
 }
-#orbitRoom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  opacity:0;perspective:1100px;transform-style:preserve-3d;will-change:transform,opacity;z-index:1}
-.orbit-glow{position:absolute;left:50%;top:50%;width:var(--glow-px);height:var(--glow-px);
-  margin:var(--glow-m) 0 0 var(--glow-m);border-radius:50%;
-  background:radial-gradient(circle,rgba(110,231,216,var(--glow-a1)) 0%,rgba(15,118,110,var(--glow-a2)) 42%,rgba(15,118,110,0) 68%)}
-.orbit-sphere{position:absolute;left:50%;top:50%;width:var(--sphere-px);height:var(--sphere-px);
-  margin:var(--sphere-m) 0 0 var(--sphere-m);border-radius:50%;
-  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.30),rgba(255,255,255,0) 44%),
-    radial-gradient(circle at 50% 50%,var(--teal-bright) 0%,var(--teal) 46%,var(--teal-deep) 100%);
-  box-shadow:inset -20px -26px 60px rgba(0,0,0,.55),inset 10px 12px 44px rgba(255,255,255,.10),
-    0 0 110px rgba(110,231,216,var(--glow-a3));
-  transform:translateZ(0)}
-.orbit-ring{position:absolute;left:50%;top:50%;border-radius:50%;
-  border:1px solid rgba(110,231,216,.55);transform-style:preserve-3d;
-  box-shadow:0 0 24px rgba(110,231,216,var(--ring-glow))}
-.orbit-ring-1{width:var(--ring1-px);height:var(--ring1-px);margin:var(--ring1-m) 0 0 var(--ring1-m);
-  transform:rotateX(var(--tilt1))}
-.orbit-ring-2{width:var(--ring2-px);height:var(--ring2-px);margin:var(--ring2-m) 0 0 var(--ring2-m);
-  transform:rotateX(var(--tilt2)) rotateZ(24deg);border-color:rgba(110,231,216,.38)}
-.orbit-ring-3{width:var(--ring3-px);height:var(--ring3-px);margin:var(--ring3-m) 0 0 var(--ring3-m);
-  transform:rotateX(var(--tilt3)) rotateZ(-18deg);border-color:rgba(110,231,216,.24);border-style:dashed}
-.orbit-spin{position:relative;width:100%;height:100%;transform-style:preserve-3d}
-.orbit-sat{position:absolute;left:50%;top:0;width:var(--sat-px);height:var(--sat-px);
-  transform:translate(-50%,-50%);border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#ffffff,var(--aqua-bright) 45%,var(--aqua) 100%);
-  box-shadow:0 0 14px var(--aqua)}
-.orbit-sat-b{top:100%}
-.orbit-caption{position:absolute;left:50%;top:50%;transform:translate(-50%,var(--caption-y));
-  font-family:'Oswald',sans-serif;font-size:clamp(.95rem,1.6vw,1.25rem);text-transform:uppercase;
-  letter-spacing:.28em;color:var(--aqua);opacity:0;white-space:nowrap;
-  text-shadow:0 0 2px rgba(110,231,216,.5)}
-@media(prefers-reduced-motion){#orbitRoom{opacity:1}}
 
 /* ===== ANIMATION LAB PANEL ===== */
 #labToggle{position:fixed;right:1.1rem;bottom:1.1rem;z-index:120;width:46px;height:46px;border-radius:50%;
@@ -281,18 +243,6 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 <section class="room r5h" id="r5"><div class="sticky"></div></section>
 <section class="room r6h" id="r6">
   <div class="sticky">
-    <div id="orbitRoom">
-      <div class="orbit-glow" aria-hidden="true"></div>
-      <div class="orbit-ring orbit-ring-3" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span></div></div>
-      <div class="orbit-ring orbit-ring-2" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span><span class="orbit-sat orbit-sat-b"></span></div></div>
-      <div class="orbit-sphere" id="orbitSphere" aria-hidden="true"></div>
-      <div class="orbit-ring orbit-ring-1" aria-hidden="true"><div class="orbit-spin"><span class="orbit-sat"></span></div></div>
-      <div class="orbit-caption" id="orbitCaption">70 countries. One mission.</div>
-    </div>
-  </div>
-</section>
-<section class="room r7h" id="r7">
-  <div class="sticky">
     <section id="galleryRoom" data-lenis-prevent><div class="card-ring" id="cardRing"></div></section>
   </div>
 </section>
@@ -329,9 +279,8 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   <button class="dot" data-room="r3" aria-label="Name reveal"></button>
   <button class="dot" data-room="r4" aria-label="Title and slogan"></button>
   <button class="dot" data-room="r5" aria-label="Cursor effects"></button>
-  <button class="dot" data-room="r6" aria-label="Orbit room"></button>
-  <button class="dot" data-room="r7" aria-label="Gallery"></button>
-</nav>
+    <button class="dot" data-room="r6" aria-label="Gallery"></button>
+  </nav>
 <button id="labToggle" aria-expanded="false" aria-controls="labHost" title="Animation lab">lab</button>
 <div id="labHost"></div>
 
@@ -346,7 +295,6 @@ var viewW=window.innerWidth,viewH=window.innerHeight;
 // ── SITE PARAMS — one source of truth, driven live by the animation lab ──
 // The lab panel writes here; every engine reads from here. Nothing is duplicated.
 var SITE={
-  orbit:{size:1,radius:1,tilt:1,glow:.5,teal:'#0f766e',aqua:'#6ee7d8'},
   scroll:{lenisDuration:1.1,wheelMult:1,idleMs:700,cruiseSec:14},
   gallery:{stiff:.05,damp:.64,gap:.85,cardK:1,reflect:.45,depth:1},
   vp:{radius:260,swing:.35,strength:1,family:'Inter',text:'#f4f1ea',accent:'#ff8a4d'}
@@ -359,12 +307,12 @@ function computeCardK(){
 }
 
 // Rooms are read from the DOM in document order, so inserting a room never
-// re-indexes the engine: the orbit room is r6, the gallery is r7.
+// re-indexes the engine: the gallery is r6.
 var rooms=Array.prototype.slice.call(document.querySelectorAll('.room'));
 var roomData=rooms.map(function(el){return{el:el,progress:0,top:0,height:0};});
 
 // The gallery room is looked up BY ID, not by a magic index.
-var galRoomEl=document.getElementById('r7');
+var galRoomEl=document.getElementById('r6');
 var galRoomData=null;
 
 function cacheRooms(){
@@ -655,29 +603,13 @@ gsap.timeline({
 .to('#descLine', { y: '-70vh', opacity: 0, duration: 0.5, ease: 'none', overwrite: 'auto' }, '<')
 .to('#quoteStage', { opacity: 0, duration: 0.5, ease: 'power2.in' }, '<');
 
-
-
-// ── ORBIT ROOM (r6): matte teal sphere + aquamarine orbit rings ──
-// Scroll-driven only: every motion here is a scrubbed function of r6's progress,
-// so it reverses exactly with the scroll. No time-based animation.
+// ── GALLERY (r6): rises into view as the room arrives ──
+// Tied to r6, not r4: #galleryRoom is absolutely positioned inside r6's sticky,
+// so it only enters the viewport as r6 arrives. Driving it from r4 left the
+// rise invisible AND left the fixed #galleryFloor black band on screen. One
+// owner per property.
 gsap.timeline({
-  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'bottom top', scrub:1 }
-})
-.fromTo('#orbitRoom',{opacity:0,scale:.86},{opacity:1,scale:1,duration:.3,ease:'none'},0)
-.fromTo('#orbitCaption',{opacity:0,y:26},{opacity:1,y:0,duration:.22,ease:'none'},.16)
-.to('.orbit-ring-1 .orbit-spin',{rotationZ:'+=360deg',duration:1,ease:'none'},0)
-.to('.orbit-ring-2 .orbit-spin',{rotationZ:'+=540deg',duration:1,ease:'none'},0)
-.to('.orbit-ring-3 .orbit-spin',{rotationZ:'-=300deg',duration:1,ease:'none'},0)
-.to('#orbitSphere',{scale:1.08,duration:1,ease:'none'},0)
-.to('#orbitRoom',{opacity:0,scale:1.05,duration:.22,ease:'none'},.78);
-
-// ── GALLERY (r7): rises into view as the room arrives ──
-// Tied to r7, not r4: #galleryRoom is absolutely positioned inside r7's sticky,
-// so it only enters the viewport as r7 arrives. Driving it from r4 left the
-// rise invisible AND left the fixed #galleryFloor black band on screen for the
-// whole orbit room. One owner per property.
-gsap.timeline({
-  scrollTrigger:{ trigger:'#r7', start:'top bottom', end:'top top', scrub:1 }
+  scrollTrigger:{ trigger:'#r6', start:'top bottom', end:'top top', scrub:1 }
 })
 .fromTo('#galleryRoom',
   { yPercent:100, opacity:0 },
@@ -908,7 +840,7 @@ var VP_SELECTORS=[
 
 // An element is "anchored" when its visual position does not track the document
 // scroll: position:fixed always, and position:sticky while it is stuck (the gallery
-// pills live inside r7's sticky). Anchored elements cache their VIEWPORT rect;
+// pills live inside r6's sticky). Anchored elements cache their VIEWPORT rect;
 // everything else caches a document-space top and is resolved per frame.
 function vpIsFixed(el){
   var n=el;
@@ -974,29 +906,7 @@ function hexRgb(hex){
   return m?[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)]:[244,241,234];
 }
 
-function orbitApply(){
-  var o=SITE.orbit,st=document.documentElement.style;
-  var sz=Math.round(250*o.size), gl=Math.round(700*o.radius);
-  var r1=Math.round(430*o.radius),r2=Math.round(560*o.radius),r3=Math.round(690*o.radius);
-  st.setProperty('--sphere-px',sz+'px');            st.setProperty('--sphere-m',(-sz/2)+'px');
-  st.setProperty('--ring1-px',r1+'px');             st.setProperty('--ring1-m',(-r1/2)+'px');
-  st.setProperty('--ring2-px',r2+'px');             st.setProperty('--ring2-m',(-r2/2)+'px');
-  st.setProperty('--ring3-px',r3+'px');             st.setProperty('--ring3-m',(-r3/2)+'px');
-  st.setProperty('--glow-px',gl+'px');              st.setProperty('--glow-m',(-gl/2)+'px');
-  st.setProperty('--tilt1',(74*o.tilt).toFixed(2)+'deg');
-  st.setProperty('--tilt2',(70*o.tilt).toFixed(2)+'deg');
-  st.setProperty('--tilt3',(78*o.tilt).toFixed(2)+'deg');
-  st.setProperty('--glow-a1',(0.22*o.glow).toFixed(3));
-  st.setProperty('--glow-a2',(0.12*o.glow).toFixed(3));
-  st.setProperty('--glow-a3',(0.38*o.glow).toFixed(3));
-  st.setProperty('--ring-glow',(0.14*o.glow).toFixed(3));
-  st.setProperty('--teal',o.teal);
-  st.setProperty('--aqua',o.aqua);
-  st.setProperty('--caption-y',Math.round(190*o.radius)+'px');
-}
-
 function applyAll(){
-  orbitApply();
   if(lenis&&lenis.options){
     lenis.options.duration=SITE.scroll.lenisDuration;
     lenis.options.wheelMultiplier=SITE.scroll.wheelMult;
@@ -1045,14 +955,6 @@ function buildLab(){
   if(!window.lil||!window.lil.GUI)return;
   if(gui){gui.destroy();gui=null;}
   gui=new window.lil.GUI({title:'margreenie \u00b7 animation lab',container:labHost,width:300});
-
-  var fOrbit=gui.addFolder('Orbit room');
-  fOrbit.add(SITE.orbit,'size',0.4,2,0.01).name('Sphere size').onChange(applyAll);
-  fOrbit.add(SITE.orbit,'radius',0.5,1.8,0.01).name('Ring radius').onChange(applyAll);
-  fOrbit.add(SITE.orbit,'tilt',0.4,1.6,0.01).name('Ring tilt').onChange(applyAll);
-  fOrbit.add(SITE.orbit,'glow',0,2,0.01).name('Glow').onChange(applyAll);
-  fOrbit.addColor(SITE.orbit,'teal').name('Teal').onChange(applyAll);
-  fOrbit.addColor(SITE.orbit,'aqua').name('Aquamarine').onChange(applyAll);
 
   var fScroll=gui.addFolder('Scroll engine');
   fScroll.add(SITE.scroll,'lenisDuration',0.4,2.5,0.05).name('Smooth duration').onChange(applyAll);
