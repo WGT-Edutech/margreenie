@@ -65,7 +65,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .card-ring{position:relative;width:100%;height:100%;transform-style:preserve-3d;display:flex;align-items:center;justify-content:center}
 .ring-card{position:absolute;left:50%;top:50%;width:calc(600px * var(--k,1));height:calc(400px * var(--k,1));margin-left:calc(-300px * var(--k,1));margin-top:calc(-200px * var(--k,1));transform-style:preserve-3d;cursor:pointer}
 .ring-card-inner{position:relative;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;background:#0a0a12;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),inset 1px 0 0 rgba(255,255,255,.04),inset -1px 0 0 rgba(0,0,0,.15),0 10px 40px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;transition:box-shadow .4s ease,transform .35s cubic-bezier(.2,.7,.3,1.3);transform-origin:center}
-.ring-card-reflect{position:absolute;top:calc(100% + 40px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
+.ring-card-reflect{position:absolute;top:calc(100% + 140px);left:0;width:100%;height:100%;overflow:hidden;pointer-events:none;background:#000}
 .ring-card-reflect img{width:100%;height:100%;object-fit:cover;transform:scaleY(-1);opacity:.45;-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.18) 75%,transparent 100%)}
 .ring-card-front{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;background:#0a0a12}
 .ring-card-front img{animation:kenburns 22s ease-in-out infinite alternate;will-change:transform}
@@ -86,9 +86,9 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(255,138,77,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
 
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:45;opacity:0;pointer-events:none;transition:opacity .5s;background:rgba(0,0,0,.85);border-bottom:1px solid rgba(255,255,255,.08);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;padding:.55rem 2rem .35rem;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.nav-strip{display:flex;flex:1 1 100%;align-items:center;justify-content:space-between;gap:1rem;margin-top:.4rem;padding-top:.4rem;border-top:1px solid rgba(255,255,255,.08)}
-.nav-motto{font-size:.72rem;color:var(--text-dim);font-style:italic;letter-spacing:.03em}
-.nav-socials{display:flex;flex-wrap:wrap;gap:.9rem}
+.nav-strip{display:flex;flex:1 1 100%;align-items:center;justify-content:flex-end;gap:1rem;margin-top:.4rem;padding-top:.4rem;border-top:1px solid rgba(255,255,255,.08)}
+.nav-motto{font-size:.72rem;color:var(--text-dim);font-style:italic;letter-spacing:.03em;flex:1 1 100%;text-align:left}
+.nav-socials{display:flex;flex-wrap:wrap;gap:.9rem;margin-left:auto;max-width:62%}
 .nav-socials a{font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.07em;text-decoration:none;transition:color .3s}
 .nav-socials a:hover{color:var(--purple)}
 .top-nav.visible{opacity:1;pointer-events:auto}
@@ -149,6 +149,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 @media(max-width:768px){
   .top-nav{justify-content:space-between;padding:.55rem 1rem .35rem}
   .nav-strip{display:none}
+  .nav-motto{display:none}
   .nav-brand{display:block;font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
   .nav-links{display:none}
   .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
@@ -236,6 +237,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 </section>
 
 <nav class="top-nav" id="topNav">
+  <span class="nav-motto">Live consciously, create passionately, act boldly.</span>
   <span class="nav-brand">margreenie</span>
     <span class="nav-links">
       <a href="#r3">About</a>
@@ -245,7 +247,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
     </span>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   <div class="nav-strip">
-    <span class="nav-motto">Live consciously, create passionately, act boldly.</span>
     <span class="nav-socials">
       <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Behind the Greens</a>
@@ -386,6 +387,10 @@ cardData.forEach(function(card){
       ?'<div class="ring-card-inner"><div class="ring-card-front"><img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"></div></div><div class="ring-card-reflect" aria-hidden="true"><img src="'+card.img+'" alt=""></div><div class="ring-card-pill">'+card.name+'</div>'
       :'<div class="ring-card-inner"><div class="ring-card-front"><span class="ring-card-title">'+card.name+'</span></div></div><div class="ring-card-pill">'+card.name+'</div>';
   el.innerHTML=inner;
+  // Per-card spring integrator (the reference gallery's model). Every animated
+  // property carries a velocity, so a card ARRIVES at its slot with a soft
+  // settle instead of tracking the focus scalar rigidly.
+  el._spring={tx:0,tz:-400,ry:0,sc:1,op:0,vtx:0,vtz:0,vry:0,vsc:0,vop:0};
   if(card.url)el.addEventListener('click',function(e){e.stopPropagation();window.open(card.url,'_blank');});
   if(card.restart)el.addEventListener('click',function(e){e.stopPropagation();window.scrollTo({top:0,behavior:'smooth'});});
   $cardRing.appendChild(el);
@@ -595,17 +600,52 @@ gsap.to('#topNav', {
   scrollTrigger: { trigger: '#r4', start: 'top bottom', end: 'top top', scrub: 1 }
 });
 
-// Gallery ring scrub: a CONTINUOUS focus position follows scroll through r6
-// (no discrete rounding — the ring glides between cards instead of ratcheting)
-var ringCards = document.querySelectorAll('.ring-card');
+// ── GALLERY ENGINE ────────────────────────────────────────────────────────────
+// Per-card springs in a fixed timestep, laid out from each card's FLOAT distance
+// to a continuous focus. Three things make it behave like the reference gallery:
+//
+//  1. LINEAR HORIZONTAL SPREAD. The old spread was `dir * smooth01(|dist|/3) *
+//     760`. smooth01 is FLAT at distance 0, so the focused card and its neighbour
+//     moved in lockstep and interpenetrated ~67% — two cards fused into one,
+//     which read as cards cutting through each other. Linear spacing keeps every
+//     adjacent pair at a constant ~15% overlap.
+//
+//  2. PER-CARD SPRINGS. The old code lerped only the scalar `focus` and derived
+//     every card's transform directly from it, so a card tracked the focus
+//     rigidly and never arrived anywhere. Here each card has its own velocity
+//     integrator (_spring): the slot position is a TARGET, and the card eases
+//     into it with STIFF/DAMP. Cards settle instead of trailing.
+//
+//  3. FIXED TIMESTEP. The integrator always advances in 1/60s chunks regardless
+//     of refresh rate, so the constants behave identically at 60/120/144Hz.
+//
+// On mobile portrait the gallery is a native scroll-snap row; the desktop spring
+// is skipped there and the scroll listener below drives the focused pill.
+var ringCards = Array.prototype.slice.call(document.querySelectorAll('.ring-card'));
 var total = ringCards.length;
 var focusTarget = 0, focus = 0;
-ScrollTrigger.create({
-  trigger: '#r6', start: 'top top', end: 'bottom bottom', scrub: 1,
+
+// Spring tuning — matched to the reference gallery (STIFF 0.08 / DAMP 0.72).
+var G_STIFF = 0.08, G_DAMP = 0.72, FOCUS_LERP = 0.12;
+var G_FIXED_DT = 1 / 60, MAX_CATCHUP = 5;
+
+// Scrub 0: focus follows the REAL scroll with no 1s tail. A laggy scrub stacked
+// on top of the lerp is what made the ring trail the scroll.
+var galleryST = ScrollTrigger.create({
+  trigger: '#r6', start: 'top top', end: 'bottom bottom', scrub: 0,
   onUpdate: function(self){
     focusTarget = Math.max(0, Math.min(total - 1, self.progress * (total - 1)));
   }
 });
+// DEBUG HOOK: lets probes read the live focus instead of assigning an
+// unreachable global.
+window.__marg = {
+  get focus(){ return focus; },
+  get focusTarget(){ return focusTarget; },
+  get prog(){ return galleryST.progress; },
+  setFocus: function(v){ focusTarget = Math.max(0, Math.min(total - 1, v)); }
+};
+
 // Mobile: the horizontal swipe drives the focused card (scroll-snap row)
 var galleryEl = document.getElementById('galleryRoom');
 if(galleryEl){
@@ -622,35 +662,73 @@ if(galleryEl){
   }, {passive:true});
 }
 
-// Continuous cover flow on a lightweight rAF (transform-only). The focus
-// position itself is spring-smoothed, then every card is laid out from its
-// FLOAT distance to the focus via eased slot functions — cards glide through
-// the ring continuously; there is no discrete slot step to ratchet.
-// On mobile portrait the gallery is a native scroll-snap row — skipped there.
 var mobilePortrait = window.innerWidth <= 900 && window.innerHeight > window.innerWidth;
 function smooth01(v){ v = v < 0 ? 0 : v > 1 ? 1 : v; return v * v * (3 - 2 * v); }
-var gallerySpring = function(){
-  if(mobilePortrait) return;
-  focus += (focusTarget - focus) * 0.12;          // spring toward the target
+
+// One fixed simulation step. Pure integration — no DOM writes.
+function galleryStep(){
+  focus += (focusTarget - focus) * FOCUS_LERP;
   if(Math.abs(focusTarget - focus) < 0.0005) focus = focusTarget;
-  ringCards.forEach(function(card, i){
-    var dist = i - focus;                          // float distance (0 = center)
-    var e = smooth01(Math.abs(dist) / 3);          // 0 focused .. 1 at the edge
+  for(var i = 0; i < ringCards.length; i++){
+    var sp = ringCards[i]._spring;
+    if(!sp) continue;
+    var dist = i - focus;
+    var d = Math.abs(dist);
     var dir = dist < 0 ? -1 : 1;
-    var tx = dir * e * 760 * cardK;
-    var tz = (120 - e * 520) * cardK;              // 120 center .. -400 edge
-    var ry = dir * e * 36;
-    var sc = 1 - 0.12 * e;
-    var op = 1 - smooth01((e - 0.4) / 0.6);        // fades in the outermost band
-    card.style.transform = 'translateX(' + tx.toFixed(1) + 'px) translateZ(' + tz.toFixed(1) + 'px) rotateY(' + ry.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
-    card.style.opacity = Math.max(0, op).toFixed(3);
-    card.style.zIndex = e < 0.2 ? '100' : e < 0.55 ? '50' : '30';
-    card.style.pointerEvents = op > 0.3 ? 'auto' : 'none';
-    card.classList.toggle('focused', e < 0.6);
-  });
-  requestAnimationFrame(gallerySpring);
-};
-requestAnimationFrame(gallerySpring);
+    var depth = smooth01(d / 3);                   // eased falloff
+    // LINEAR horizontal spread — constant overlap per adjacent pair.
+    var gap = 600 * cardK * 0.85;
+    var txT = dir * Math.min(d, 3) * gap;
+    var tzT = (120 - depth * 520) * cardK;         // 120 centre .. -400 edge
+    var ryT = dir * depth * 36;
+    var scT = 1 - 0.12 * depth;
+    var opT = 1 - smooth01((depth - 0.4) / 0.6);   // fades the outermost band
+    // v += (target - pos) * STIFF; v *= DAMP; pos += v
+    sp.vtx += (txT - sp.tx) * G_STIFF; sp.vtx *= G_DAMP; sp.tx += sp.vtx;
+    sp.vtz += (tzT - sp.tz) * G_STIFF; sp.vtz *= G_DAMP; sp.tz += sp.vtz;
+    sp.vry += (ryT - sp.ry) * G_STIFF; sp.vry *= G_DAMP; sp.ry += sp.vry;
+    sp.vsc += (scT - sp.sc) * G_STIFF; sp.vsc *= G_DAMP; sp.sc += sp.vsc;
+    sp.vop += (opT - sp.op) * G_STIFF; sp.vop *= G_DAMP; sp.op += sp.vop;
+  }
+}
+
+// Render the current spring state; write only when a rounded value changed, so
+// a ring at rest costs no style flush.
+function galleryRender(){
+  for(var i = 0; i < ringCards.length; i++){
+    var card = ringCards[i];
+    var sp = card._spring;
+    if(!sp) continue;
+    var depth = smooth01(Math.abs(i - focus) / 3);
+    var tStr = 'translateX(' + sp.tx.toFixed(1) + 'px) translateZ(' + sp.tz.toFixed(1) +
+               'px) rotateY(' + sp.ry.toFixed(1) + 'deg) scale(' + sp.sc.toFixed(3) + ')';
+    if(card._lastT !== tStr){ card.style.transform = tStr; card._lastT = tStr; }
+    var oStr = Math.max(0, Math.min(1, sp.op)).toFixed(3);
+    if(card._lastO !== oStr){ card.style.opacity = oStr; card._lastO = oStr; }
+    var zStr = depth < 0.2 ? '100' : depth < 0.55 ? '50' : '30';
+    if(card._lastZ !== zStr){ card.style.zIndex = zStr; card._lastZ = zStr; }
+    var pStr = sp.op > 0.3 ? 'auto' : 'none';
+    if(card._lastP !== pStr){ card.style.pointerEvents = pStr; card._lastP = pStr; }
+    var fCls = depth < 0.6;
+    if(card._lastF !== fCls){ card.classList.toggle('focused', fCls); card._lastF = fCls; }
+  }
+}
+
+// The single rAF driver: accumulate real elapsed time, advance the simulation in
+// fixed 1/60s chunks, then render once.
+var lastGalT = 0, galAcc = 0;
+function galleryTick(now){
+  requestAnimationFrame(galleryTick);
+  if(mobilePortrait) return;                     // mobile path owns the ring
+  if(!lastGalT){ lastGalT = now; galAcc = 0; }
+  galAcc += Math.min(0.1, (now - lastGalT) / 1000);   // clamp tab-hidden stalls
+  lastGalT = now;
+  var steps = 0;
+  while(galAcc >= G_FIXED_DT && steps < MAX_CATCHUP){ galleryStep(); galAcc -= G_FIXED_DT; steps++; }
+  if(steps === MAX_CATCHUP) galAcc = 0;          // drop the backlog, do not spiral
+  galleryRender();
+}
+requestAnimationFrame(galleryTick);
 
 // Scroll reset
 if('scrollRestoration' in history) history.scrollRestoration = 'manual';
