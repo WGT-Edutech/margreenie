@@ -8,9 +8,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>The Knysna Question — Margarita Samsonova</title>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Can an Elephant Talk to a Whale?">
+<meta property="og:description" content="On the coast of Knysna, South Africa, in the summer of 2000, naturalist Lyall Watson believed he watched an elephant communicating with a blue whale.">
+<meta property="og:image" content="https://wgt-edutech.github.io/margreenie/images/knysna-quest.jpg">
+<meta property="og:url" content="https://wgt-edutech.github.io/margreenie/blog.html">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"Can an Elephant Talk to a Whale?","author":{"@type":"Person","name":"Margarita Samsonova"},"image":"https://wgt-edutech.github.io/margreenie/images/knysna-quest.jpg","publisher":{"@type":"Organization","name":"Margreenie"},"mainEntityOfPage":"https://wgt-edutech.github.io/margreenie/blog.html"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--purple:#ff8a4d;--text-cream:#f4f1ea;--text-dim:rgba(244,241,234,.5)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -37,6 +46,11 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .post-sources strong{color:var(--text-cream)}
 .post-cta{margin:2rem 0 0;padding:1.6rem;border:1px dashed rgba(255,138,77,.35);border-radius:14px;display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
 .post-cta a{font-family:'Oswald',sans-serif;font-size:1rem;text-transform:uppercase;letter-spacing:.06em;color:var(--purple);text-decoration:none}
+.post-share{margin-top:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.post-share span{font-family:'Inter',sans-serif;font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em}
+.share-buttons{display:flex;gap:.6rem}
+.share-buttons a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--text-cream);font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;text-decoration:none;transition:all .3s}
+.share-buttons a:hover{background:var(--purple);color:#000;border-color:var(--purple);transform:translateY(-2px)}
 .next-post{max-width:760px;margin:0 auto;padding:0 2rem 4rem}
 .next-post a{color:var(--purple);text-decoration:none;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}
 .site-footer{background:#000;border-top:1px solid rgba(255,138,77,.15);padding:3rem 2rem 4rem}
@@ -46,7 +60,30 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .footer-links a{color:var(--text-dim);text-decoration:none;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
 .footer-links a:hover{color:var(--purple)}
 .footer-note{margin-top:1.6rem;font-size:.85rem;color:var(--text-dim)}
-@media(max-width:768px){.nav-links a{margin-left:1rem;font-size:.78rem}}
+@media(max-width:768px){
+  .nav-links a{margin-left:1rem;font-size:.78rem}
+  /* Mobile typography & flow: 16px floor, tighter spacing */
+  .post-hero{padding:6rem 1.25rem 2rem;min-height:45vh}
+  .post-body{padding:2rem 1.25rem 3rem;font-size:1.05rem;gap:1rem}
+  .post-body h2{font-size:1.3rem;margin-top:.8rem}
+  .post-sources{padding:1.2rem;font-size:.85rem}
+  .post-cta{padding:1.2rem}
+  .content-room{padding:3rem 1.25rem}
+  .content-body{font-size:1.05rem;gap:.85rem}
+  .content-tag{font-size:.85rem}
+  .content-title{margin-bottom:1rem}
+  .content-lede{margin-bottom:1.2rem}
+  .tour-grid{gap:1rem}
+  .tour-card{padding:1.2rem;gap:.5rem}
+  .tour-card p{font-size:.9rem}
+  .tour-card a{font-size:.9rem}
+  .post-stage{gap:1.5rem}
+  .post-more h3{font-size:1.3rem}
+  .post-more p{font-size:.95rem}
+  .site-footer{padding:2rem 1.25rem 3rem}
+  .footer-links a{font-size:.9rem}
+  .footer-note{font-size:.9rem}
+}
 .content-room{max-width:1000px;margin:0 auto;padding:4rem 2rem}
 .content-tag{font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#ffb98a;margin-bottom:.8rem}
 .content-title{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,3.4vw,2.4rem);text-transform:uppercase;letter-spacing:.04em;color:var(--text-cream);margin-bottom:1.4rem}
@@ -96,12 +133,12 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
     <a href="index.html#r3">About</a>
     <a href="blog.html">Blog</a>
     <a href="network.html">Network</a>
-    <a href="network.html#donate" class="donate-link">Donate</a>
+    <a href="donate.html" class="donate-link">Donate</a>
   </span>
 </nav>
 
 <div class="post-hero">
-  <img src="images/elephant-kenya.jpg" alt="Elephant in the African savanna">
+  <img src="images/knysna-quest.jpg" alt="Elephant and whale swimming together in the ocean" fetchpriority="high">
   <div class="post-hero-content">
     <div class="post-kicker">The Quest · Interspecies Communication</div>
     <h1>Can an Elephant Talk to a Whale?</h1>
@@ -145,6 +182,15 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
     <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie →</a>
     <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Read more on Substack →</a>
   </div>
+
+  <div class="post-share">
+    <span>Share this story</span>
+    <div class="share-buttons">
+      <a href="https://twitter.com/intent/tweet?text=Can%20an%20Elephant%20Talk%20to%20a%20Whale%3F&url=https%3A%2F%2Fwgt-edutech.github.io%2Fmargreenie%2Fblog.html" target="_blank" rel="noopener" aria-label="Share on X">X</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwgt-edutech.github.io%2Fmargreenie%2Fblog.html" target="_blank" rel="noopener" aria-label="Share on Facebook">Facebook</a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwgt-edutech.github.io%2Fmargreenie%2Fblog.html&title=Can%20an%20Elephant%20Talk%20to%20a%20Whale%3F" target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
+    </div>
+  </div>
 </article>
 
 <section class="content-room" id="profile">
@@ -153,7 +199,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
       <div class="post-card">
         <div class="post-head"><span class="post-ava" aria-hidden="true"></span><span class="post-user">margreenie<span class="post-loc">· Kenya · on safari</span></span></div>
         <div class="post-img" id="postImg">
-          <img src="images/hero-post.jpg" alt="Margarita Samsonova on safari in Kenya, watching a giraffe" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
+          <img src="images/hero-post.jpg" alt="Margarita Samsonova on safari in Kenya, watching a giraffe" loading="lazy" onerror="this.style.display='none';document.getElementById('postFallback').style.display='flex';">
           <div class="post-fallback" id="postFallback">Post image missing — check images/hero-post.jpg</div>
         </div>
         <div class="post-actions" aria-hidden="true"><span class="pa-heart">&#9825;</span><span class="pa-comment">&#128172;</span><span class="pa-share">&#10148;</span></div>
@@ -168,66 +214,120 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   </div>
 </section>
 
-<section class="content-room" id="whale">
-  <div class="content-inner">
-    <h2 class="content-tag">The Whale Meditation</h2>
-    <h3 class="content-title">Where the ocean becomes a teacher.</h3>
-    <div class="content-body">
-      <p>Margarita&rsquo;s first whales were Alaska&rsquo;s &mdash; spotted from a cruise-ship summer job when she was nineteen. &ldquo;Seeing them for the first time got me fascinated not just by whales themselves, but by how little we understand about their communication, behaviour and relationship with the ocean,&rdquo; she says.</p>
-      <p>That fascination became <strong>Whale Passage</strong>, her ongoing storytelling and research project, and it flows into her guided <strong>whale meditation sessions</strong> &mdash; quiet, immersive immersions themed around the ocean&rsquo;s vastness, breath and sound, offered through &ldquo;Voyage Across the Atlantic for the Whales&rdquo; talks and Sacred Soul Fest collaborations.</p>
-      <p>No preachy eco-lecture. A stillness practice, tuned to the rhythm of the deep &mdash; leaving you calmer, and closer to the planet.</p>
-      <p class="content-cta">Join a session &mdash; announced soon via <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">@margreenie</a>.</p>
-    </div>
-  </div>
-</section>
-
-<section class="content-room" id="tour">
-  <div class="content-inner">
-    <h2 class="content-tag">On Tour</h2>
-    <h3 class="content-title">Where Margarita shows up next.</h3>
-    <div class="tour-grid">
-          <div class="tour-card tour-soon">
-            <div class="tour-date">Sat · 7 Nov 2026 · Cape Town</div>
-            <h4>Whale Consciousness Morning</h4>
-            <p>Placeholder &mdash; early session at a rooftop yoga centre near Long Street. Margarita is in town preparing a series of unique events connecting people to whale consciousness, conservation, business and entrepreneurship through quantum field, meditation, body attunement and environmental science. Likely venue: Light House Holistic, 50 Bree St (rooftop retreat), one block from Long Street.</p>
-            <a href="https://www.threads.com/@margreenie/post/Dcx0WmJCNg6/cape-town-right-now-i-am-in-town-preparing-a-series-of-unique-events-connecting/" target="_blank" rel="noopener">Her announcement on Threads</a>
-            <a href="https://www.lighthouseholistic.co.za/" target="_blank" rel="noopener">Light House Holistic</a>
-          </div>
-          <div class="tour-card">
-            <div class="tour-date">Programme</div>
-        <h4>Greenfluencers in the Wild</h4>
-        <p>A 10-day Lisbon immersion teaching creators how to turn environmental passion into a career &mdash; days on the Tagus with Terra Incognita, whale &amp; dolphin watches, camera coaching.</p>
-        <a href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">See it in action</a>
-      </div>
-      <div class="tour-card">
-        <div class="tour-date">Live</div>
-        <h4>Sacred Soul Fest</h4>
-        <p>Fireside &ldquo;Voyage Across the Atlantic for the Whales&rdquo; conversation &mdash; influencer burnout, greenfluencing, and why whales guided her back to purpose.</p>
-        <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Listen to the talk</a>
-      </div>
-      <div class="tour-card">
-        <div class="tour-date">Policy</div>
-        <h4>COP Summits &amp; EU Youth Energy</h4>
-        <p>A regular at COP summits worldwide and a former European Commission Young Energy Ambassador for Latvia &mdash; carrying creator voices into the negotiating rooms.</p>
-        <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">Connect on LinkedIn</a>
-      </div>
-      <div class="tour-card tour-soon">
-        <div class="tour-date">Next dates</div>
-        <h4>Announced soon</h4>
-        <p>New session and event dates are shared first with her community.</p>
-        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+<section class="content-room" id="whale">
+
+  <div class="content-inner">
+
+    <h2 class="content-tag">The Whale Meditation</h2>
+
+    <h3 class="content-title">Where the ocean becomes a teacher.</h3>
+
+    <div class="content-body">
+
+      <p>Margarita&rsquo;s first whales were Alaska&rsquo;s &mdash; spotted from a cruise-ship summer job when she was nineteen. &ldquo;Seeing them for the first time got me fascinated not just by whales themselves, but by how little we understand about their communication, behaviour and relationship with the ocean,&rdquo; she says.</p>
+
+      <p>That fascination became <strong>Whale Passage</strong>, her ongoing storytelling and research project, and it flows into her guided <strong>whale meditation sessions</strong> &mdash; quiet, immersive immersions themed around the ocean&rsquo;s vastness, breath and sound, offered through &ldquo;Voyage Across the Atlantic for the Whales&rdquo; talks and Sacred Soul Fest collaborations.</p>
+
+      <p>No preachy eco-lecture. A stillness practice, tuned to the rhythm of the deep &mdash; leaving you calmer, and closer to the planet.</p>
+
+      <p class="content-cta">Join a session &mdash; announced soon via <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">@margreenie</a>.</p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<section class="content-room" id="tour">
+
+  <div class="content-inner">
+
+    <h2 class="content-tag">On Tour</h2>
+
+    <h3 class="content-title">Where Margarita shows up next.</h3>
+
+    <div class="tour-grid">
+
+          <div class="tour-card tour-soon">
+
+            <div class="tour-date">Sat · 7 Nov 2026 · Cape Town</div>
+
+            <h4>Whale Consciousness Morning</h4>
+
+            <p>Placeholder &mdash; early session at a rooftop yoga centre near Long Street. Margarita is in town preparing a series of unique events connecting people to whale consciousness, conservation, business and entrepreneurship through quantum field, meditation, body attunement and environmental science. Likely venue: Light House Holistic, 50 Bree St (rooftop retreat), one block from Long Street.</p>
+
+            <a href="https://www.threads.com/@margreenie/post/Dcx0WmJCNg6/cape-town-right-now-i-am-in-town-preparing-a-series-of-unique-events-connecting/" target="_blank" rel="noopener">Her announcement on Threads</a>
+
+            <a href="https://www.lighthouseholistic.co.za/" target="_blank" rel="noopener">Light House Holistic</a>
+
+          </div>
+
+          <div class="tour-card">
+
+            <div class="tour-date">Programme</div>
+
+        <h4>Greenfluencers in the Wild</h4>
+
+        <p>A 10-day Lisbon immersion teaching creators how to turn environmental passion into a career &mdash; days on the Tagus with Terra Incognita, whale &amp; dolphin watches, camera coaching.</p>
+
+        <a href="https://www.jeromemaas.com/blog/greenfluencers-in-the-wild/" target="_blank" rel="noopener">See it in action</a>
+
+      </div>
+
+      <div class="tour-card">
+
+        <div class="tour-date">Live</div>
+
+        <h4>Sacred Soul Fest</h4>
+
+        <p>Fireside &ldquo;Voyage Across the Atlantic for the Whales&rdquo; conversation &mdash; influencer burnout, greenfluencing, and why whales guided her back to purpose.</p>
+
+        <a href="https://open.spotify.com/episode/3eYB4MZCSXOhobzLJkRAzz" target="_blank" rel="noopener">Listen to the talk</a>
+
+      </div>
+
+      <div class="tour-card">
+
+        <div class="tour-date">Policy</div>
+
+        <h4>COP Summits &amp; EU Youth Energy</h4>
+
+        <p>A regular at COP summits worldwide and a former European Commission Young Energy Ambassador for Latvia &mdash; carrying creator voices into the negotiating rooms.</p>
+
+        <a href="https://za.linkedin.com/in/margreen" target="_blank" rel="noopener">Connect on LinkedIn</a>
+
+      </div>
+
+      <div class="tour-card tour-soon">
+
+        <div class="tour-date">Next dates</div>
+
+        <h4>Announced soon</h4>
+
+        <p>New session and event dates are shared first with her community.</p>
+
+        <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Follow @margreenie</a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">margreenie</div>
     <div class="footer-links">
       <a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Behind the Greens</a>
+      <a href="https://margaritasamsonova.wixsite.com/behindthegreens/content-creation-eco-brands" target="_blank" rel="noopener">Behind the Greens</a>
       <a href="https://www.youtube.com/margreen" target="_blank" rel="noopener">YouTube</a>
       <a href="https://www.threads.com/@margreenie" target="_blank" rel="noopener">Threads</a>
       <a href="https://substack.com/@margreen" target="_blank" rel="noopener">Substack</a>

@@ -11,6 +11,7 @@
   // VP ENGINE START
   function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
   function smoothstep(t) { t = clamp01(t); return t * t * (3 - 2 * t); }
+  function smootherstep(t) { t = clamp01(t); return t * t * t * (t * (t * 6 - 15) + 10); }
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
   /**
@@ -37,7 +38,7 @@
     var dx = cx - ex, dy = cy - ey;
     var dist = Math.sqrt(dx * dx + dy * dy);
     var t = radius > 0 ? clamp01(1 - dist / radius) : 0;
-    t = smoothstep(t) * strength;
+    t = smootherstep(t) * strength;   // quintic: round, soft-edged blob
 
     var wMax = clamp(baseW * (1 + swing), 100, 1000);
     var wMin = clamp(baseW * (1 - swing), 100, 1000);
@@ -67,6 +68,7 @@
   return {
     clamp01: clamp01,
     smoothstep: smoothstep,
+    smootherstep: smootherstep,
     clamp: clamp,
     compute: compute,
     formatSettings: formatSettings
