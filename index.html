@@ -62,7 +62,8 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.4),transparent 62%);
   opacity:.55;filter:blur(1px)}
 
-#galleryRoom{position:absolute;inset:0;z-index:30;perspective:2400px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
+#galleryRoom{position:absolute;inset:0;z-index:30;perspective:2400px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;cursor:grab}
+#galleryRoom.grabbing{cursor:grabbing}
 #r6 .sticky{overflow:visible}
 /* Cylinder camera (React Bits circular-carousel, cylinder preset): the ring sits
    R back from the perspective plane (front card lands at z=0 = full size) and
@@ -70,7 +71,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .card-ring{position:absolute;inset:0;display:flex;transform-style:preserve-3d;transform:translateZ(-510px) rotateX(-5deg)}
 /* Each card is a 0x0 anchor at the room centre; the render walks it around the
    drum with rotateY(base) translateZ(R). Children are positioned vs. it. */
-.ring-card{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;cursor:pointer}
+.ring-card{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;cursor:grab}
 /* Tiles: 8 vertical slices per face bend around the cylinder (bend = radius,
    alpha = centre/bend, shift = R·sin a, depth = −R·(1−cos a), turn = a). The
    photo is never scaled — each tile clips one strip of the full image, so the
@@ -812,6 +813,68 @@ if(galleryEl){
     galPX=Math.max(-1,Math.min(1,(ev.clientX-r.left)/r.width*2-1));
     galPY=Math.max(-1,Math.min(1,(ev.clientY-r.top)/r.height*2-1));
   },{passive:true});
+}
+// DRAGGABLE RING (lab Draggable): grab the ring and turn it. The ring is
+// scroll-driven, so a horizontal drag scrolls the page — Lenis is stopped
+// mid-drag (the same pattern as the intro autoscroll) and the ring tracks the
+// pointer 1:1 (one card-width of drag = one card). Release throws with
+// momentum (lab Momentum) or settles onto the nearest card via the rest-snap.
+var dragState=null;
+if(galleryEl){
+  galleryEl.addEventListener('pointerdown',function(ev){
+    if(mobilePortrait||!SITE.gallery.draggable)return;
+    if(ev.button!==0)return;
+    dragState={id:ev.pointerId,x:ev.clientX,y:ev.clientY,moved:false,
+      samples:[{t:performance.now(),y:window.scrollY}]};
+    lastInputT=performance.now();
+    try{galleryEl.setPointerCapture(ev.pointerId);}catch(e){}
+  });
+  galleryEl.addEventListener('pointermove',function(ev){
+    if(!dragState||dragState.id!==ev.pointerId)return;
+    var dx=ev.clientX-dragState.x,dy=ev.clientY-dragState.y;
+    if(!dragState.moved){
+      if(Math.abs(dx)<5&&Math.abs(dy)<5)return;
+      if(Math.abs(dy)>Math.abs(dx)*1.2)return;   // vertical intent = normal page scroll
+      dragState.moved=true;
+      dragState.x=ev.clientX;dragState.y=ev.clientY;
+      lenis.stop();
+      galleryEl.classList.add('grabbing');
+    }
+    var deltaX=ev.clientX-dragState.x;
+    dragState.x=ev.clientX;dragState.y=ev.clientY;
+    var spanGal=(galRoomData?galRoomData.height:viewH+1)-viewH;
+    var k=Math.max(1,spanGal/((total-1)*(360*cardK)));  // px of scroll per px of drag
+    window.scrollBy(0,-deltaX*k);
+    var now=performance.now();
+    dragState.samples.push({t:now,y:window.scrollY});
+    while(dragState.samples.length>2&&now-dragState.samples[0].t>110)dragState.samples.shift();
+    lastInputT=now;
+  });
+  function endDrag(ev){
+    if(!dragState||dragState.id!==ev.pointerId)return;
+    var s=dragState;dragState=null;
+    galleryEl.classList.remove('grabbing');
+    try{galleryEl.releasePointerCapture(ev.pointerId);}catch(e){}
+    if(!s.moved)return;
+    var first=s.samples[0],last=s.samples[s.samples.length-1];
+    var spanMs=last.t-first.t;
+    var vel=spanMs>8?(last.y-first.y)/spanMs*1000:0;   // scroll velocity px/s
+    var tau=0.18+SITE.gallery.momentum*1.5;
+    lenis.start();
+    lenis.scrollTo(window.scrollY,{immediate:true});
+    if(Math.abs(vel)>80&&SITE.gallery.momentum>0&&SITE.gallery.snap){
+      lenis.scrollTo(window.scrollY+vel*tau*0.55,{duration:Math.min(2.2,Math.max(0.3,tau*1.4))});
+    }
+    window.__suppressRingClick=performance.now();
+  }
+  galleryEl.addEventListener('pointerup',endDrag);
+  galleryEl.addEventListener('pointercancel',endDrag);
+  // a real drag must not open the card link that was grabbed
+  galleryEl.addEventListener('click',function(ev){
+    if(window.__suppressRingClick&&performance.now()-window.__suppressRingClick<400){
+      ev.preventDefault();ev.stopPropagation();window.__suppressRingClick=0;
+    }
+  },true);
 }
 var cardCentres = [];
 function cacheCardCentres(){
