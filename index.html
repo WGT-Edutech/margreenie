@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
-<link rel="icon" type="image/png" href="images/favicon-32.png">
-<link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="icon" type="image/png" href="images/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="images/favicon-180.png?v=2">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
@@ -107,6 +107,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
 .nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+.brand-mark{display:inline-block;height:1.5rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
 .nav-links{display:flex;align-items:center}
 .nav-links a{font-family:var(--body-font),sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
@@ -275,7 +276,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 </section>
 
 <nav class="top-nav" id="topNav">
-  <span class="nav-brand">margreenie</span>
+  <span class="nav-brand"><img class="brand-mark" src="images/logo-mark.png?v=2" alt="" width="41" height="24">margreenie</span>
   <span class="nav-links">
     <a href="#r3">About</a>
     <a href="blog.html">Blog</a>
