@@ -1276,8 +1276,29 @@ var vpSplitDone=false;
 var VP_EASE_K=1-Math.exp(-1/60/0.12);
 var vpCacheT=0;
 function vpCacheSoon(){clearTimeout(vpCacheT);vpCacheT=setTimeout(vpCache,250);}
+
+// ── LIVE GEOMETRY REFRESH ───────────────────────────────────────────────────
+// The hero title/description are transformed by SCRUBBED GSAP timelines (scrub:1
+// keeps them gliding for ~1s after the scroll stops) and every title glyph also
+// carries its own reveal translateY. A cache refreshed only on scroll/resize is
+// captured mid-scrub and then never corrected, so the proximity blob aims at
+// where the text USED to be — on the title the effect reads as lost (peak weight
+// drops from 945 to ~600 while the hero is still settling). Re-read the rects on
+// a throttle from the ticker so the cache tracks the animation.
+var vpGeomTick=0;
+var VP_GEOM_EVERY=3;                       // ~20Hz at 60fps
+function vpRefreshGeom(){
+  var sy=window.scrollY;
+  for(var i=0;i<vpEls.length;i++){
+    var e=vpEls[i];
+    var r=e.el.getBoundingClientRect();
+    e.left=r.left; e.w=r.width; e.h=r.height;
+    if(e.fixed){e.top=r.top;}else{e.docTop=r.top+sy;}
+  }
+}
 function vpStep(){
   if(!VP||REDUCED)return;
+  if((vpGeomTick++%VP_GEOM_EVERY)===0)vpRefreshGeom();
   var cx=vpCursor.x,cy=vpCursor.y,sy=window.scrollY;
   for(var i=0;i<vpEls.length;i++){
     var e=vpEls[i];
@@ -1304,8 +1325,9 @@ window.addEventListener('pointermove',function(ev){vpCursor.x=ev.clientX;vpCurso
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(vpCache);
 vpCache();
 gsap.ticker.add(vpStep);
-// Positions go stale while hero text scrubs with the timeline or ring cards
-// glide in 3D — re-cache after the scroll settles (and on resize).
+// Positions also go stale while hero text scrubs with the timeline or ring cards
+// glide in 3D; vpRefreshGeom() above tracks that continuously, and this re-cache
+// after the scroll settles (and on resize) covers DOM/layout changes.
 if(lenis)lenis.on('scroll',vpCacheSoon);
 window.addEventListener('resize',vpCacheSoon);
 
