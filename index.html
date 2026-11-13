@@ -142,8 +142,11 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
 
 /* ── PROJECT DESCRIPTION ROOMS ── */
-.proj-room{padding:0 0 6rem}
+.proj-room{padding:0 0 6rem;scroll-margin-top:7rem}
 .proj-hero{display:block;width:100%;height:auto;aspect-ratio:21/9;max-height:62vh;object-fit:cover}
+/* Portrait-ish sources: anchor the crop to the top so a face near the top edge
+   is never sliced off by the wide hero box. */
+.proj-hero--head{object-position:center top}
 .proj-points{list-style:none;padding:0;margin:0 0 2.5rem;display:grid;gap:.7rem;max-width:720px}
 .proj-points li{position:relative;padding-left:1.4rem;font-size:1.02rem;line-height:1.65;color:var(--text-dim)}
 .proj-points li::before{content:'\2014';position:absolute;left:0;color:var(--purple)}
@@ -390,7 +393,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 </section>
 
 <section class="content-room proj-room" id="proj-voyage-michigan">
-  <img class="proj-hero" src="images/proj-voyage-michigan.jpg" alt="Margarita Samsonova speaking at a Voyage Michigan event">
+  <img class="proj-hero proj-hero--head" src="images/proj-voyage-michigan.jpg" alt="Margarita Samsonova speaking at a Voyage Michigan event">
   <div class="content-inner">
     <p class="content-tag">Project</p>
     <h2 class="content-title">Voyage Michigan Story</h2>
@@ -655,12 +658,17 @@ cardData.forEach(function(card){
     e.preventDefault();
     var target=document.querySelector(h);
     if(!target)return;
+    // Stop the room's top edge below the fixed nav bar. Without this the hero
+    // starts at the viewport top and the nav covers its upper slice — which cut
+    // the face off the Voyage Michigan portrait.
+    var navH=document.getElementById('topNav')?document.getElementById('topNav').offsetHeight:0;
+    var stopAt=Math.max(0,target.offsetTop-navH);
     if(typeof lenis!=='undefined'&&lenis){
       if(lenis.isStopped)lenis.start();                 // autoscroll may have stopped it
       lenis.scrollTo(window.scrollY,{immediate:true});   // resync internal scroll first
-      lenis.scrollTo(target.offsetTop,{immediate:true});
+      lenis.scrollTo(stopAt,{immediate:true});
     }else{
-      window.scrollTo({top:target.offsetTop,behavior:'smooth'});
+      window.scrollTo({top:stopAt,behavior:'smooth'});
     }
   });
   var front=card.img
