@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
-<link rel="icon" type="image/png" href="images/favicon-32.png">
-<link rel="apple-touch-icon" href="images/favicon-180.png">
+<link rel="icon" type="image/png" href="images/favicon-32.png?v=2">
+<link rel="apple-touch-icon" href="images/favicon-180.png?v=2">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
@@ -107,10 +107,12 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .dot{width:10px;height:10px;border-radius:50%;background:rgba(244,241,234,.2);border:1px solid rgba(244,241,234,.1);cursor:pointer;transition:all .3s;padding:0}
 .dot.active{background:radial-gradient(circle,rgba(200,170,255,.9) 20%,var(--purple) 55%,rgba(255,138,77,.3) 100%);border-color:var(--purple);box-shadow:none;transform:scale(1.3)}
 
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
-.nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:7rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:7rem;background:#000;z-index:45;border-top:1px solid rgba(255,138,77,.18)}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:2.3rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
+.brand-mark{display:inline-block;height:3rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
 .nav-links{display:flex;align-items:center}
-.nav-links a{font-family:var(--body-font),sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
+.nav-links a{font-family:var(--body-font),sans-serif;font-size:1.7rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
 .nav-links a.donate-link{color:var(--purple)!important}
 .menu-toggle{display:none}
@@ -130,6 +132,18 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .content-cta{color:var(--text-cream);font-weight:500}
 .content-cta a{color:var(--purple);text-decoration:none;border-bottom:1px solid rgba(255,138,77,.4)}
 .content-lede{max-width:640px;color:var(--text-dim);margin-bottom:2rem}
+
+/* ── PROJECT DESCRIPTION ROOMS ── */
+.proj-room{padding:0 0 6rem}
+.proj-hero{display:block;width:100%;height:auto;aspect-ratio:21/9;max-height:62vh;object-fit:cover}
+.proj-points{list-style:none;padding:0;margin:0 0 2.5rem;display:grid;gap:.7rem;max-width:720px}
+.proj-points li{position:relative;padding-left:1.4rem;font-size:1.02rem;line-height:1.65;color:var(--text-dim)}
+.proj-points li::before{content:'\2014';position:absolute;left:0;color:var(--purple)}
+.proj-cta{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(255,138,77,.15)}
+.proj-cta a{display:inline-block;padding:.7em 1.6em;border-radius:999px;font-family:var(--body-font),sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.05em;text-decoration:none;color:var(--text-cream);background:rgba(255,138,77,.14);border:1px solid rgba(255,138,77,.4);transition:background .3s,transform .3s}
+.proj-cta a:hover{background:rgba(255,138,77,.28);transform:translateY(-2px)}
+/* the lit pill reads as an open action, not just a label */
+.ring-card.focused .ring-card-pill::after{content:'\2192';color:var(--purple);margin-left:.35em}
 .tour-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
 .tour-card{background:#08080f;border:1px solid rgba(244,241,234,.08);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.6rem}
 .tour-date{font-family:var(--body-font),sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
@@ -154,13 +168,13 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 .gallery-floor{position:fixed;bottom:0;left:0;right:0;height:38vh;z-index:1;opacity:0;pointer-events:none;transition:opacity .8s;background:#000}
 .gallery-floor.visible{opacity:1}
 
-.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1200vh}
+.r1h{height:30vh}.r2h{height:30vh}.r3h{height:110vh}.r4h{height:400vh}.r5h{height:10vh}.r6h{height:1360vh}
 @media(max-width:768px){.r1h{height:20vh}.r2h{height:20vh}.r3h{height:80vh}.r4h{height:300vh}.r5h{height:10vh}.r6h{height:280vh}}
 
-@media(max-width:768px){
+@media(max-width:900px){
   .top-nav{padding:0 1rem}
   .nav-links{display:none}
-  .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
+  .menu-toggle{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:80px;height:80px;padding:0;background:none;border:0;cursor:pointer;-webkit-appearance:none}
   .menu-toggle span{display:block;width:22px;height:2px;background:var(--text-cream);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
   .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .menu-toggle.open span:nth-child(2){opacity:0}
@@ -184,9 +198,9 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   .ring-card{position:relative;left:auto;top:auto;width:80vw;height:53vw;max-width:240px;max-height:162px;margin:0;flex:0 0 auto;scroll-snap-align:center;scroll-snap-stop:always;transform:none!important;opacity:1!important;pointer-events:auto!important;z-index:auto!important}
   .ring-card-reflect{display:none}
 }
-.menu-backdrop{position:fixed;top:3.5rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s}
+.menu-backdrop{position:fixed;top:7rem;left:0;right:0;bottom:0;z-index:104;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility 0s .3s}
 .menu-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .3s ease,visibility 0s}
-.mobile-menu{position:fixed;top:3.5rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(255,138,77,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
+.mobile-menu{position:fixed;top:7rem;right:0;bottom:0;width:min(280px,80vw);z-index:110;display:flex;flex-direction:column;gap:1.1rem;padding:2.2rem 1.8rem;background:rgba(10,10,20,.94);backdrop-filter:blur(14px);border-left:1px solid rgba(255,138,77,.25);box-shadow:-10px 0 40px rgba(0,0,0,.5);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:transform .35s ease,visibility 0s .35s}
 .mobile-menu.open{transform:translateX(0);visibility:visible;pointer-events:auto;transition:transform .35s ease,visibility 0s}
 .mobile-menu a{font-family:var(--body-font),sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:rgba(244,241,234,.9);padding:.6rem .4rem;border-bottom:1px solid rgba(255,255,255,.06);transition:color .3s,text-shadow .3s}
 .mobile-menu a:hover{color:var(--purple);text-shadow:0 0 2px hsl(24 100% 72% / .5)}
@@ -276,8 +290,129 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
   </div>
 </section>
 
+<!-- ===== PROJECT DESCRIPTION ROOMS ===== -->
+<section class="content-room proj-room" id="proj-whale-passage">
+  <img class="proj-hero" src="images/whale-ocean.jpg" alt="A whale surfacing in open ocean">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Whale Passage</h2>
+    <p class="content-lede">Whale Passage is Margarita&rsquo;s long-running ocean storytelling series &mdash; following whale migration routes, the science of the people protecting them, and the coastal communities whose lives run on the same tides. It is filmed and photographed in the field, in the season the whales move.</p>
+    <ul class="proj-points">
+      <li>Field storytelling from migration routes and research stations.</li>
+      <li>Film and photography published across the margreenie channels.</li>
+      <li>Built to make marine conservation feel close, not distant.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-behind-the-greens">
+  <img class="proj-hero" src="images/behind-the-greens.jpg" alt="Behind the Greens media team at work in the field">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Behind the Greens</h2>
+    <p class="content-lede">Behind the Greens is Margarita&rsquo;s media agency &mdash; the studio brands hire to tell their stories of environmental work and impact. It takes a campaign from first brief through filmed story, edit and publication, and has reached more than half a billion people.</p>
+    <ul class="proj-points">
+      <li>Agency for green brands: strategy, production, distribution.</li>
+      <li>Founder story and method documented at behindthegreens.co.</li>
+      <li>500M+ reached across campaign and editorial work.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://www.instagram.com/behindthegreensmedia/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-terra-incognita">
+  <img class="proj-hero" src="images/terra-incognita.jpg" alt="Sailing on the Tagus river in Lisbon">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Terra Incognita</h2>
+    <p class="content-lede">Terra Inc&oacute;gnita is a nautical centre on the Tagus in Lisbon, born out of a dream to democratise access to the sport of sailing for everyone. It grew from a sailing school into a centre for cruising-sailing certification, marine wildlife observation and river experiences.</p>
+    <ul class="proj-points">
+      <li>Sailing school and nautical centre, Doca de Santo Amaro, Lisbon.</li>
+      <li>First school in the country certified by the Portuguese Sailing Federation as a Cruise Sailing Specialist.</li>
+      <li>Dolphin and marine-bird observation with a skipper and a marine biologist.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://terraincognita.pt/en/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-mercedes-oceanic">
+  <img class="proj-hero" src="images/mercedes-oceanic.jpg" alt="Mercedes-Benz Oceanic Lounge on the Tagus river, Lisbon">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Mercedes Oceanic Lounge</h2>
+    <p class="content-lede">Mercedes-Benz Oceanic Lounge is a brand space on the Tagus in Lisbon, created in partnership with Terra Inc&oacute;gnita and facing the river and its diversity. It hosts a series of unique experiences &mdash; conferences, events and time on the water.</p>
+    <ul class="proj-points">
+      <li>Mercedes-Benz experience space, Doca de Santo Amaro, Lisbon.</li>
+      <li>In partnership with Terra Inc&oacute;gnita, on the Tagus river.</li>
+      <li>Conferences, brand events and sailing experiences.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://mboceaniclounge.pt/en/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-mangrowth">
+  <img class="proj-hero" src="images/mangrove.jpg" alt="Mangrove forest at the waterline">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Mangrowth (documentary)</h2>
+    <p class="content-lede">Mangrowth is a documentary following the ManGrowth project &mdash; the study and conservation of mangrove ecosystems &mdash; and the people working to hold them. It sits inside Wherever Magazine&rsquo;s <em>Eco Heroines in Portugal</em> feature on Margarita.</p>
+    <ul class="proj-points">
+      <li>Documentary on mangrove ecosystems and their conservation.</li>
+      <li>Follows researchers and local eco-heroines in the field.</li>
+      <li>Featured in Wherever Magazine&rsquo;s Eco Heroines in Portugal.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://www.wherevermags.com/news/eco-heroines-in-portugal/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-knysna-quest">
+  <img class="proj-hero" src="images/knysna-quest.jpg" alt="Elephant and whale swimming together in the ocean off Knysna">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">The Knysna Quest</h2>
+    <p class="content-lede">The Knysna Quest retraces a story naturalist Lyall Watson chronicled in <em>Elephantoms</em> &mdash; a Knysna elephant matriarch, one of the last wild elephants of the Garden Route, seemingly in communication with a blue whale beyond the surf. Margarita&rsquo;s goal is to film the Knysna shore and bring whale and elephant researchers, and their recordings, to the same beach.</p>
+    <ul class="proj-points">
+      <li>Interspecies communication: elephants and whales sharing the same water.</li>
+      <li>Field documentary on the Knysna coastline, South Africa.</li>
+      <li>Full long-form story published on the margreenie blog.</li>
+    </ul>
+    <p class="proj-cta"><a href="blog.html">Read the full story on the blog &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-voyage-michigan">
+  <img class="proj-hero" src="images/voyage-michigan.jpg" alt="Margarita Samsonova travelling and filming on the road">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">Voyage Michigan Story</h2>
+    <p class="content-lede">Voyage Michigan sat down with Margarita to tell her story &mdash; a media creator turned conservationist who has travelled more than sixty countries watching people turn a passion for the planet into impactful action.</p>
+    <ul class="proj-points">
+      <li>Interview feature with Voyage Michigan.</li>
+      <li>Covers the journey from media creator to conservationist.</li>
+      <li>Part of the press and interview archive.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
+<section class="content-room proj-room" id="proj-70-countries">
+  <img class="proj-hero" src="images/70-countries.jpg" alt="Margarita Samsonova on her travels across seventy countries">
+  <div class="content-inner">
+    <p class="content-tag">Project</p>
+    <h2 class="content-title">70 Countries &amp; Counting</h2>
+    <p class="content-lede">70 Countries &amp; Counting is the travel archive &mdash; seven decades of borders crossed, ecosystems witnessed and the people met along the way, logged as Margarita heads towards the next ten.</p>
+    <ul class="proj-points">
+      <li>Ongoing travel archive across seventy countries.</li>
+      <li>Field notes, film and photography from each stop.</li>
+      <li>Published on the margreenie Instagram.</li>
+    </ul>
+    <p class="proj-cta"><a href="https://www.instagram.com/margreenie/" target="_blank" rel="noopener">Visit the actual project site &rarr;</a></p>
+  </div>
+</section>
+
 <nav class="top-nav" id="topNav">
-  <span class="nav-brand">margreenie</span>
+  <span class="nav-brand"><img class="brand-mark" src="images/logo-mark.png?v=2" alt="" width="41" height="24">margreenie</span>
   <span class="nav-links">
     <a href="#r3">About</a>
     <a href="blog.html">Blog</a>
@@ -441,14 +576,14 @@ function revealNameChars(count){
 }
 // ── GALLERY CARDS ──
 var cardData=[
-  {name:'Whale Passage',img:'images/whale-ocean.jpg',url:'https://www.instagram.com/margreenie/'},
-  {name:'Behind the Greens',img:'images/behind-the-greens.jpg',url:'https://www.instagram.com/behindthegreensmedia/'},
-    {name:'Terra Incognita',img:'images/terra-incognita.jpg',url:'https://terraincognita.pt/en/'},
-  {name:'Mercedes Oceanic Lounge',img:'images/mercedes-oceanic.jpg',url:'https://mboceaniclounge.pt/en/'},
-  {name:'Mangrowth (documentary)',img:'images/mangrove.jpg',url:'https://www.wherevermags.com/news/eco-heroines-in-portugal/'},
-  {name:'The Knysna Quest',img:'images/knysna-quest.jpg',url:'blog.html'},
-  {name:'Voyage Michigan Story',img:'images/voyage-michigan.jpg',url:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/'},
-  {name:'70 Countries & Counting',img:'images/70-countries.jpg',url:'https://www.instagram.com/margreenie/'}
+  {name:'Whale Passage',img:'images/whale-ocean.jpg',url:'#proj-whale-passage',site:'https://www.instagram.com/margreenie/',siteLabel:'instagram.com/margreenie'},
+  {name:'Behind the Greens',img:'images/behind-the-greens.jpg',url:'#proj-behind-the-greens',site:'https://www.instagram.com/behindthegreensmedia/',siteLabel:'instagram.com/behindthegreensmedia'},
+  {name:'Terra Incognita',img:'images/terra-incognita.jpg',url:'#proj-terra-incognita',site:'https://terraincognita.pt/en/',siteLabel:'terraincognita.pt'},
+  {name:'Mercedes Oceanic Lounge',img:'images/mercedes-oceanic.jpg',url:'#proj-mercedes-oceanic',site:'https://mboceaniclounge.pt/en/',siteLabel:'mboceaniclounge.pt'},
+  {name:'Mangrowth (documentary)',img:'images/mangrove.jpg',url:'#proj-mangrowth',site:'https://www.wherevermags.com/news/eco-heroines-in-portugal/',siteLabel:'wherevermags.com'},
+  {name:'The Knysna Quest',img:'images/knysna-quest.jpg',url:'#proj-knysna-quest',site:'blog.html',siteLabel:'margreenie blog',internal:true},
+  {name:'Voyage Michigan Story',img:'images/voyage-michigan.jpg',url:'#proj-voyage-michigan',site:'https://voyagemichigan.com/interview/check-out-margarita-samsonovas-story/',siteLabel:'voyagemichigan.com'},
+  {name:'70 Countries & Counting',img:'images/70-countries.jpg',url:'#proj-70-countries',site:'https://www.instagram.com/margreenie/',siteLabel:'instagram.com/margreenie'}
 ];
 var $cardRing=document.getElementById('cardRing');
 // CYLINDER TILES (React Bits circular-carousel geometry): each card = 8 vertical
@@ -495,13 +630,31 @@ cardData.forEach(function(card){
   // REAL LINKS, not clickable divs (a11y): keyboard activation, screen readers,
   // middle-click and copy-link all work. CSS and the engine treat <a> identically.
   var el=document.createElement('a');el.className='ring-card';
-  el.href=card.url||'/';el.target='_blank';el.rel='noopener';
+  el.href=card.url||'/';
+  if(card.url && card.url.charAt(0)!=='#'){ el.target='_blank'; el.rel='noopener'; }
   // Anchors are draggable by default. A native link drag makes Chrome fire
   // pointercancel the instant the ring drag engages, killing the drag — and it
   // is also what made a tap feel dead. Keep the link, drop the native drag.
   el.draggable=false;
   el.setAttribute('aria-label','Open '+card.name);
   el.dataset.img=card.img||'';
+  el.dataset.site=card.site||'';
+  // Hash links open the project description room on this page; anything else is
+  // an external site and keeps the browser's default new-tab behaviour.
+  el.addEventListener('click',function(e){
+    var h=this.getAttribute('href')||'';
+    if(h.charAt(0)!=='#')return;
+    e.preventDefault();
+    var target=document.querySelector(h);
+    if(!target)return;
+    if(typeof lenis!=='undefined'&&lenis){
+      if(lenis.isStopped)lenis.start();                 // autoscroll may have stopped it
+      lenis.scrollTo(window.scrollY,{immediate:true});   // resync internal scroll first
+      lenis.scrollTo(target.offsetTop,{immediate:true});
+    }else{
+      window.scrollTo({top:target.offsetTop,behavior:'smooth'});
+    }
+  });
   var front=card.img
       ?'<img src="'+card.img+'" alt="'+card.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">'
       :'<span class="ring-card-title">'+card.name+'</span>';
@@ -799,7 +952,7 @@ window.__marg = {
   get prog(){ return galP; },
   setFocus: function(v){
     var r6 = galRoomData;
-    window.scrollTo(0, r6.top + (v / (total - 1)) * Math.max(1, r6.height - viewH));
+    window.scrollTo(0, r6.top + (v / total) * Math.max(1, r6.height - viewH));
   }
 };
 
@@ -827,16 +980,17 @@ if(galleryEl){
 // momentum (lab Momentum) or settles onto the nearest card via the rest-snap.
 var dragState=null;
 if(galleryEl){
+  // Window-level move/up listeners (NOT setPointerCapture on the room).
+  // Capture retargets the pointerup — and therefore the click — to #galleryRoom,
+  // so the browser fires the click on the container instead of the card <a>: the
+  // gallery links silently stopped opening. It also made a tap on a card feel
+  // dead. Listening on window keeps the drag alive and leaves the click alone.
   galleryEl.addEventListener('pointerdown',function(ev){
     if(mobilePortrait||!SITE.gallery.draggable)return;
     if(ev.button!==0)return;
     dragState={id:ev.pointerId,x:ev.clientX,y:ev.clientY,moved:false,
       samples:[{t:performance.now(),y:window.scrollY}]};
     lastInputT=performance.now();
-    // NO setPointerCapture: capturing retargets the pointerup — and therefore the
-    // click — to #galleryRoom, so the browser fires the click on the container
-    // instead of the card <a> and the link never opens. Window-level listeners
-    // keep the drag alive and leave the click alone.
     window.addEventListener('pointermove',dragMove,{passive:true});
     window.addEventListener('pointerup',endDrag);
     window.addEventListener('pointercancel',endDrag);
@@ -855,7 +1009,7 @@ if(galleryEl){
     var deltaX=ev.clientX-dragState.x;
     dragState.x=ev.clientX;dragState.y=ev.clientY;
     var spanGal=(galRoomData?galRoomData.height:viewH+1)-viewH;
-    var k=Math.max(1,spanGal/((total-1)*(360*cardK)));  // px of scroll per px of drag
+    var k=Math.max(1,spanGal/(total*(360*cardK)));  // px of scroll per px of drag
     window.scrollBy(0,-deltaX*k);
     var now=performance.now();
     dragState.samples.push({t:now,y:window.scrollY});
@@ -932,7 +1086,11 @@ function galleryStep(){
   // nearest slot, which puts the focused card dead centre (tx = 0) and lights its
   // pill. This mirrors the mobile row, where scroll-snap-align:center already
   // guarantees a centred card.
-  var fRaw = galP * (total - 1);
+  // FULL REVOLUTION: focus runs 0..total (not 0..total-1), so the ring turns a
+  // complete 360deg and lands back on card 0 at the end of the gallery instead
+  // of dead-ending on the last card. Card i sits front when focus == i (mod
+  // total), so focus == total puts card 0 front again — an endless loop.
+  var fRaw = galP * total;
   if(Math.abs(fRaw - lastFocusRaw) > 0.0002){
     restT = 0;
     lastFocusRaw = fRaw;
@@ -962,7 +1120,9 @@ function galleryStep(){
 // coplanar overlap is impossible — no depthFocus needed). Cards depth-fade via
 // --cc-depth on their shade layer.
 function galleryRender(){
-  var slot = Math.max(0, Math.min(total - 1, Math.round(focus)));
+  // Modular: focus now reaches `total`, where card 0 is front again — the lit
+  // pill must wrap with it instead of clamping onto the last card.
+  var slot = ((Math.round(focus) % total) + total) % total;
   var swell = 1 + SITE.gallery.stretch * 0.12 * Math.min(1, Math.abs(focusVel) / 420); // lab Stretch
   var R = ccRadius() * swell;
   var persp = Math.max(600, SITE.gallery.perspective / SITE.gallery.depth); // lab Perspective/Depth -> camera
@@ -1024,8 +1184,9 @@ var vpEls=[];
 var VP_SELECTORS=[
   '#descLine','#quoteStage blockquote','#quoteStage cite','#sloganBar',
   '.content-tag','.content-title','.content-body p','.content-lede','.tour-date',
-  '.tour-card h4','.tour-card p','.tour-card a','.donate-note','.nav-brand',
-  '.nav-links a','.mobile-menu a','.ring-card-pill','.ring-card-title','.sect-btn'
+  '.tour-card h4','.tour-card p','.tour-card a','.donate-note',
+  '.nav-brand','.nav-links a','.mobile-menu a',
+  '.ring-card-pill','.ring-card-title','.sect-btn'
 ];
 
 // An element is "anchored" when its visual position does not track the document
@@ -1317,5 +1478,6 @@ window.addEventListener('pageshow', function(ev){
 
 })();
 </script>
+  <div class="bottom-bar" aria-hidden="true"></div>
 </body>
 </html>

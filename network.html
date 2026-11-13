@@ -22,10 +22,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:auto}
 body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
-.nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream)}
-.brand-mark{display:inline-block;height:1.5rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
-.nav-links a{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:7rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;height:7rem;background:#000;z-index:45;border-top:1px solid rgba(255,138,77,.18)}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:2.3rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream)}
+.brand-mark{display:inline-block;height:3rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
+.nav-links a{font-family:'Inter',sans-serif;font-size:1.7rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
 .nav-links a.donate-link{color:var(--purple)!important}
 .page-hero{padding:5rem 2rem 2rem;max-width:1000px;margin:0 auto}
@@ -53,7 +54,7 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
 .footer-links a:hover{color:var(--purple)}
 .footer-note{margin-top:1.6rem;font-size:.85rem;color:var(--text-dim)}
 @media(max-width:768px){
-  .nav-links a{margin-left:1rem;font-size:.78rem}
+  .nav-links a{margin-left:1rem;font-size:1.56rem}
   /* Mobile typography & flow: 16px floor, tighter spacing */
   .page-hero{padding:4.5rem 1.25rem 1.5rem}
   .net-grid{padding:1rem 1.25rem 2.5rem;gap:1rem}
@@ -229,5 +230,6 @@ body{background:#000;color:var(--text-cream);font-family:'Inter',sans-serif;line
   <div class="footer-inner"><p class="footer-note">Live consciously, create passionately, act boldly. — Margarita Samsonova</p></div>
   </footer>
 
-  </body>
+    <div class="bottom-bar" aria-hidden="true"></div>
+</body>
 </html>
