@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self';">
-<link rel="icon" type="image/png" href="images/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="images/favicon-180.png?v=2">
+<link rel="icon" type="image/png" href="images/favicon-32.png">
+<link rel="apple-touch-icon" href="images/favicon-180.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
@@ -14,11 +14,13 @@
 <meta property="og:image" content="https://wgt-edutech.github.io/margreenie/images/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Margarita Samsonova — margreenie · conservationist · storyteller">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wgt-edutech.github.io/margreenie/images/og-card.jpg">
 <title>Margarita Samsonova — Greenfluencer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Oswald:wght@400;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Oswald:wght@200..700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
 <script src="js/gsap.min.js"></script>
 <script src="js/ScrollTrigger.min.js"></script>
 <script src="js/lenis.min.js"></script>
@@ -107,7 +109,6 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 
 .top-nav{position:fixed;top:0;left:0;right:0;z-index:45;height:3.5rem;background:#000;border-bottom:1px solid rgba(255,138,77,.18);display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
 .nav-brand{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.18em;color:var(--text-cream);text-shadow:0 0 2px hsl(24 100% 72% / .4)}
-.brand-mark{display:inline-block;height:1.5rem;width:auto;vertical-align:-0.3em;margin-right:.5rem}
 .nav-links{display:flex;align-items:center}
 .nav-links a{font-family:var(--body-font),sans-serif;font-size:.85rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;margin-left:1.6rem;transition:color .3s}
 .nav-links a:hover{color:var(--purple)}
@@ -276,7 +277,7 @@ body{background:#000;color:var(--text-cream);font-family:var(--body-font),sans-s
 </section>
 
 <nav class="top-nav" id="topNav">
-  <span class="nav-brand"><img class="brand-mark" src="images/logo-mark.png?v=2" alt="" width="41" height="24">margreenie</span>
+  <span class="nav-brand">margreenie</span>
   <span class="nav-links">
     <a href="#r3">About</a>
     <a href="blog.html">Blog</a>
@@ -495,6 +496,10 @@ cardData.forEach(function(card){
   // middle-click and copy-link all work. CSS and the engine treat <a> identically.
   var el=document.createElement('a');el.className='ring-card';
   el.href=card.url||'/';el.target='_blank';el.rel='noopener';
+  // Anchors are draggable by default. A native link drag makes Chrome fire
+  // pointercancel the instant the ring drag engages, killing the drag — and it
+  // is also what made a tap feel dead. Keep the link, drop the native drag.
+  el.draggable=false;
   el.setAttribute('aria-label','Open '+card.name);
   el.dataset.img=card.img||'';
   var front=card.img
@@ -828,9 +833,15 @@ if(galleryEl){
     dragState={id:ev.pointerId,x:ev.clientX,y:ev.clientY,moved:false,
       samples:[{t:performance.now(),y:window.scrollY}]};
     lastInputT=performance.now();
-    try{galleryEl.setPointerCapture(ev.pointerId);}catch(e){}
+    // NO setPointerCapture: capturing retargets the pointerup — and therefore the
+    // click — to #galleryRoom, so the browser fires the click on the container
+    // instead of the card <a> and the link never opens. Window-level listeners
+    // keep the drag alive and leave the click alone.
+    window.addEventListener('pointermove',dragMove,{passive:true});
+    window.addEventListener('pointerup',endDrag);
+    window.addEventListener('pointercancel',endDrag);
   });
-  galleryEl.addEventListener('pointermove',function(ev){
+  function dragMove(ev){
     if(!dragState||dragState.id!==ev.pointerId)return;
     var dx=ev.clientX-dragState.x,dy=ev.clientY-dragState.y;
     if(!dragState.moved){
@@ -850,12 +861,14 @@ if(galleryEl){
     dragState.samples.push({t:now,y:window.scrollY});
     while(dragState.samples.length>2&&now-dragState.samples[0].t>110)dragState.samples.shift();
     lastInputT=now;
-  });
+  }
   function endDrag(ev){
     if(!dragState||dragState.id!==ev.pointerId)return;
+    window.removeEventListener('pointermove',dragMove);
+    window.removeEventListener('pointerup',endDrag);
+    window.removeEventListener('pointercancel',endDrag);
     var s=dragState;dragState=null;
     galleryEl.classList.remove('grabbing');
-    try{galleryEl.releasePointerCapture(ev.pointerId);}catch(e){}
     if(!s.moved)return;
     var first=s.samples[0],last=s.samples[s.samples.length-1];
     var spanMs=last.t-first.t;
@@ -868,8 +881,6 @@ if(galleryEl){
     }
     window.__suppressRingClick=performance.now();
   }
-  galleryEl.addEventListener('pointerup',endDrag);
-  galleryEl.addEventListener('pointercancel',endDrag);
   // a real drag must not open the card link that was grabbed
   galleryEl.addEventListener('click',function(ev){
     if(window.__suppressRingClick&&performance.now()-window.__suppressRingClick<400){
